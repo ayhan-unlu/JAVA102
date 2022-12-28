@@ -10,6 +10,7 @@ public class MainEncapsulation {
         Book lordOfTheRings = new Book("Lord of the Rings", -100);
         // lordOfTheRings.pageNumber=-1000;
         lordOfTheRings.setPageNumber(-1000);
+        System.out.println(harryPotter.getBookName());
         System.out.println(lordOfTheRings.getPageNumber());
 
         System.out.println(lordOfTheRings.getBookName());
