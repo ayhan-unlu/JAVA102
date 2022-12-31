@@ -4,28 +4,27 @@ public class MainUniversity {
     public static void main(String[] args) {
         Employee employee1 = new Employee("Ayhan Unlu", "+905005002020", "a@a.com");
 
-        // System.out.println(employee1.getNameSurname());
-        // System.out.println();
-        // employee1.enter();
+        System.out.println(employee1.getNameSurname());
+        employee1.enterUniversity();
 
         Academician academician1 = new Academician("Mahmut Hodja", "+905005005050", "mahmut@patika.dev", "CENG",
                 "Associated Proffessor");
 
-        // academician1.exitUniversity();
-        // System.out.println(academician1.getEmailAddress());
-        // System.out.println(academician1.getStatus());
+        academician1.exitUniversity();
+        System.out.println(academician1.getEmailAddress());
+        System.out.println(academician1.getStatus());
 
-        // academician1.enterCourse();
+        academician1.enterCourse();
 
         CivilServant civilServant1 = new CivilServant("Hafize Civil Servant", "+905005015020304", "haf@patika.dev",
                 "CENG", "24/7");
 
-        // civilServant1.work();
+        civilServant1.work();
 
         Employee civilServant2 = new CivilServant("Body Ekrem", "+905015023456", "body@kodluyoruz.org", "PR", "09-18");
 
         civilServant2.goToMesshall();
-        // civilServant2.work();
+        //civilServant2.work();
         civilServant1.work();
 
         Lecturer lecturer1 = new Lecturer("No Ashes", "+905555555555", "noAsh@gmail.com", "CENG", "proffesor", "123");
@@ -55,7 +54,8 @@ public class MainUniversity {
         IT_Personel1.work();
         IT_Personel1.networkEstablishment();
 
-        Security_Personel securityPersonel1 = new Security_Personel("Mr. Halil", "+905055052233", "halil@patika.dev", "security", "10-22","entrance Document");
+        Security_Personel securityPersonel1 = new Security_Personel("Mr. Halil", "+905055052233", "halil@patika.dev",
+                "security", "10-22", "entrance Document");
 
         securityPersonel1.goToMesshall();
         securityPersonel1.work();
