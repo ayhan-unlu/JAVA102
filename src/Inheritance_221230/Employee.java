@@ -29,22 +29,29 @@ public class Employee {
 
     public String getEmailAddress() {
         return this.emailAddress;
-    }
+    }   
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
     public void enterUniversity() {
-        System.out.println(this.nameSurname + " entered university.");
+        System.out.println(this.getNameSurname() + " entered university.");
     }
 
+    public void enterUniversity(String time) {
+        System.out.println(this.getNameSurname() + " entered university at " + time);
+    }
+
+    public void enterUniversity(String time, String gate) {
+        System.out.println(this.getNameSurname() + " entered university at "+ time +" using gate "+gate);
+    }
     public void exitUniversity() {
-        System.out.println(this.nameSurname + " left the university.");
+        System.out.println(this.getNameSurname() + " left the university.");
     }
 
     public void goToMesshall() {
-        System.out.println(this.nameSurname + " went to messhall");
+        System.out.println(this.getNameSurname() + " went to messhall");
     }
 
 }

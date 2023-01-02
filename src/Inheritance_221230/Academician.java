@@ -26,7 +26,12 @@ public class Academician extends Employee {
         this.status = status;
     }
 
-    public void enterCourse(){
-        System.out.println(this.getNameSurname()+" entered the course.");
+    public void enterCourse() {
+        System.out.println(this.getNameSurname() + " entered the course.");
+    }
+
+    @Override
+    public void enterUniversity() {
+        System.out.println("The academician " + this.getNameSurname() + " entered the university using Gate A");
     }
 }

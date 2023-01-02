@@ -23,4 +23,9 @@ public class Lecturer extends Academician {
     public void makeExam(){
         System.out.println(this.getNameSurname()+" is making an exam at Room:"+ this.getRoomNumber());
     }
+
+    @Override
+    public void enterUniversity(){
+        System.out.println("Lecturer " + this.getNameSurname()+" entered the university using Gate B");
+    }
 }

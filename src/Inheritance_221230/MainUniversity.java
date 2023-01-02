@@ -60,5 +60,21 @@ public class MainUniversity {
         securityPersonel1.goToMesshall();
         securityPersonel1.work();
         securityPersonel1.shift();
+
+
+        //Method overloading...
+        System.out.println();
+        lecturer1.enterUniversity();
+        System.out.println();
+        lecturer1.enterUniversity("10:00");
+        System.out.println();
+        lecturer1.enterUniversity("10:00", "A");
+        System.out.println();
+
+        //method overriding..
+        lecturer1.enterUniversity();
+
+
+
     }
 }
