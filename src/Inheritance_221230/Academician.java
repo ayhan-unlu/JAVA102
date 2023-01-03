@@ -32,6 +32,6 @@ public class Academician extends Employee {
 
     @Override
     public void enterUniversity() {
-        System.out.println("The academician " + this.getNameSurname() + " entered the university using Gate A");
+        System.out.println("The academician " + this.getNameSurname() + " entered university using academician entering method using Gate B.");
     }
 }

@@ -28,6 +28,11 @@ public class CivilServant extends Employee {
         this.workingHours = workingHours;
     }
 
+
+    @Override
+    public void enterUniversity(){
+        System.out.println("Civil Servant "+this.getNameSurname()+" entered university using civil servant entering method using Gate D.");
+    }
     public void work() {
         System.out.println(this.getNameSurname() + " works " + this.getWorkingHours());
     }

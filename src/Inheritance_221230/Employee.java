@@ -36,7 +36,7 @@ public class Employee {
     }
 
     public void enterUniversity() {
-        System.out.println(this.getNameSurname() + " entered university.");
+        System.out.println("Employee "+this.getNameSurname() + " entered university using employee entering method using Main Gate.");
     }
 
     public void enterUniversity(String time) {
