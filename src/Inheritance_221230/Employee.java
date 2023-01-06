@@ -47,11 +47,18 @@ public class Employee {
         System.out.println(this.getNameSurname() + " entered university at "+ time +" using gate "+gate);
     }
     public void exitUniversity() {
-        System.out.println(this.getNameSurname() + " left the university.");
+        System.out.println("Employee "+this.getNameSurname() + " left the university.");
     }
 
     public void goToMesshall() {
         System.out.println(this.getNameSurname() + " went to messhall");
+    }
+
+    public static void whoEnteredUniversity(Employee[]enteredEmployeeList){
+        for (Employee e: enteredEmployeeList) {
+            e.enterUniversity();
+            
+        }
     }
 
 }

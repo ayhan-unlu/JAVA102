@@ -35,7 +35,7 @@ public class MainUniversity {
                 lecturer1.senateMeeting();
                 lecturer1.makeExam();
 
-                Assistant assistant1 = new Assistant("Intern Ali", "+905435432121", "intern@patika.dev", "Bootcamp",
+                Assistant assistant1 = new Assistant("Assistant Ali", "+905435432121", "intern@patika.dev", "Bootcamp",
                                 "Assistant", "10-18");
 
                 assistant1.enterUniversity();
@@ -89,6 +89,16 @@ public class MainUniversity {
                 Employee academician2 = new Academician("Kodluyoruz","+905554443322","a@kodluyoruz.org","Coding","Prof.");
                 System.out.println("**************");
                 academician2.enterUniversity();
+                academician2.exitUniversity();
+                
+                System.out.println("**************");
+                //int [] enteredEmployee = new int[5];
+                //Academician [] enteredEmployeeList = {employee1,academician1,lecturer1,assistant1,labAssistant1,civilServant1,IT_Personel1,securityPersonel1};
+                Employee [] enteredEmployeeList = {employee1,academician1,lecturer1,assistant1,labAssistant1,civilServant1,IT_Personel1,securityPersonel1};
+
+                Employee.whoEnteredUniversity(enteredEmployeeList);
+                  
+
 
         }
 }
