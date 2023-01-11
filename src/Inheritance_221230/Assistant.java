@@ -1,6 +1,6 @@
 package Inheritance_221230;
 
-public class Assistant extends Academician{
+public abstract class Assistant extends Academician{
     private String officeHours;
 
     public Assistant(String nameSurname, String mobileNumber, String emailAddress, String department, String status, String officeHours){

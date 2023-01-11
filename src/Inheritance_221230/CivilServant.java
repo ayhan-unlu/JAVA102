@@ -1,6 +1,6 @@
 package Inheritance_221230;
 
-public class CivilServant extends Employee {
+public abstract class  CivilServant extends Employee {
 
     private String department;
     private String workingHours;

@@ -1,6 +1,6 @@
 package Inheritance_221230;
 
-public class Lecturer extends Academician {
+public  class Lecturer extends Academician {
     private String roomNumber;
 
     public Lecturer( String nameSurname, String mobileNumber, String emailAddress, String department, String status, String roomNumber){
@@ -15,7 +15,9 @@ public class Lecturer extends Academician {
     public void setRoomNumber(String roomNumber){
         this.roomNumber=roomNumber;
     }
-
+    public void enterCourse(String courseTime  ){
+        System.out.println("Lecturer " + this.getNameSurname()+"entered the course at "+courseTime);
+    } 
     public void senateMeeting(){
         System.out.println(this.getNameSurname()+ " attended Senate Meeting.");
     }

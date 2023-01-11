@@ -1,6 +1,6 @@
 package Inheritance_221230;
 
-public class Academician extends Employee {
+public abstract class Academician extends Employee {
     private String department;
     private String status;
 
@@ -26,9 +26,8 @@ public class Academician extends Employee {
         this.status = status;
     }
 
-    public void enterCourse() {
-        System.out.println(this.getNameSurname() + " entered the course.");
-    }
+    public abstract void enterCourse(String courseTime  ); 
+    //{ System.out.println(this.getNameSurname() + " entered the course.");    }
 
     @Override
     public void enterUniversity() {
