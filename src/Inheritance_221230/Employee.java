@@ -1,6 +1,6 @@
 package Inheritance_221230;
 
-public class Employee {
+public abstract class Employee {
     private String nameSurname;
     private String mobileNumber;
     private String emailAddress;
@@ -29,35 +29,32 @@ public class Employee {
 
     public String getEmailAddress() {
         return this.emailAddress;
-    }   
+    }
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
-    public void enterUniversity() {
-        System.out.println("Employee "+this.getNameSurname() + " entered university using employee entering method using Main Gate.");
-    }
+    public abstract void enterUniversity();
 
     public void enterUniversity(String time) {
         System.out.println(this.getNameSurname() + " entered university at " + time);
     }
 
     public void enterUniversity(String time, String gate) {
-        System.out.println(this.getNameSurname() + " entered university at "+ time +" using gate "+gate);
+        System.out.println(this.getNameSurname() + " entered university at " + time + " using gate " + gate);
     }
-    public void exitUniversity() {
-        System.out.println("Employee "+this.getNameSurname() + " left the university.");
-    }
+
+    public abstract void exitUniversity(String exitTime);
 
     public void goToMesshall() {
         System.out.println(this.getNameSurname() + " went to messhall");
     }
 
-    public static void whoEnteredUniversity(Employee[]enteredEmployeeList){
-        for (Employee e: enteredEmployeeList) {
+    public static void whoEnteredUniversity(Employee[] enteredEmployeeList) {
+        for (Employee e : enteredEmployeeList) {
             e.enterUniversity();
-            
+
         }
     }
 

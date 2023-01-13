@@ -1,6 +1,6 @@
 package Inheritance_221230;
 
-public abstract class  CivilServant extends Employee {
+public abstract class CivilServant extends Employee {
 
     private String department;
     private String workingHours;
@@ -28,11 +28,12 @@ public abstract class  CivilServant extends Employee {
         this.workingHours = workingHours;
     }
 
-
     @Override
-    public void enterUniversity(){
-        System.out.println("Civil Servant "+this.getNameSurname()+" entered university using civil servant entering method using Gate D.");
+    public void enterUniversity() {
+        System.out.println("Civil Servant " + this.getNameSurname()
+                + " entered university using civil servant entering method using Gate D.");
     }
+
     public void work() {
         System.out.println(this.getNameSurname() + " works " + this.getWorkingHours());
     }

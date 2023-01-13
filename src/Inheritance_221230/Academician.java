@@ -26,11 +26,12 @@ public abstract class Academician extends Employee {
         this.status = status;
     }
 
-    public abstract void enterCourse(String courseTime  ); 
-    //{ System.out.println(this.getNameSurname() + " entered the course.");    }
+    public abstract void enterCourse(String courseTime);
+    // { System.out.println(this.getNameSurname() + " entered the course."); }
 
     @Override
     public void enterUniversity() {
-        System.out.println("The academician " + this.getNameSurname() + " entered university using academician entering method using Gate B.");
+        System.out.println("The academician " + this.getNameSurname()
+                + " entered university using academician entering method using Gate B.");
     }
 }
