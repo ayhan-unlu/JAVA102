@@ -29,6 +29,8 @@ public class MainBankSystem {
 
         int bankSelection = scan.nextInt();
 
+        scan.close();
+
         switch (bankSelection){
             case 1:
             System.out.println("Bank A selected");
