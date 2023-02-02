@@ -3,48 +3,44 @@ package AdventureGame_230128;
 import java.util.Scanner;
 
 public class Player {
+    private int damage;
+    private int health;
+    private int money;
+    private String charName;
     private String name;
+    private Scanner input = new Scanner(System.in);
 
     public Player(String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName() {
-        this.name = name;
-    }
-
-    private int selection;
+    private int selectChar;
 
     public void selectChar() {
 
-//        Samurai samurai = new Samurai();
-//        Archer archer = new Archer();
-//        Knight knight = new Knight(); 
+        // Samurai samurai = new Samurai();
+        // Archer archer = new Archer();
+        // Knight knight = new Knight();
 
-        GameChar [] charList={new Samurai(),new Archer(), new Knight()};
+        GameChar[] charList = { new Samurai(), new Archer(), new Knight() };
+        System.out.println("Characters");
+        System.out.println("-------------------------------");
 
-        for (GameChar gameChar:charList){
-            System.out.println("Character "+gameChar.getName()+ 
-            " have "
-            +gameChar.getDamage()+" damage "+
-            gameChar.getHealth()+" health "+
-            gameChar.getMoney()+" money");
+        for (GameChar gameChar : charList) {
+            System.out.println("Character: " + gameChar.getName() +
+                    " Damage: " + gameChar.getDamage() +
+                    " Health: " + gameChar.getHealth() +
+                    " Money: " + gameChar.getMoney());
         }
-        
-        
+        System.out.println("Please choose a character\n1:Samurai \n2:Archer \n3:Knight");
+        selectChar  = input.nextInt();
+
         // Scanner scan = new Scanner(System.in);
-        // selection = scan.nextInt();
-//        System.out.println("-------------------------------");
-  //      System.out.println("Samurai  Damage:5 \t Health 21 \t Money:15");
-    //    System.out.println("Archer \t Damage:7 \t Health 18 \t Money:20");
-      //  System.out.println("Knight \t Damage:8 \t Health 24 \t Money:25");
-        switch (selection) {
+        // System.out.println("Archer \t Damage:7 \t Health 18 \t Money:20");
+        // System.out.println("Knight \t Damage:8 \t Health 24 \t Money:25");
+        switch (selectChar) {
             case 1:
-                System.out.println("You have chosen Samurai, Congrats!!");
+                System.out .println("You have chosen Samurai, Congrats!!");
                 break;
             case 2:
                 System.out.println("You have chosen Archer, Congrats!!");
@@ -56,6 +52,14 @@ public class Player {
                 System.out.println("Please enter a valid selection");
                 break;
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName() {
+        this.name = name;
     }
 
 }
