@@ -15,7 +15,7 @@ public class Game {
         Player player = new Player("Ayhan");
         System.out.println(player.getName()
                 + " welcome the foggy and dark island !!! Every experience on this island will change your world!!!");
-        System.out.println("Please select your character type :\n1 : Samurai\n2 : Bowler\n3 : Knight");
+  //      System.out.println("Please select your character type :\n1 : Samurai\n2 : Bowler\n3 : Knight");
 
         player.selectChar();
     }
