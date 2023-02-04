@@ -21,7 +21,7 @@ public class Player {
 
         GameChar[] charList = { new Samurai(), new Archer(), new Knight() };
         System.out.println("Characters");
-        System.out.println("-------------------------------");
+        System.out.println("---------------------------------------------------------");
 
         for (GameChar gameChar : charList) {
             System.out.println(gameChar.getName() +
@@ -30,10 +30,13 @@ public class Player {
                     " \tHealth: " + gameChar.getHealth() +
                     " \tMoney: " + gameChar.getMoney());
         }
+        System.out.println("---------------------------------------------------------");
         System.out.println("Please choose a character Id: (1-3)");
         selectChar = input.nextInt();
+        System.out.println();
 
         switch (selectChar) {
+
             case 1:
                 initPlayer(new Samurai());
                 System.out.println("You have chosen Samurai, Congrats!!");
