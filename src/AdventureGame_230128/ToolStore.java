@@ -7,6 +7,61 @@ public class ToolStore extends NormalLocation {
 
     @Override
     public boolean onLocation() {
+        return menu();
+  }
+
+    public void printWeapon() {
+        System.out.println();
+        System.out.println("--------------------------");
+        System.out.println("Weapons:");
+
+        for (Weapon w : Weapon.weapons()) {
+            System.out.println(" Id: " + w.getId() +
+                    " < Name: " + w.getName() +
+                    " Damage: " + w.getDamage() +
+                    " Price: " + w.getPrice() + " >");
+        }
+
+        System.out.print("Please choose the Id number of the weapon You want to buy(1-3): ");
+
+        int selectedWeaponId = input.nextInt();
+
+        while (selectedWeaponId < 1 || selectedWeaponId > Weapon.weapons().length) {
+            System.out.println("You have enter an invalid Id. Please try again.");
+            selectedWeaponId = input.nextInt();
+        }
+        Weapon selectedWeapon = Weapon.getWeaponObjById(selectedWeaponId);
+        if (selectedWeapon != null) {
+            if (sufficientMoney(selectedWeapon)) {
+                System.out.println("You have bought a " + selectedWeapon.getName());
+                int balance=calculateBalance(selectedWeapon);
+                System.out.println("Your balance is: " + balance);
+                this.getPlayer().setMoney(balance);
+
+            } else
+                System.out.println("You do not have enough money to buy " + selectedWeapon.getName());
+
+        }
+        /*
+         * switch (selectWeapon) {
+         * case 1:
+         * 
+         * break;
+         * case 2:
+         * 
+         * break;
+         * case 3:
+         * 
+         * break;
+         * }
+         */
+    }
+
+    public void printArmor() {
+        System.out.println("Armor:");
+    }
+
+    public boolean menu() {
         System.out.println();
         System.out.println("--------------------------");
         System.out.println("Welcome to the Tool Store!");
@@ -39,27 +94,22 @@ public class ToolStore extends NormalLocation {
             // break;
         }
         return true;
-    }
-
-    public void printWeapon() {
-        System.out.println();
-        System.out.println("--------------------------");
-        System.out.println("Weapons:");
-    }
-
-    public void printArmor() {
-        System.out.println("Armor:");
-    }
-
-    public void menu() {
-
+  
     }
 
     public void buy() {
 
     }
 
-    public void sufficientMoney() {
+    public boolean sufficientMoney(Weapon selectedWeapon) {
+        if (selectedWeapon.getPrice() <= this.getPlayer().getMoney()) {
+            return true;
+        }
+        return false;
+    }
 
+    public int calculateBalance(Weapon selectedWeapon) {
+        int balance = this.getPlayer().getMoney() - selectedWeapon.getPrice();
+        return balance;
     }
 }
