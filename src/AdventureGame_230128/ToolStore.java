@@ -8,7 +8,7 @@ public class ToolStore extends NormalLocation {
     @Override
     public boolean onLocation() {
         return menu();
-  }
+    }
 
     public void printWeapon() {
         System.out.println();
@@ -22,39 +22,6 @@ public class ToolStore extends NormalLocation {
                     " Price: " + w.getPrice() + " >");
         }
 
-        System.out.print("Please choose the Id number of the weapon You want to buy(1-3): ");
-
-        int selectedWeaponId = input.nextInt();
-
-        while (selectedWeaponId < 1 || selectedWeaponId > Weapon.weapons().length) {
-            System.out.println("You have enter an invalid Id. Please try again.");
-            selectedWeaponId = input.nextInt();
-        }
-        Weapon selectedWeapon = Weapon.getWeaponObjById(selectedWeaponId);
-        if (selectedWeapon != null) {
-            if (sufficientMoney(selectedWeapon)) {
-                System.out.println("You have bought a " + selectedWeapon.getName());
-                int balance=calculateBalance(selectedWeapon);
-                System.out.println("Your balance is: " + balance);
-                this.getPlayer().setMoney(balance);
-
-            } else
-                System.out.println("You do not have enough money to buy " + selectedWeapon.getName());
-
-        }
-        /*
-         * switch (selectWeapon) {
-         * case 1:
-         * 
-         * break;
-         * case 2:
-         * 
-         * break;
-         * case 3:
-         * 
-         * break;
-         * }
-         */
     }
 
     public void printArmor() {
@@ -81,6 +48,7 @@ public class ToolStore extends NormalLocation {
         switch (selectCase) {
             case 1:
                 printWeapon();
+                buyWeapon();
                 break;
             case 2:
                 printArmor();
@@ -94,10 +62,38 @@ public class ToolStore extends NormalLocation {
             // break;
         }
         return true;
-  
+
     }
 
-    public void buy() {
+    public void buyWeapon() {
+        System.out.print("Please choose the Id number of the weapon You want to buy(1-3): ");
+
+        int selectedWeaponId = input.nextInt();
+
+        while (selectedWeaponId < 1 || selectedWeaponId > Weapon.weapons().length) {
+            System.out.println("You have enter an invalid Id. Please try again.");
+            selectedWeaponId = input.nextInt();
+        }
+        Weapon selectedWeapon = Weapon.getWeaponObjById(selectedWeaponId);
+        if (selectedWeapon != null) {
+            if (sufficientMoney(selectedWeapon)) {
+                // buying a weapon is done in this section
+                System.out.println("You have bought a " + selectedWeapon.getName());
+                int balance = calculateBalance(selectedWeapon);
+                // int newDamage=calculateDamage(selectedWeapon);
+                System.out.println("Your balance is: " + balance);
+                this.getPlayer().setMoney(balance);
+                // System.out.println("Your previous weapon was " +
+                // this.getPlayer().getInventory().getWeapon().getName());
+                this.getPlayer().getInventory().setWeapon(selectedWeapon);
+                // System.out.println("Your new weapon is " +
+                // this.getPlayer().getInventory().getWeapon().getName());
+                // this.getPlayer().getInventory().getWeapon().setDamage(newDamage);
+
+            } else
+                System.out.println("You do not have enough money to buy " + selectedWeapon.getName());
+
+        }
 
     }
 
@@ -111,5 +107,10 @@ public class ToolStore extends NormalLocation {
     public int calculateBalance(Weapon selectedWeapon) {
         int balance = this.getPlayer().getMoney() - selectedWeapon.getPrice();
         return balance;
+    }
+
+    public int calculateDamage(Weapon selectedWeapon) {
+        int damage = this.getPlayer().getDamage() + getPlayer().getInventory().getWeapon().getDamage();
+        return damage;
     }
 }

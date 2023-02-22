@@ -10,9 +10,11 @@ public class Player {
     private String charName;
     private String name;
     private Scanner input = new Scanner(System.in);
+    private Inventory inventory;
 
     public Player(String name) {
         this.name = name;
+        this.inventory = new Inventory();
     }
 
     private int selectChar;
@@ -55,12 +57,14 @@ public class Player {
                 break;
         }
 
-        System.out.println("Chosen Character: " + this.getName() +
-                " Id: " + this.getId() +
-                " Damage: " + this.getDamage() +
-                " Health " + this.getHealth() +
-                " Money: " + this.getMoney());
-        // System.out .println("You have chosen " + + " , Congrats!!");
+        /*
+         * System.out.println("Chosen Character: " + this.getName() +
+         * " Id: " + this.getId() +
+         * " Damage: " + this.getDamage() +
+         * " Health " + this.getHealth() +
+         * " Money: " + this.getMoney());
+         * System.out .println("You have chosen " + + " , Congrats!!");
+         */
     }
 
     public void initPlayer(GameChar gameChar) {
@@ -69,6 +73,16 @@ public class Player {
         this.setDamage(gameChar.getDamage());
         this.setHealth(gameChar.getHealth());
         this.setMoney(gameChar.getMoney());
+
+    }
+
+    public void printInfo() {
+        System.out.println(
+                " Weapon: " + this.getInventory().getWeapon().getName() +
+                        " Damage: " + this.getDamage() +
+                        " Health " + this.getHealth() +
+                        " Money: " + this.getMoney());
+        // System.out .println("You have chosen " + + " , Congrats!!");
 
     }
 
@@ -89,7 +103,7 @@ public class Player {
     }
 
     public int getDamage() {
-        return damage;
+        return damage + this.getInventory().getWeapon().getDamage();
     }
 
     public void setDamage(int damage) {
@@ -110,6 +124,15 @@ public class Player {
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+
     }
 
 }
