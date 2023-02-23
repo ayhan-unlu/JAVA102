@@ -77,11 +77,12 @@ public class Player {
     }
 
     public void printInfo() {
-        System.out.println(
-                " Weapon: " + this.getInventory().getWeapon().getName() +
-                        " Damage: " + this.getDamage() +
-                        " Health " + this.getHealth() +
-                        " Money: " + this.getMoney());
+        System.out.println(" Weapon: " + this.getInventory().getWeapon().getName() +
+                " Damage: " + this.getDamage() +
+                " Armor: " + this.getInventory().getArmor().getName() +
+                " Blockage: " + this.getInventory().getArmor().getBlockage() +
+                " Health " + this.getHealth() +
+                " Money: " + this.getMoney());
         // System.out .println("You have chosen " + + " , Congrats!!");
 
     }
