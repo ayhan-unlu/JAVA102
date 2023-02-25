@@ -38,7 +38,6 @@ public class Player {
         System.out.println();
 
         switch (selectChar) {
-
             case 1:
                 initPlayer(new Samurai());
                 System.out.println("You have chosen Samurai, Congrats!!");
@@ -56,15 +55,6 @@ public class Player {
                 System.out.println("You have entered an invalid ID, Samurai is selected as default");
                 break;
         }
-
-        /*
-         * System.out.println("Chosen Character: " + this.getName() +
-         * " Id: " + this.getId() +
-         * " Damage: " + this.getDamage() +
-         * " Health " + this.getHealth() +
-         * " Money: " + this.getMoney());
-         * System.out .println("You have chosen " + + " , Congrats!!");
-         */
     }
 
     public void initPlayer(GameChar gameChar) {
@@ -73,7 +63,6 @@ public class Player {
         this.setDamage(gameChar.getDamage());
         this.setHealth(gameChar.getHealth());
         this.setMoney(gameChar.getMoney());
-
     }
 
     public void printInfo() {
@@ -83,8 +72,6 @@ public class Player {
                 " Blockage: " + this.getInventory().getArmor().getBlockage() +
                 " Health " + this.getHealth() +
                 " Money: " + this.getMoney());
-        // System.out .println("You have chosen " + + " , Congrats!!");
-
     }
 
     public String getName() {

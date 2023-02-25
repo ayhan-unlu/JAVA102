@@ -1,9 +1,13 @@
 package AdventureGame_230128;
 
-/*public class BattleLocation extends Location{
+public class BattleLocation extends Location {
+
+    public BattleLocation(Player player, String name) {
+        super(player, name);
+    }
+
     @Override
-    boolean onLocation(){
+    public boolean onLocation() {
         return false;
     }
-    
-} */
+}

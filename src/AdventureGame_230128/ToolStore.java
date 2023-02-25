@@ -71,10 +71,6 @@ public class ToolStore extends NormalLocation {
                     System.out.println("Hope to see You soon. ");
                     showMenu = false;
                     break;
-                // default:
-                // System.out.println("You have chosen an invalid action.\nPlease choose
-                // again");
-                // break;
             }
         }
         return true;
@@ -96,15 +92,9 @@ public class ToolStore extends NormalLocation {
                     // buying a weapon is done in this section
                     System.out.println("You have bought a " + selectedWeapon.getName());
                     balance = calculateBalance(selectedWeapon);
-                    // int newDamage=calculateDamage(selectedWeapon);
                     System.out.println("Your balance is: " + balance);
                     this.getPlayer().setMoney(balance);
-                    // System.out.println("Your previous weapon was " +
-                    // this.getPlayer().getInventory().getWeapon().getName());
                     this.getPlayer().getInventory().setWeapon(selectedWeapon);
-                    // System.out.println("Your new weapon is " +
-                    // this.getPlayer().getInventory().getWeapon().getName());
-                    // this.getPlayer().getInventory().getWeapon().setDamage(newDamage);
                 } else
                     System.out.println("You do not have enough money to buy " + selectedWeapon.getName());
             }

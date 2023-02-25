@@ -27,9 +27,7 @@ public class Weapon {
                 return w;
             }
         }
-
         return null;
-
     }
 
     public String getName() {
