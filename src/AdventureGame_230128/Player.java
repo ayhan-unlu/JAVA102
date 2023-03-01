@@ -7,7 +7,7 @@ public class Player {
     private int damage;
     private int health;
     private int money;
-    private String charName;
+    // private String charName;
     private String name;
     private Scanner input = new Scanner(System.in);
     private Inventory inventory;
@@ -67,7 +67,7 @@ public class Player {
 
     public void printInfo() {
         System.out.println(" Weapon: " + this.getInventory().getWeapon().getName() +
-                " Damage: " + this.getDamage() +
+                " Damage: " + this.getTotalDamage() +
                 " Armor: " + this.getInventory().getArmor().getName() +
                 " Blockage: " + this.getInventory().getArmor().getBlockage() +
                 " Health " + this.getHealth() +
@@ -90,8 +90,12 @@ public class Player {
         this.Id = Id;
     }
 
-    public int getDamage() {
+    public int getTotalDamage() {
         return damage + this.getInventory().getWeapon().getDamage();
+    }
+
+    public int getDamage() {
+        return damage;
     }
 
     public void setDamage(int damage) {
@@ -118,9 +122,8 @@ public class Player {
         return inventory;
     }
 
-    public void setInventory(Inventory inventory) {
+    public void setInventory(Inventory inventory) {     
         this.inventory = inventory;
-
     }
 
 }

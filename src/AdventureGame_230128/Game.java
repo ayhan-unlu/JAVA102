@@ -23,8 +23,11 @@ public class Game {
             System.out.println("-------------");
             System.out.println("Locations:");
             System.out.println("1. Safe House : This is a safe location for You. No enemies inside.");
-            System.out.println("2. Tool Store : This is a shopping center for your needs such as weapons and armours.");
-            System.out.println("0. Exit : Leave the game.");
+            System.out.println("2. Tool Store : This is a shopping center for your needs such as weapons and armors.");
+            System.out.println("3. Cave       : < Award: Food     > Watch out! Cave is the land of Zombies...");
+            System.out.println("4. Forest     : < Award: Firewood > Watch out! Forest is the land of Vampires...");
+            System.out.println("5. River      : < Award: Water    > Watch out! River is the land of Bears...");
+            System.out.println("0. Exit       : Leave the game.");
             System.out.println("-------------");
             System.out.println("Please choose Location You are willing to go:(1-2)");
 
@@ -39,6 +42,15 @@ public class Game {
                     break;
                 case 2:
                     location = new ToolStore(player);
+                    break;
+                case 3:
+                    location = new Cave(player);
+                    break;
+                case 4:
+                    location = new Forest(player);
+                    break;
+                case 5:
+                    location = new River(player);
                     break;
                 default:
                     System.out.println("You have entered an invalid Location, Safe House is selected as default");
