@@ -51,11 +51,9 @@ public class Game {
                     break;
                 case 5:
                     location = new River(player);
-                    break;
+                     break;
                 default:
-                    System.out.println("You have entered an invalid Location, Safe House is selected as default");
-                    location = new SafeHouse(player);
-                    break;
+                    System.out.println("Please enter a valid location");
             }
             if (location == null) {
                 System.out.println("You have given up on the foggy and dark island so quickly.");
