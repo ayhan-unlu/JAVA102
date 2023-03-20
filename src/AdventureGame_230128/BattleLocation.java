@@ -22,18 +22,19 @@ public abstract class BattleLocation extends Location {
         System.out.println("You may face up to " + this.maxObstacle + " " + this.getObstacle().getName() + "s in the "
                 + this.getName());
         System.out.println(
-                "In this game You will fight " + obstacleNumber + " " + this.getObstacle().getName()+"(s)\n");
+                "In this game You will fight " + obstacleNumber + " " + this.getObstacle().getName() + "(s)\n");
         System.out.print("Please choose <F>ight or <R>un away:");
         String selectCase = input.nextLine();
         selectCase = selectCase.toUpperCase();
-        if (selectCase.equals("F")) {
+        if (selectCase.equals("F") && combat(obstacleNumber)) {
             System.out.println();
             System.out.println("Execute battle commands");
-            if(combat(obstacleNumber)){
-                System.out.println("You have killed all "+this.getObstacle().getName()+" in "+this.getName());
-            }return true;
+            System.out.println("You have killed all " + this.getObstacle().getName() + " in " + this.getName());
 
-        }if(this.getPlayer().getHealth()<0){
+            return true;
+
+        }
+        if (this.getPlayer().getHealth() == 0) {
             System.out.println("Sorry to tell you that but You are Dead!!!");
             return false;
 
@@ -44,11 +45,11 @@ public abstract class BattleLocation extends Location {
     }
 
     public boolean combat(int obstacleNumber) {
-        
-        this.getObstacle().setHealth(this.getObstacle().getHealth()*obstacleNumber);
+
         for (int i = 1; i <= obstacleNumber; i++) {
+            this.getObstacle().setHealth(this.getObstacle().getOriginalHealth());
             printPlayerStats();
-            printEnemyStats();
+            printEnemyStats(i);
             while (this.getPlayer().getHealth() > 0 && this.getObstacle().getHealth() > 0) {
                 System.out.print("<H>it or <R>unaway :");
                 String selectCombat = input.nextLine().toUpperCase();
@@ -67,10 +68,23 @@ public abstract class BattleLocation extends Location {
                         this.getPlayer().setHealth(this.getPlayer().getHealth() - obstacleCurrentDamage);
                         printHealthAfterHit();
                     }
+                } else {
+                    return false;
                 }
             }
+            if (this.getObstacle().getHealth() < this.getPlayer().getHealth()) {
+                System.out.println("-------------------");
+                System.out.println("you won");
+                // System.out.println("Congratulations !!! You have killed the " +
+                // this.getObstacle().getName());
+                System.out.println("You have earned " + this.getObstacle().getAwardMoney());
+                this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAwardMoney());
+                System.out.println("Your Current Balance is : " + this.getPlayer().getMoney());
+            } else {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     public void printHealthAfterHit() {
@@ -92,8 +106,8 @@ public abstract class BattleLocation extends Location {
         System.out.println();
     }
 
-    public void printEnemyStats() {
-        System.out.println("The Enemy " + this.getObstacle().getName() + " Info ");
+    public void printEnemyStats(int i) {
+        System.out.println(i + ". " + this.getObstacle().getName() + " Info ");
         System.out.println("-------------------------------");
         System.out.println("Health      :" + this.getObstacle().getHealth());
         System.out.println("Damage      :" + this.getObstacle().getDamage());
