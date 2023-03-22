@@ -28,9 +28,9 @@ public abstract class BattleLocation extends Location {
         selectCase = selectCase.toUpperCase();
         if (selectCase.equals("F") && combat(obstacleNumber)) {
             System.out.println();
-            System.out.println("Execute battle commands");
-            System.out.println("You have killed all " + this.getObstacle().getName() + " in " + this.getName());
-
+            // System.out.println("Execute battle commands");
+            System.out.println("You have killed all " + this.getObstacle().getName() + "(s) in " + this.getName());
+            addAwardToInventory();
             return true;
 
         }
@@ -42,6 +42,31 @@ public abstract class BattleLocation extends Location {
             System.out.println("Running away so fast!!");
         }
         return true;
+    }
+
+    public void addAwardToInventory() {
+        // System.out.println(this.getAward());
+        switch (this.getAward()) {
+            case "Food":
+                this.getPlayer().getInventory().setCaveAward("Food");
+                break;
+
+            case "Firewood":
+                this.getPlayer().getInventory().setForestAward("Firewood");
+                break;
+
+            case "Water":
+                this.getPlayer().getInventory().setRiverAward("Water");
+                break;
+
+            default:
+                break;
+        }
+        System.out.println("Your Award Inventory: Cave Award: "
+                + this.getPlayer().getInventory().getCaveAward() + "  Forest Award: "
+                + this.getPlayer().getInventory().getForestAward() + " River Award: "
+                + this.getPlayer().getInventory().getRiverAward());
+
     }
 
     public boolean combat(int obstacleNumber) {
