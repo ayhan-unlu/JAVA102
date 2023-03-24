@@ -28,7 +28,6 @@ public abstract class BattleLocation extends Location {
         selectCase = selectCase.toUpperCase();
         if (selectCase.equals("F") && combat(obstacleNumber)) {
             System.out.println();
-            // System.out.println("Execute battle commands");
             System.out.println("You have killed all " + this.getObstacle().getName() + "(s) in " + this.getName());
             addAwardToInventory();
             return true;
@@ -45,7 +44,6 @@ public abstract class BattleLocation extends Location {
     }
 
     public void addAwardToInventory() {
-        // System.out.println(this.getAward());
         switch (this.getAward()) {
             case "Food":
                 this.getPlayer().getInventory().setCaveAward("Food");
@@ -72,6 +70,8 @@ public abstract class BattleLocation extends Location {
     public boolean combat(int obstacleNumber) {
 
         for (int i = 1; i <= obstacleNumber; i++) {
+            int whoHitsFirst = whoHitsFirst(); // this function decides who hits first 50% player starts which is equal
+                                               // to zero "0" 50% enemy starts which is equal to one "1"
             this.getObstacle().setHealth(this.getObstacle().getOriginalHealth());
             printPlayerStats();
             printEnemyStats(i);
@@ -79,10 +79,23 @@ public abstract class BattleLocation extends Location {
                 System.out.print("<H>it or <R>unaway :");
                 String selectCombat = input.nextLine().toUpperCase();
                 if (selectCombat.equals("H")) {
-                    System.out.println("You hit your enemy...");
-                    this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getTotalDamage());
-                    printHealthAfterHit();
-                    if (this.getObstacle().getHealth() > 0) {
+                    if (whoHitsFirst == 0) {
+                        System.out.println("You hit your enemy...");
+                        this.getObstacle()
+                                .setHealth(this.getObstacle().getHealth() - this.getPlayer().getTotalDamage());
+                        printHealthAfterHit();
+                        if (this.getObstacle().getHealth() > 0) {
+                            System.out.println();
+                            System.out.println("The Enemy hits you...");
+                            int obstacleCurrentDamage = this.getObstacle().getDamage()
+                                    - this.getPlayer().getInventory().getArmor().getBlockage();
+                            if (obstacleCurrentDamage < 0) {
+                                obstacleCurrentDamage = 0;
+                            }
+                            this.getPlayer().setHealth(this.getPlayer().getHealth() - obstacleCurrentDamage);
+                            printHealthAfterHit();
+                        }
+                    } else {
                         System.out.println();
                         System.out.println("The Enemy hits you...");
                         int obstacleCurrentDamage = this.getObstacle().getDamage()
@@ -92,6 +105,12 @@ public abstract class BattleLocation extends Location {
                         }
                         this.getPlayer().setHealth(this.getPlayer().getHealth() - obstacleCurrentDamage);
                         printHealthAfterHit();
+                        if (this.getPlayer().getHealth() > 0) {
+                            System.out.println("You hit your enemy...");
+                            this.getObstacle()
+                                    .setHealth(this.getObstacle().getHealth() - this.getPlayer().getTotalDamage());
+                            printHealthAfterHit();
+                        }
                     }
                 } else {
                     return false;
@@ -110,6 +129,12 @@ public abstract class BattleLocation extends Location {
             }
         }
         return true;
+
+    }
+
+    private int whoHitsFirst() {
+        Random r = new Random();
+        return r.nextInt(2);
     }
 
     public void printHealthAfterHit() {
