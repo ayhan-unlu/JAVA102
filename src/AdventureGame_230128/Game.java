@@ -42,6 +42,7 @@ public class Game {
             System.out.println("3. Cave       : < Award: Food     > Watch out! Cave is the land of Zombies...");
             System.out.println("4. Forest     : < Award: Firewood > Watch out! Forest is the land of Vampires...");
             System.out.println("5. River      : < Award: Water    > Watch out! River is the land of Bears...");
+            System.out.println("6. Mine       : < Award: Depends on your luck Weapon/Armor/Money > Watch out! Mine is the land of Snakes...");
             System.out.println("0. Exit       : Leave the game.");
             System.out.println("-------------");
             System.out.println("Please choose Location You are willing to go:(1-5)");
@@ -82,7 +83,7 @@ public class Game {
                     }
                     location = new Forest(player);
                     break;
-                case 5:
+                    case 5:
                     if (player.getInventory().getRiverAward().equals("Water")) {
                         System.out.println("You have finished the River!!! Congrats !!!");
                         System.out.println("You are not allowed to play this section again.");
@@ -90,6 +91,9 @@ public class Game {
                         break;
                     }
                     location = new River(player);
+                    break;
+                    case 6:
+                    location = new Mine(player);
                     break;
                 default:
                     System.out.println("Please enter a valid location");

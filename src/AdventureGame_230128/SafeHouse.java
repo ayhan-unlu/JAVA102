@@ -14,7 +14,7 @@ public class SafeHouse extends NormalLocation {
         return true;
     }
 
-    private void controlAwardInventory() {
+ /*   private void controlAwardInventory() {
         boolean condition1 = (this.getPlayer().getInventory().getCaveAward() == "Food");
         boolean condition2 = (this.getPlayer().getInventory().getForestAward() == "Firewood");
         boolean condition3 = (this.getPlayer().getInventory().getRiverAward() == "Water");
@@ -29,7 +29,7 @@ public class SafeHouse extends NormalLocation {
 
         }
     }
-
+*/
     private void completeHealth() {
         this.getPlayer().setHealth(this.getPlayer().getOriginalHealth());
     }

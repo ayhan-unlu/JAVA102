@@ -30,6 +30,10 @@ public abstract class BattleLocation extends Location {
             System.out.println();
             System.out.println("You have killed all " + this.getObstacle().getName() + "(s) in " + this.getName());
             addAwardToInventory();
+            if (this.getObstacle().getName() == "Snake") {
+                snakeAward();
+            }
+
             return true;
 
         }
@@ -122,7 +126,7 @@ public abstract class BattleLocation extends Location {
                 // System.out.println("Congratulations !!! You have killed the " +
                 // this.getObstacle().getName());
                 System.out.println("You have earned " + this.getObstacle().getAwardMoney());
-                this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAwardMoney());
+                this.getPlayer().setMoney(this.getPlayer().getMoney() + obstacleNumber*(this.getObstacle().getAwardMoney()));
                 System.out.println("Your Current Balance is : " + this.getPlayer().getMoney());
             } else {
                 return false;
@@ -130,6 +134,71 @@ public abstract class BattleLocation extends Location {
         }
         return true;
 
+    }
+
+    public void snakeAward() {
+        int chance = createPercentageChance();
+        int weaponChance = createPercentageChance();
+        int armorChance = createPercentageChance();
+        int moneyChance = createPercentageChance();
+        // System.out.print("chance" + chance);
+        // System.out.print("weaponChance" + weaponChance);
+        // System.out.print("armorChance" + armorChance);
+        // System.out.println("moneyChance" + moneyChance);
+        if (chance < 55) {
+            System.out.println(" You are going to win something");
+            if (chance < 15) {
+                System.out.println("You are going to win a weapon");
+                if (weaponChance < 50) {
+                    System.out.println("You won a Pistol");
+                    this.getPlayer().getInventory().setWeapon(Weapon.getWeaponObjById(1));
+                } else if ((weaponChance < 80) && (weaponChance >= 50)) {
+                    System.out.println("You have won a Rifle");
+                    this.getPlayer().getInventory().setWeapon(Weapon.getWeaponObjById(3));
+
+                } else {
+                    System.out.println("You won a sword");
+                    this.getPlayer().getInventory().setWeapon(Weapon.getWeaponObjById(2));
+
+                }
+            }
+            if ((chance >= 15) && (chance < 30)) {
+                System.out.println("You are going to win an armor");
+                if (armorChance < 50) {
+                    System.out.println("You won a Light Armor");
+                    this.getPlayer().getInventory().setArmor(Armor.getArmorObjbyId(1));
+                } else if ((armorChance < 80) && (armorChance >= 50)) {
+                    System.out.println("You have won a Medium Armor");
+                    this.getPlayer().getInventory().setArmor(Armor.getArmorObjbyId(2));
+                } else {
+                    System.out.println("You won a Heavy Armor");
+                    this.getPlayer().getInventory().setArmor(Armor.getArmorObjbyId(3));
+                }
+            }
+
+            if (chance >= 30) {
+                System.out.println("You are going to win a money");
+                if (moneyChance < 50) {
+                    System.out.println("You won 1 Money");
+                    this.getPlayer().setMoney(this.getPlayer().getMoney() + 1);
+                } else if ((moneyChance < 80) && (moneyChance >= 50)) {
+                    System.out.println("You have won 5 Money");
+                    this.getPlayer().setMoney(this.getPlayer().getMoney() + 5);
+                } else {
+                    System.out.println("You won 10 Money");
+                    this.getPlayer().setMoney(this.getPlayer().getMoney() + 10);
+                }
+
+            }
+        } else {
+            System.out.println("Sorry !!! You won NOTHING SADDLY.");
+        }
+    }
+
+    public int createPercentageChance() {
+        Random r = new Random();
+        int percentage = r.nextInt(100);
+        return percentage;
     }
 
     private int whoHitsFirst() {
