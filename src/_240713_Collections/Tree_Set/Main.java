@@ -8,10 +8,10 @@ public class Main {
         // OrderGradeComparator order = new OrderGradeComparator();
 
         // TreeSet<Student> students = new TreeSet(order);
-        //TreeSet<Student> students = new TreeSet<>(new OrderGradeComparator().reversed());
-//        TreeSet<Student> students = new TreeSet<>(new OrderNameComparator());
+        // TreeSet<Student> students = new TreeSet<>(new
+        // OrderGradeComparator().reversed());
+        // TreeSet<Student> students = new TreeSet<>(new OrderNameComparator());
         TreeSet<Student> students = new TreeSet<>(new OrderNameComparator().reversed());
-
 
         // Student s1=new Student ("Mustafa",20);
         // students.add(s1);
@@ -22,7 +22,7 @@ public class Main {
         students.add(new Student("Damla", 60));
         students.add(new Student("Cemre", 60));
 
-        for (Student stu:students){
+        for (Student stu : students) {
             System.out.println(stu.getName());
         }
 
