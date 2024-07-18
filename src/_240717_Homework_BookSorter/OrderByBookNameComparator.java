@@ -9,5 +9,4 @@ public class OrderByBookNameComparator implements Comparator<Book>{
         return o1.getBookName().compareTo(o2.getBookName());
     }
 
-  
 }
