@@ -1,5 +1,7 @@
 package _240718_PatikaStore;
 
+import java.util.TreeSet;
+
 public class Notebook {
 
     private int notebookId;
@@ -85,5 +87,32 @@ public class Notebook {
     }
     public void setScreenSize(double screenSize){
         this.screenSize=screenSize;
+    }
+
+    public void printAllNotebookList(TreeSet<Notebook> notebookList){
+        System.out.println("Notebook List\n");
+        System.out.println(
+                        "--------------------------------------------------------------------------------------------------------------\n");
+        System.out.format("| %2s | %-18s | %9s | %13s | %12s | %-6s | %3s | %7s | %11s |", "ID", "Name",
+                        "Price",
+                        "Discount Rate",
+                        "Stock Amount", "Brand", "RAM", "Storage", "Screen Size");
+        System.out.println();
+        System.out.println(
+                        "--------------------------------------------------------------------------------------------------------------\n");
+        for (Notebook notebookId : notebookList) {
+                System.out.format("| %2s | %-18s | %9s | %13s | %12s | %-6s | %3s | %7s | %11s |",
+                                notebookId.getNotebookId(),
+                                notebookId.getNotebookName(), notebookId.getPrice() + ".0 TL",
+                                notebookId.getDiscountRate(),
+                                notebookId.getStockAmount(),
+                                notebookId.getNotebookBrand(), notebookId.getRAM(),
+                                notebookId.getStorage(), notebookId.getScreenSize());
+                System.out.println();
+        }
+        System.out.println(
+                        "--------------------------------------------------------------------------------------------------------------\n");
+
+
     }
 }

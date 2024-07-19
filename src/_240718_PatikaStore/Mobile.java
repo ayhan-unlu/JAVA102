@@ -1,5 +1,7 @@
 package _240718_PatikaStore;
 
+import java.util.TreeSet;
+
 public class Mobile {
 
     private String açıklama = "    Features of Mobile Phone products:";
@@ -33,80 +35,118 @@ public class Mobile {
     public int getMobileId() {
         return mobileId;
     }
-    public void setMobileId(int mobileId){
-        this.mobileId=mobileId;
+
+    public void setMobileId(int mobileId) {
+        this.mobileId = mobileId;
     }
 
-    public int getPrice(){
+    public int getPrice() {
         return price;
     }
-    public void setPrice(int price){
-        this.price=price;
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public int getDiscountRate(){
+    public int getDiscountRate() {
         return discountRate;
     }
-    public void setDiscountRate(int discountRate){
-        this.discountRate=discountRate;
+
+    public void setDiscountRate(int discountRate) {
+        this.discountRate = discountRate;
     }
 
-    public int getStockAmount(){
+    public int getStockAmount() {
         return stockAmount;
     }
-    public void setStockAmount(int stockAmount){
-        this.stockAmount=stockAmount;
+
+    public void setStockAmount(int stockAmount) {
+        this.stockAmount = stockAmount;
     }
 
-    public String getMobileName(){
+    public String getMobileName() {
         return mobileName;
     }
-    public void setMobileName(String mobileName){
-        this.mobileName=mobileName;
+
+    public void setMobileName(String mobileName) {
+        this.mobileName = mobileName;
     }
 
-    public String getMobileBrand(){
+    public String getMobileBrand() {
         return mobileBrand;
     }
-    public void setMobileBrand(String mobileBrand){
-        this.mobileBrand=mobileBrand;
+
+    public void setMobileBrand(String mobileBrand) {
+        this.mobileBrand = mobileBrand;
     }
 
-    public int getPhoneMemory(){
+    public int getPhoneMemory() {
         return phoneMemory;
     }
-    public void setPhoneMemory(int phoneMemory){
-        this.phoneMemory=phoneMemory;
+
+    public void setPhoneMemory(int phoneMemory) {
+        this.phoneMemory = phoneMemory;
     }
 
-    public double getScreenSize(){
+    public double getScreenSize() {
         return screenSize;
-    }    
-    public void setScreenSize(double screenSize){
-        this.screenSize=screenSize;
     }
 
-    public int getBatteryPower(){
+    public void setScreenSize(double screenSize) {
+        this.screenSize = screenSize;
+    }
+
+    public int getBatteryPower() {
         return batteryPower;
     }
-    public void setBatteryPower(int batteryPower){
-        this.batteryPower=batteryPower;
+
+    public void setBatteryPower(int batteryPower) {
+        this.batteryPower = batteryPower;
     }
 
-    public int getRAM(){
+    public int getRAM() {
         return RAM;
     }
-    public void setRAM(int RAM){
-        this.RAM=RAM;
+
+    public void setRAM(int RAM) {
+        this.RAM = RAM;
     }
 
-    public String getColor(){
+    public String getColor() {
         return color;
     }
 
-    public void setColor(String color){
-        this.color=color;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    
+    public void printMobileFullList(TreeSet<Mobile> mobileList) {
+
+        System.out.println("Mobile List\n");
+
+        System.out.println(
+                "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
+        System.out.format("| %2s | %-22s | %9s | %13s | %12s | %-7s | %12s | %11s | %13s | %3s | %-5s |", "Id",
+                "Name",
+                "Price", "Discount Rate", "Stock Amount", "Brand", "Phone Memory", "Screen Size",
+                "Battery Power",
+                "RAM", "Color");
+        System.out.println();
+        System.out.println(
+                "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
+        for (Mobile mobileId : mobileList) {
+            System.out.format(
+                    "| %2s | %-22s | %9s | %13s | %12s | %-7s | %12s | %11s | %13s | %3s | %-5s |",
+                    mobileId.getMobileId(), mobileId.getMobileName(), mobileId.getPrice() + ".0 TL",
+                    mobileId.getDiscountRate(), mobileId.getStockAmount(),
+                    mobileId.getMobileBrand(),
+                    mobileId.getPhoneMemory(), mobileId.getScreenSize(), mobileId.getBatteryPower(),
+                    mobileId.getRAM(),
+                    mobileId.getColor());
+            System.out.println();
+        }
+        System.out.println(
+                "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
+    }
+
 }
