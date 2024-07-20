@@ -1,10 +1,10 @@
 package _240718_PatikaStore;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Mobile {
 
-    private String açıklama = "    Features of Mobile Phone products:";
     private int mobileId;
     private int price;
     private int discountRate;
@@ -120,7 +120,15 @@ public class Mobile {
         this.color = color;
     }
 
-    public void printMobileFullList(TreeSet<Mobile> mobileList) {
+    public void addPresetMobiles(ArrayList<Mobile> mobileList){
+        mobileList.add(new Mobile(1, 3199, 0, 1, "SAMSUNG GALAXY A51", "Samsung", 128, 6.5, 4000, 6, "Black"));
+        mobileList.add(new Mobile(2, 7379, 0, 1, "iPhone 11 64 GB", "Apple", 64, 6.1, 3046, 6, "Blue"));
+        mobileList.add(new Mobile(3, 4012, 0, 1, "Redmi Note 10 Pro 8GB", "Xiaomi", 128, 6.5, 4000, 12,
+                        "White"));
+
+    }
+
+    public void printMobileFullList(ArrayList<Mobile> mobileList) {
 
         System.out.println("Mobile List\n");
 
@@ -147,6 +155,18 @@ public class Mobile {
         }
         System.out.println(
                 "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
+    }
+
+    public void deleteMobile(int mobileId,ArrayList<Mobile> mobileList){
+        Iterator <Mobile> iter = mobileList.iterator();
+
+        while(iter.hasNext()){
+            Mobile m = iter.next();
+            if(m.getMobileId()==mobileId){
+                iter.remove();
+            }
+        }
+
     }
 
 }

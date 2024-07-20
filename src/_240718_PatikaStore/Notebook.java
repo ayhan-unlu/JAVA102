@@ -1,6 +1,8 @@
 package _240718_PatikaStore;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class Notebook {
 
@@ -10,109 +12,139 @@ public class Notebook {
     private int stockAmount;
     private String notebookName;
     private String notebookBrand;
-    private int RAM;//(8GB) 
-    private int storage;//(512 SSDs) 
+    private int RAM;// (8GB)
+    private int storage;// (512 SSDs)
     private double screenSize;// (14 inches)
 
-    Notebook(int notebookId,int price,int discountRate,int stockAmount,String notebookName,String notebookBrand,int RAM,int storage,double screenSize){
-        this.notebookId=notebookId;
-        this.price=price;
-        this.discountRate=discountRate;
-        this.stockAmount=stockAmount;
-        this.notebookName=notebookName;
-        this.notebookBrand=notebookBrand;
-        this.RAM=RAM;
-        this.storage=storage;
-        this.screenSize=screenSize;
+    Notebook(int notebookId, int price, int discountRate, int stockAmount, String notebookName, String notebookBrand,
+            int RAM, int storage, double screenSize) {
+        this.notebookId = notebookId;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.stockAmount = stockAmount;
+        this.notebookName = notebookName;
+        this.notebookBrand = notebookBrand;
+        this.RAM = RAM;
+        this.storage = storage;
+        this.screenSize = screenSize;
     }
 
-    public int getNotebookId(){
+    public int getNotebookId() {
         return notebookId;
     }
-    public void setNotebookId(int notebookId){
-        this.notebookId=notebookId;
+
+    public void setNotebookId(int notebookId) {
+        this.notebookId = notebookId;
     }
 
-    public int getPrice(){
+    public int getPrice() {
         return price;
     }
-    public void setPrice(int price){
-        this.price=price;
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public int getDiscountRate(){
+    public int getDiscountRate() {
         return discountRate;
     }
-    public void setDiscountRate(int discountRate){
-        this.discountRate=discountRate;
+
+    public void setDiscountRate(int discountRate) {
+        this.discountRate = discountRate;
     }
 
-    public int getStockAmount(){
+    public int getStockAmount() {
         return stockAmount;
     }
-    public void setStockAmount(int stockAmount){
-        this.stockAmount=stockAmount;
+
+    public void setStockAmount(int stockAmount) {
+        this.stockAmount = stockAmount;
     }
 
-    public String getNotebookName(){
+    public String getNotebookName() {
         return notebookName;
     }
-    public void setNotebookName(String notebookName){
-        this.notebookName=notebookName;
+
+    public void setNotebookName(String notebookName) {
+        this.notebookName = notebookName;
     }
 
-    public String getNotebookBrand(){
+    public String getNotebookBrand() {
         return notebookBrand;
     }
-    public void setNotebookBrand(String notebookBrand){
-        this.notebookBrand=notebookBrand;
+
+    public void setNotebookBrand(String notebookBrand) {
+        this.notebookBrand = notebookBrand;
     }
 
-    public int getRAM(){
+    public int getRAM() {
         return RAM;
     }
-    public void setRAM(int RAM){
-        this.RAM=RAM;
+
+    public void setRAM(int RAM) {
+        this.RAM = RAM;
     }
 
-    public int getStorage(){
+    public int getStorage() {
         return storage;
     }
-    public void setStorage(int storage){
-        this.storage=storage;
+
+    public void setStorage(int storage) {
+        this.storage = storage;
     }
 
-    public double getScreenSize(){
+    public double getScreenSize() {
         return screenSize;
     }
-    public void setScreenSize(double screenSize){
-        this.screenSize=screenSize;
+
+    public void setScreenSize(double screenSize) {
+        this.screenSize = screenSize;
     }
 
-    public void printAllNotebookList(TreeSet<Notebook> notebookList){
+    public void addPresetNotebooks(ArrayList<Notebook> notebookList){
+        
+        notebookList.add(new Notebook(1, 7000, 0, 1, "HUAWEI Matebook 14", "Huawei", 16, 512, 14.0));
+        notebookList.add(new Notebook(2, 3699, 0, 1, "LENOVO V14 IGL", "Lenovo", 8, 1024, 14.0));
+        notebookList.add(new Notebook(3, 8199, 0, 1, "ASUS Tuf Gaming", "Asus", 32, 2048, 15.6));
+
+    }
+
+    public void printNotebookFullList(ArrayList<Notebook> notebookList) {
         System.out.println("Notebook List\n");
         System.out.println(
-                        "--------------------------------------------------------------------------------------------------------------\n");
+                "--------------------------------------------------------------------------------------------------------------\n");
         System.out.format("| %2s | %-18s | %9s | %13s | %12s | %-6s | %3s | %7s | %11s |", "ID", "Name",
-                        "Price",
-                        "Discount Rate",
-                        "Stock Amount", "Brand", "RAM", "Storage", "Screen Size");
+                "Price",
+                "Discount Rate",
+                "Stock Amount", "Brand", "RAM", "Storage", "Screen Size");
         System.out.println();
         System.out.println(
-                        "--------------------------------------------------------------------------------------------------------------\n");
+                "--------------------------------------------------------------------------------------------------------------\n");
         for (Notebook notebookId : notebookList) {
-                System.out.format("| %2s | %-18s | %9s | %13s | %12s | %-6s | %3s | %7s | %11s |",
-                                notebookId.getNotebookId(),
-                                notebookId.getNotebookName(), notebookId.getPrice() + ".0 TL",
-                                notebookId.getDiscountRate(),
-                                notebookId.getStockAmount(),
-                                notebookId.getNotebookBrand(), notebookId.getRAM(),
-                                notebookId.getStorage(), notebookId.getScreenSize());
-                System.out.println();
+            System.out.format("| %2s | %-18s | %9s | %13s | %12s | %-6s | %3s | %7s | %11s |",
+                    notebookId.getNotebookId(),
+                    notebookId.getNotebookName(), notebookId.getPrice() + ".0 TL",
+                    notebookId.getDiscountRate(),
+                    notebookId.getStockAmount(),
+                    notebookId.getNotebookBrand(), notebookId.getRAM(),
+                    notebookId.getStorage(), notebookId.getScreenSize());
+            System.out.println();
         }
         System.out.println(
-                        "--------------------------------------------------------------------------------------------------------------\n");
+                "--------------------------------------------------------------------------------------------------------------\n");
 
+    }
 
+    public void deleteNotebook(int notebookId, ArrayList<Notebook> notebookList) {
+
+        Iterator<Notebook> iter = notebookList.iterator();
+
+        while(iter.hasNext()){
+            Notebook n = iter.next();
+
+            if (n.getNotebookId() == notebookId){
+                iter.remove();
+            }
+        }
     }
 }
