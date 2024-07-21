@@ -2,6 +2,8 @@ package _240718_PatikaStore;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Mobile {
 
@@ -128,9 +130,9 @@ public class Mobile {
 
     }
 
-    public void printMobileFullList(ArrayList<Mobile> mobileList) {
+    public void printMobileListById(ArrayList<Mobile> mobileList) {
 
-        System.out.println("Mobile List\n");
+        System.out.println("Mobile List by Id\n");
 
         System.out.println(
                 "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -153,6 +155,52 @@ public class Mobile {
                     mobileId.getColor());
             System.out.println();
         }
+        if (mobileList.size() == 0) {
+            System.out.println(" No mobile left in the list");
+        }
+        System.out.println(
+                "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
+    }
+
+    public TreeSet<Mobile> convertMobileListToBrandOrderedList(ArrayList<Mobile> mobileList){
+        TreeSet <Mobile> newMobileList=new TreeSet<>(new OrderByMobileBrandComparator());
+        for (Mobile m: mobileList){
+            newMobileList.add(m);
+        }
+
+
+
+        return newMobileList;
+    }
+    public void printMobileListByBrand(ArrayList<Mobile> mobileList) {
+        TreeSet<Mobile> newMobileList=convertMobileListToBrandOrderedList(mobileList);
+
+        System.out.println("Mobile List by Brand\n");
+
+        System.out.println(
+                "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
+        System.out.format("| %-22s | %2s | %9s | %13s | %12s | %-7s | %12s | %11s | %13s | %3s | %-5s |", "Name",
+                "Id",
+                "Price", "Discount Rate", "Stock Amount", "Brand", "Phone Memory", "Screen Size",
+                "Battery Power",
+                "RAM", "Color");
+        System.out.println();
+        System.out.println(
+                "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
+        for (Mobile mobileId : newMobileList) {
+            System.out.format(
+                    "| %-22s | %2s | %9s | %13s | %12s | %-7s | %12s | %11s | %13s | %3s | %-5s |",
+                    mobileId.getMobileName(), mobileId.getMobileId(), mobileId.getPrice() + ".0 TL",
+                    mobileId.getDiscountRate(), mobileId.getStockAmount(),
+                    mobileId.getMobileBrand(),
+                    mobileId.getPhoneMemory(), mobileId.getScreenSize(), mobileId.getBatteryPower(),
+                    mobileId.getRAM(),
+                    mobileId.getColor());
+            System.out.println();
+        }
+        if (mobileList.size() == 0) {
+            System.out.println(" No mobile left in the list");
+        }
         System.out.println(
                 "-----------------------------------------------------------------------------------------------------------------------------------------------\n");
     }
@@ -169,4 +217,31 @@ public class Mobile {
 
     }
 
+    public void addMobile(ArrayList<Mobile> mobileList) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Please enter the information about the Mobile you want to add: ");
+        
+        System.out.print("Price: ");
+        int price=scan.nextInt();
+        System.out.print("Discount Rate: ");
+        int discountRate=scan.nextInt();
+        System.out.print("Stock Amount: ");
+        int stockAmount=scan.nextInt();
+        System.out.print("Mobile Name: ");
+        String mobileName=scan.nextLine();
+        System.out.print("Mobile Brand: ");
+        String mobileBrand=scan.nextLine();
+        System.out.print("Phone Memory: ");
+        int phoneMemory=scan.nextInt();
+        System.out.print("Screen Size: ");
+        double screenSize=scan.nextDouble();
+        System.out.print("Battery Power: ");
+        int batteryPower=scan.nextInt();
+        System.out.print(" RAM: ");
+        int RAM=scan.nextInt();
+        System.out.print("Color: ");
+        String color=scan.nextLine();
+
+        mobileList.add(new Mobile(mobileList.size()+1, price, discountRate, stockAmount, mobileName, mobileBrand, phoneMemory, screenSize, batteryPower, RAM, color));
+    }
 }
