@@ -1,5 +1,7 @@
 package _240721_InsuranceCompany;
 
+import java.util.ArrayList;
+
 public class Main {
 
     
@@ -7,10 +9,13 @@ public class Main {
 
         System.out.println("   546");
         GetInput g=new GetInput();
-        g.getEmailInput();
-        g.getPasswordInput();
+        
         AccountManager aManager=new AccountManager();
+        aManager.login(g.getEmailInput(), g.getPasswordInput());
+       HomeAddress homeaddress= new HomeAddress(null, null);
+       //    public static ArrayList<IAddress> addressList = new ArrayList<>();
 
+//homeaddress.printAddressList(addressList);
 
     }
 

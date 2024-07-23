@@ -9,19 +9,21 @@ public class AccountManager implements Comparable {
         return 0;
     } 
 
-    TreeSet <Account> list = new TreeSet<>();
+    
 
-    public void login(String email, String password){
+    public Account login(String email, String password,TreeSet<Account>list){
 
         try {
 
             for( Account a:list){
-                //    if(){}
+                return a;
+
                 }            
         } catch (Exception e) {
             System.out.println("InvalidAuthenticationException");
             // TODO: handle exception
         }
+        return null;
 
 
     }

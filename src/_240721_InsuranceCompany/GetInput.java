@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class GetInput {
 
-    private String email;
-    private String password;
+//    private String loginEmail;
+//    private String loginPassword;
 
     Scanner scan = new Scanner(System.in);
 

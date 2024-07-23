@@ -2,4 +2,10 @@
 
 public class AddressManager {
 
+    
+    public static void addAddress(String address){
+        
+    }
+
+    
 }

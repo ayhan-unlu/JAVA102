@@ -1,8 +1,12 @@
 package _240721_InsuranceCompany;
 
-public interface IAddress {
+import java.util.ArrayList;
 
-    public void addAddress();
-    public void deleteAddress();
+public interface IAddress {
+    public static ArrayList<IAddress> addressList = new ArrayList<>();
+    
+
+    public void addAddress(String address);
+    public void deleteAddress(String address);
 
 }
