@@ -3,6 +3,7 @@ package _240721_InsuranceCompany;
 public abstract class Account {
 
     User user = new User();
+ArrayList<Insurance> insuranceList=new ArrayList<>();
 
     // user.getInsuranceList(); Insurance ArrayList
     public final void showUSerInfo() {
