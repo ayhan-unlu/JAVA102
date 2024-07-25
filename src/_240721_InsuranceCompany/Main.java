@@ -4,18 +4,17 @@ import java.util.ArrayList;
 
 public class Main {
 
-    
-    public static void main(String [] args) {
+    public static void main(String[] args) {
 
         System.out.println("   546");
-        GetInput g=new GetInput();
-        
-        AccountManager aManager=new AccountManager();
-        aManager.login(g.getEmailInput(), g.getPasswordInput());
-       HomeAddress homeaddress= new HomeAddress(null, null);
-       //    public static ArrayList<IAddress> addressList = new ArrayList<>();
+        GetInput g = new GetInput();
 
-//homeaddress.printAddressList(addressList);
+        AccountManager aManager = new AccountManager();
+//        aManager.login(g.getEmailInput(), g.getPasswordInput());
+//        HomeAddress homeaddress = new HomeAddress(null, null);
+        // public static ArrayList<IAddress> addressList = new ArrayList<>();
+
+        // homeaddress.printAddressList(addressList);
 
     }
 
