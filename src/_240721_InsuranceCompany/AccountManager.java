@@ -4,27 +4,31 @@ import java.util.TreeSet;
 
 public class AccountManager implements Comparable {
 
+    // TreeSet<Account> accountList= new TreeSet<>(new OrderByEmailComparator());
+
     @Override
-    public int compareTo(Object o1){
+    public int compareTo(Object o1) {
         return 0;
-    } 
+    }
 
-    
-
-    public Account login(String email, String password,TreeSet<Account>list){
+    public Account login(String email, String password, TreeSet<User> list) {
 
         try {
+            for (User u : list) {
+                System.out.println(u.getEmail() + "  " + u.getPassword());
+                if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
+                    System.out.println("Login confirmed**********");
+                }else{
+                    System.out.println("Access Denied.");
+                }
+            }
+        }
 
-            for( Account a:list){
-                return a;
-
-                }            
-        } catch (Exception e) {
+        catch (Exception e) {
             System.out.println("InvalidAuthenticationException");
             // TODO: handle exception
         }
         return null;
-
 
     }
 

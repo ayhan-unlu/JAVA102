@@ -1,11 +1,15 @@
     package _240721_InsuranceCompany;
 
-public class AddressManager {
+public class AddressManager implements IAddress {
 
     
-    public static void addAddress(String address){
+    public void addAddress(String address){
+
         
     }
 
+    public void deleteAddress(String address){
+        
+    }
     
 }
