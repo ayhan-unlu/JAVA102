@@ -1,13 +1,11 @@
 package _240721_InsuranceCompany;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.TreeSet;
 
 public class AccountManager {
-
     TreeSet<Account> accounts;
     User currentUser;
     Account account;
@@ -17,17 +15,56 @@ public class AccountManager {
         run();
     }
 
+    public TreeSet<Account> getAccounts() {
+        return this.accounts;
+    }
+
+    // public void setAccounts(TreeSet<Account> accounts) {
+    // this.accounts = accounts;
+    // }
+
+    // public User getCurrentUser() {
+    // return this.currentUser;
+    // }
+
+    // public void setCurrentUser(User currentUser) {
+    // this.currentUser = currentUser;
+    // }
+
+    // public Account getAccount() {
+    // return this.account;
+    // }
+
+    // public void setAccount(Account account) {
+    // this.account = account;
+    // }
+
     public void run() {
         Scanner scan = new Scanner(System.in);
 
         String choice = " ";
 
         while (!choice.equals("3")) {
-            System.out.println("1- Create an Account\n2- Login to Account\3- Exit\n4- Admin Login\nYour Choice:? ");
+            System.out.println("1- Create an Account\n2- Login to Account\n3- Exit\n4- Admin Login\nYour Choice:? ");
             choice = scan.nextLine();
 
             if (choice.equals("1")) {
                 createAccount();
+            } else if (choice.equals("2")) {
+                System.out.println("Please enter your email: ");
+                String email = scan.nextLine();
+                System.out.println("Please enter your password: ");
+                String password = scan.nextLine();
+System.out.println("21");
+                login(email, password);
+                System.out.println("22");
+            }else if(choice.equals("4")){
+                System.out.println("Printing all accounts and passwords in the System...");
+                for(Account a:getAccounts())
+                    System.out.println("Email: "+a.getUser().getEmail()+"\nPassword: "+a.getUser().getPassword());
+                System.out.println("Printing all Insurance List in the System...");
+                for(Insurance i:User.getInsuranceList())
+                System.out.println("Customer Name: "+ i.getUser().getUsersName()+"\nInsurance Name: "+i.getInsuranceName()+"Insurance Price: "+i.getInsurancePrice());
             }
         }
     }
@@ -53,15 +90,24 @@ public class AccountManager {
 
         User user = new User(usersName, surname, email, password, occupation, age);
 
-        System.out.println("Are you applying for an Enterprise? 1-->Yes 0-->No");
+        System.out.println(user.getEmail() + " " + user.getPassword());
+
+        System.out.println();
+
+        System.out.println("Are you applying for Individual Account? 1-->Yes 0-->No");
         int accountType = scan.nextInt();
+
+        System.out.println("11");
         Account prop;
+        System.out.println("12");
 
         if (accountType == 1) {
-            prop = new Enterprise(user);
-        } else  {
+            System.out.println("13");
             prop = new Individual(user);
-        } 
+            System.out.println("14");
+        } else {
+            prop = new Enterprise(user);
+        }
 
         accounts.add(prop);
 
@@ -87,11 +133,12 @@ public class AccountManager {
 
     // TreeSet<Account> accountList= new TreeSet<>(new OrderByEmailComparator());
 
-    @Override
-    public int compareTo(Object o1) {
-        return 0;
-    }
-
+    /*
+     * @Override
+     * public int compareTo(Object o1) {
+     * return 0;
+     * }
+     */
     public void addAccount(TreeSet<Account> accountList, AuthenticationStatus authenticationStatus,
             TreeSet<User> userList) {
 
@@ -112,29 +159,133 @@ public class AccountManager {
 
     }
 
-    public Account login(String email, String password, ArrayList<User> userList) {
+    public void login(String email, String password) {
+        System.out.println("23");
+        for (Account account : accounts) {
+            System.out.println("24");
+            try {
+                System.out.println("25");
 
-        try {
-            for (User u : userList) {
-                System.out.println(u.getEmail() + "  " + u.getPassword());
-                if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
-                    // AuthenticationStatus.SUCCESS.returnAuthenticationStatus(1);
-                    System.out.println(AuthenticationStatus.SUCCESS.getAuthenticationStatus());
-                    System.out.println("Login confirmed**********");
-                } else if (!email.equals(u.getEmail()) && password.equals(u.getPassword())) {
-                    // AuthenticationStatus.SUCCESS.returnAuthenticationStatus(2);
-                    System.out.println(AuthenticationStatus.FAIL.getAuthenticationStatus());
-                    System.out.println("Access Denied.");
+                account.login(email, password);
+                System.out.println("26");
+
+                if (account.isLogin()) {
+                    System.out.println("27");
+                    currentUser = account.getUser();
+                    this.account = account;
+System.out.println("28");
+                    if (account.getType() == 1) {
+                        System.out.println("29");
+                        individualUserProcess();
+                        System.out.println("291");
+                    } else {
+                        enterpriseUserProcess();
+                    }
+                    break;
                 }
+            } catch (InvalidAuthenticationException e) {
             }
         }
+    }
 
-        catch (Exception e) {
-            System.out.println("InvalidAuthenticationException");
-            // TODO: handle exception
+    public void individualUserProcess() {
+        System.out.println("Welcome " + currentUser.getUsersName());
+
+        String choice = "1";
+
+        while (!choice.equals("q")) {
+            Scanner scan = new Scanner(System.in);
+
+            System.out.println("\n1- Show My Info:");
+            System.out.println("\n2- Add Insurance:");
+            System.out.println("\n3- Show Insurance List:");
+            System.out.println("\n4- Add Address:");
+            System.out.println("\n5- Show All Addresses:");
+            choice = scan.nextLine();
+
+            if (choice.equals("1")) {
+                account.showInfo();
+            } else if (choice.equals("2")) {
+                InsuranceManager insuranceManager = new InsuranceManager();
+                account.addInsurance(insuranceManager.createInsurance(currentUser));
+            } else if (choice.equals("3")) {
+                for (Insurance insurance : account.getUser().getInsuranceList()) {
+                    System.out.println(
+                            "\nName: " + insurance.getInsuranceName() + "\nPrice: " + insurance.getInsurancePrice());
+                }
+            } else if (choice.equals("4")) {
+                account.addAddress(AddressManager.createHomeAddress());
+            } else if (choice.equals("5")) {
+                for (Address address : currentUser.getAddressList()) {
+                    System.out.println(currentUser.getAddressList());
+
+                }
+            }
+
         }
-        return null;
 
     }
 
+    public void enterpriseUserProcess() {
+        /*
+         * System.out.println("Welcome " + currentUser.getUsersName());
+         * 
+         * String choice = "1";
+         * 
+         * while (!choice.equals("q")) {
+         * System.out.println(
+         * "\n1- Show My Info: \n2- Get Insurance: \n3- Get Insurance List\n4- Add Address\n5- Show All Addresses: \nPlease enter your choice: "
+         * );
+         * Scanner scan = new Scanner(System.in);
+         * choice = scan.nextLine();
+         * 
+         * if (choice.equals("1")) {
+         * account.showInfo();
+         * } else if (choice.equals(2)) {
+         * InsuranceManager insuranceManager = new InsuranceManager();
+         * account.addInsurance(insuranceManager.createInsurance(currentUser));
+         * } else if (choice.equals("3")) {
+         * for (Insurance insurance : account.getUser().getInsuranceList()) {
+         * System.out.println(
+         * "Name: " + insurance.getInsuranceName() + "\nPrice: " +
+         * insurance.getInsurancePrice());
+         * }
+         * } else if (choice.equals("4")) {
+         * account.addAddress(AddressManager.createHomeAddress());
+         * } else if (choice.equals("5")) {
+         * for (IAddress address : currentUser.getAddressList()) {
+         * System.out.println(currentUser.getAddressList());
+         * }
+         * }
+         * 
+         * }
+         */
+    }
+    /*
+     * public Account login(String email, String password, ArrayList<User> userList)
+     * {
+     * 
+     * try {
+     * for (User u : userList) {
+     * System.out.println(u.getEmail() + "  " + u.getPassword());
+     * if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
+     * // AuthenticationStatus.SUCCESS.returnAuthenticationStatus(1);
+     * System.out.println(AuthenticationStatus.SUCCESS.getAuthenticationStatus());
+     * System.out.println("Login confirmed**********");
+     * } else if (!email.equals(u.getEmail()) && password.equals(u.getPassword())) {
+     * // AuthenticationStatus.SUCCESS.returnAuthenticationStatus(2);
+     * System.out.println(AuthenticationStatus.FAIL.getAuthenticationStatus());
+     * System.out.println("Access Denied.");
+     * }
+     * }
+     * }
+     * 
+     * catch (Exception e) {
+     * System.out.println("InvalidAuthenticationException");
+     * // TODO: handle exception
+     * }
+     * return null;
+     * 
+     * }
+     */
 }

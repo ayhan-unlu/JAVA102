@@ -65,6 +65,12 @@ public abstract class Account implements Comparable<Account> {
     }
 
     public void login(String email, String password) throws InvalidAuthenticationException{
+        
+        System.out.println("292");
+        
+        System.out.println(user.getEmail());
+        System.out.println(email);
+        System.out.println("293");
         if(!(user.getEmail().equals(email)&&user.getPassword().equals(password))){
             status=AuthenticationStatus.FAIL;
             throw new InvalidAuthenticationException("Invalid email or password");
@@ -74,8 +80,8 @@ public abstract class Account implements Comparable<Account> {
         }
     }
 
-    public abstract void addAddress(IAddress address);
-    public abstract void removeAddress(IAddress address);
+    public abstract void addAddress(Address address);
+    public abstract void removeAddress(Address address);
 
         public boolean isLogin(){
             return status==AuthenticationStatus.SUCCESS;

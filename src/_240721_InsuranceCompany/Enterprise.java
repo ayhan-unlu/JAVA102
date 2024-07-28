@@ -19,12 +19,12 @@ public class Enterprise extends Account {
     }
 
     @Override
-    public void addAddress(IAddress address){
+    public void addAddress(Address address){
         user.getAddressList().add(address);
     }
 
     @Override
-    public void removeAddress(IAddress address){
+    public void removeAddress(Address address){
         user.getAddressList().remove(address);
     }
 

@@ -1,6 +1,6 @@
 package _240721_InsuranceCompany;
 
-public class BusinessAddress implements IAddress{
+public class BusinessAddress implements Address{
 
    private String address;
 

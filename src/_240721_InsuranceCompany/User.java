@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class User {
-    private final ArrayList<IAddress> addressList;
+    private final ArrayList<Address> addressList;
     static private final ArrayList<Insurance> insuranceList = new ArrayList<>();
     private String usersName;
     private String surname;
@@ -20,7 +20,7 @@ public class User {
 
     User(String usersName, String surname, String email, String password, String occupation,
             int age) {
-        this.addressList = new ArrayList<IAddress>();
+        this.addressList = new ArrayList<Address>();
         this.usersName = usersName;
         this.surname = surname;
         this.email = email;
@@ -31,7 +31,7 @@ public class User {
         lastLoginDate=Date.from(Instant.now());
     }
 
-    public ArrayList<IAddress> getAddressList(){
+    public ArrayList<Address> getAddressList(){
         return addressList;
     }
 /* because it is final 
@@ -67,7 +67,7 @@ public class User {
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {

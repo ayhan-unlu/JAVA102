@@ -4,13 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Individual extends Account {
-
-
-  /*
-   * private String insuranceName;
-   * private Date startingDate;
-   * private Date endDate;
-   */
   private User user;
 
   public Individual() {
@@ -20,16 +13,18 @@ public class Individual extends Account {
   }
 
   public Individual(User user) {
+    System.out.println("15");
     this.user = user;
+    System.out.println("16");
   }
 
   @Override
-  public void addAddress(IAddress address){
+  public void addAddress(Address address){
     user.getAddressList().add(address);
   }
 
   @Override
-  public void removeAddress(IAddress address){
+  public void removeAddress(Address address){
     user.getAddressList().remove(address);
   }
 
@@ -38,26 +33,4 @@ public class Individual extends Account {
     User.getInsuranceList().add(i);
   }
 
-  /*
-   * Individual(ArrayList<Account> accountList, AuthenticationStatus
-   * authenticationStatus, User user,
-   * ArrayList<Insurance> insuranceList,
-   * String insuranceName, double price, Date startingDate, Date endDate) {
-   * super(accountList, authenticationStatus, user, insuranceList);
-   * this.insuranceName = insuranceName;
-   * this.startingDate = startingDate;
-   * this.endDate = endDate;
-   * }
-   */
-  /*
-   * @Override
-   * public void calculate(){
-   * 
-   * }
-   * 
-   * @Override
-   * public void addInsurance(){
-   * 
-   * }
-   */
 }
