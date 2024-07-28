@@ -23,4 +23,4 @@ public class Day {
     public void setDay(int day){
         this.day=day;
     }
-}
+ }

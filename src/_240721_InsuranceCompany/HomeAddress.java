@@ -4,30 +4,35 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class HomeAddress implements IAddress {
-/*private String homeAddress;
+    private String address;
 
-    HomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress;
+    public HomeAddress(String address) {
+        this.address = address;
     }
 
-  */  @Override
-    public void addAddress(String address){
-    //    addressList.add()
-        
+    @Override
+    public void addAddress(String address) {
+        // addressList.add()
 
     }
 
     @Override
-    public void deleteAddress(String address) {
+    public void remove() {
 
     }
 
-/*    public void printAddressList(ArrayList addressList) {
+    @Override
+    public void editAddress(String address) {
 
-        Iterator<Integer> iter = addressList.iterator();
-        while (iter.hasNext()) {
-            System.out.println(iter.next());
-        }
     }
- */    
+
+    /*
+     * public void printAddressList(ArrayList addressList) {
+     * 
+     * Iterator<Integer> iter = addressList.iterator();
+     * while (iter.hasNext()) {
+     * System.out.println(iter.next());
+     * }
+     * }
+     */
 }

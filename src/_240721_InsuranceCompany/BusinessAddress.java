@@ -2,20 +2,23 @@ package _240721_InsuranceCompany;
 
 public class BusinessAddress implements IAddress{
 
-/*    private String homeAddress;
-    private String businessAddress;
+   private String address;
 
-    BusinessAddress(String homeAddress,String businessAddress){
-        this.homeAddress=homeAddress;
-        this.businessAddress=businessAddress;
+public     BusinessAddress(String address){
+        this.address=address;
     }
-*/
+
     @Override
     public void addAddress(String address){
 
     }
+
     @Override
-    public void deleteAddress(String address){
+    public void remove(){
+        
+    }
+    @Override
+    public void editAddress(String address){
         
     }
  

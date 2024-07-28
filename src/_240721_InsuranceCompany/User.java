@@ -1,37 +1,54 @@
 package _240721_InsuranceCompany;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
 public class User {
-
+    private final ArrayList<IAddress> addressList;
+    static private final ArrayList<Insurance> insuranceList = new ArrayList<>();
     private String usersName;
     private String surname;
     private String email;
     private String password;
     private String occupation;
     private int age;
-    // private ArrayList<String> addressList;// ??? need care
-    private SimpleDateFormat lastLoginDate;
+    private Date lastLoginDate;
 
-    User(String usersName, String surname, String email, String password, String occupation, int age/*
-                                                                                                     * ,
-                                                                                                     * ArrayList<String>
-                                                                                                     * addressList ,
-                                                                                                     * SimpleDateFormat
-                                                                                                     * lastLoginDate
-                                                                                                     */) {
+    User(String usersName, String surname, String email, String password, String occupation,
+            int age) {
+        this.addressList = new ArrayList<IAddress>();
         this.usersName = usersName;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.occupation = occupation;
         this.age = age;
-        // this.addressList = addressList;
-        // this.lastLoginDate=lastLoginDate;
+        lastLoginDate=new Date();
+        lastLoginDate=Date.from(Instant.now());
     }
+
+    public ArrayList<IAddress> getAddressList(){
+        return addressList;
+    }
+/* because it is final 
+    public void setAddressList(ArrayList<IAddress> addressList){
+        this.addressList=addressList;
+    }
+ */
+    public static ArrayList<Insurance> getInsuranceList(){
+        return insuranceList;
+    }
+
+    
+
+   /* cause final and also static
+   public static  void setInsuranceList(ArrayList<Insurance> insuranceList){
+        this.insuranceList=insuranceList;
+    } */
 
     public String getUsersName() {
         return this.usersName;
@@ -91,21 +108,21 @@ public class User {
      * }
      */
 
-    public SimpleDateFormat getLastLoginDate() {
+    public Date getLastLoginDate() {
         return lastLoginDate;
     }
 
-    public void setLastLoginDate(SimpleDateFormat lastLoginDate) {
+    public void setLastLoginDate() {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public void addUsersToList(TreeSet<User> list, User u) {
-        list.add(u);
+    public void addUsersToList(ArrayList<User> userList, User u) {
+        userList.add(u);
     }
 
-    public void printUserList(TreeSet<User> list) {
+    public void printUserList(ArrayList<User> userList) {
 
-        for (User ur : list) {
+        for (User ur : userList) {
 
             System.out.println();
 

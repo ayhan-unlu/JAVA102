@@ -4,18 +4,19 @@ import java.util.Date;
 
 public class HealthInsurance extends Insurance{
 
-    HealthInsurance(String insuranceName,double price, Date startingDate,Date endDate){
-        super(insuranceName,price,startingDate,endDate);
+    HealthInsurance(String insuranceName,double insurancePrice, Date insuranceDate,User user){
+        super(insuranceName,insurancePrice,insuranceDate,user);
     }
     
     @Override
-    public void calculate(){
-
+    public double calculate(double insurancePrice){
+        System.out.println("Annual Health Insurance Plan costs : "+insurancePrice*12*0.90);
+        return insurancePrice*12*0.90;
     }
 
-    @Override
-    public void addInsurance(){
+//    @Override
+  //  public void addInsurance(){
         
-    }
+    //}
 
 }

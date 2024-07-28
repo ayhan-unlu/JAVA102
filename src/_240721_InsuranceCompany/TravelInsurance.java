@@ -4,16 +4,19 @@ import java.util.Date;
 
 public class TravelInsurance extends Insurance{
 
-    TravelInsurance(String insuranceName,double price, Date startingDate, Date endDate){
-        super(insuranceName,price,startingDate,endDate);
+    TravelInsurance(String insuranceName,double insurancePrice, Date insuranceDate, User user){
+        super(insuranceName,insurancePrice,insuranceDate,user);
     }
 
     @Override
-    public void calculate(){
+    public double calculate(double insurancePrice){
+
+        System.out.println("3-Month long Travel Insurance costs : "+insurancePrice*3);
+        return insurancePrice*3*0.99;
 
     }
-
-    public void addInsurance(){
+//@Override
+  //  public void addInsurance(){
         
-    }
+    //}
 }

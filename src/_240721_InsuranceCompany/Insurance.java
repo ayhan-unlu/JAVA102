@@ -5,15 +5,15 @@ import java.util.Date;
 public abstract class Insurance {
 
     private String insuranceName;
-    private double price;
-    private Date startingDate;
-    private Date endDate;
+    private double insurancePrice;
+    private Date insuranceDate;
+    private final User user;
 
-    Insurance(String insuranceName, double price, Date startingDate, Date endDate){
+    public Insurance(String insuranceName, double insurancePrice, Date insuranceDate, User user){
         this.insuranceName=insuranceName;
-        this.price=price;
-        this.startingDate=startingDate;
-        this.endDate=endDate;
+        this.insurancePrice=insurancePrice;
+        this.insuranceDate=insuranceDate;
+        this.user=user;
     }
 
     public String getInsuranceName() {
@@ -24,32 +24,32 @@ public abstract class Insurance {
         this.insuranceName = insuranceName;
     }
 
-    public double getPrice() {
-        return this.price;
+    public double getInsurancePrice() {
+        return this.insurancePrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setInsurancePrice(double insurancePrice) {
+        this.insurancePrice = insurancePrice;
     }
 
-    public Date getStartingDate() {
-        return this.startingDate;
+    public Date getInsuranceDate() {
+        return this.insuranceDate;
     }
 
-    public void setStartingDate(Date startingDate) {
-        this.startingDate = startingDate;
+    public void setInsuranceDate(Date insuranceDate) {
+        this.insuranceDate = insuranceDate;
     }
 
-    public Date getEndDate() {
-        return this.endDate;
+    public User getUser() {
+        return this.user;
     }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+/* because it is final 
+    public void setUser(User user) {
+        this.user = user;
     }
+ */
+    public abstract double calculate(double insurancePrice);
 
-    public abstract void calculate();
-
-    public abstract void addInsurance();
+//    public abstract void addInsurance();
 
 }

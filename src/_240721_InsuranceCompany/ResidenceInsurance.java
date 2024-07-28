@@ -4,17 +4,18 @@ import java.util.Date;
 
 public class ResidenceInsurance extends Insurance{
 
-    ResidenceInsurance(String insuranceName, double price,Date startingDate, Date endDate){
-        super(insuranceName, price,startingDate,endDate);
+    ResidenceInsurance(String insuranceName, double insurancePrice,Date insuranceDate, User user){
+        super(insuranceName, insurancePrice, insuranceDate,user);
     }
 
     @Override
-    public void calculate(){
-
+    public double  calculate(double insurancePrice){
+        System.out.println("Annual Residental Insurance Plan costs : "+insurancePrice*12*0.95);
+        return insurancePrice*12*0.95;
     }
 
-    @Override
-    public void addInsurance(){
+//    @Override
+  //  public void addInsurance(){
         
-    }
+    //}
 }

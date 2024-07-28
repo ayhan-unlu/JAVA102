@@ -1,21 +1,47 @@
 package _240721_InsuranceCompany;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Enterprise{
+public class Enterprise extends Account {
 
-    Enterprise(String insuranceName,double price, Date startingDate,Date endDate){
+    private User user;
+
+    public Enterprise() {
+        this.setStatus(AuthenticationStatus.FAIL);
+        this.setInsuranceList(new ArrayList<>());
+        setType(1);
     }
 
-/*
-   @Override
-    public void calculate(){
-
+    public Enterprise(User user){
+        this();
+        this.user=user;
     }
 
     @Override
-    public void addInsurance(){
-        
+    public void addAddress(IAddress address){
+        user.getAddressList().add(address);
     }
- */
+
+    @Override
+    public void removeAddress(IAddress address){
+        user.getAddressList().remove(address);
+    }
+
+    @Override
+    public void addInsurance(Insurance i){
+        User.getInsuranceList().add(i);
+    }
+
+    /*
+     * @Override
+     * public void calculate(){
+     * 
+     * }
+     * 
+     * @Override
+     * public void addInsurance(){
+     * 
+     * }
+     */
 }
