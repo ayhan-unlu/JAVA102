@@ -1,7 +1,6 @@
 package _240721_InsuranceCompany;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Individual extends Account {
   private User user;

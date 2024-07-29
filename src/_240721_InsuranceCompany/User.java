@@ -1,11 +1,8 @@
 package _240721_InsuranceCompany;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.TreeSet;
 
 public class User {
     private final ArrayList<Address> addressList;

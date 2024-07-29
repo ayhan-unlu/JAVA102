@@ -9,7 +9,6 @@ public class AgeCheckException extends Exception{
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return "This is an exception of the AgeCheckException Class.";
     }
 

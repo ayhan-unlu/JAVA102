@@ -7,6 +7,7 @@ public class Wrapper_Classes_240706 {
         
         String str = "abc";
         Short s = 2;
+        System.out.println(s);
         //XX String str1 =20;
         //XX String str1 = a.toString();
         String str1 = b.toString();

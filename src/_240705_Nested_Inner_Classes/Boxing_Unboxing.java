@@ -8,7 +8,7 @@ public class Boxing_Unboxing {
 
         // Autoboxing
         Integer b = a; // Integer.valueOf(a)
-
+System.out.println(b);
         // Boxing
         Integer c = Integer.valueOf(a);
 
@@ -21,6 +21,7 @@ public class Boxing_Unboxing {
 
         //Unboxing
         int i = c.intValue();
+        System.out.println(i);
 
     }
 

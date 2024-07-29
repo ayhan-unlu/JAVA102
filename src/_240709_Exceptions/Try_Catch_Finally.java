@@ -1,6 +1,5 @@
 package _240709_Exceptions;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Try_Catch_Finally {
@@ -9,9 +8,11 @@ public class Try_Catch_Finally {
         System.out.println("The program started.");
 
         Scanner input = new Scanner(System.in);
+        System.out.println(input);
         int a = 1;
         int b = 20;
-        int c;
+        int c = 0;
+        System.out.println(c);
         int[] arr = new int[2];
 
         try {

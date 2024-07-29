@@ -16,6 +16,7 @@ public class AddressManager {
         Scanner scan = new Scanner(System.in);
         System.out.print("Please enter your home Address: ");
         String homeAddress = scan.nextLine();
+        scan.close();
         return new HomeAddress(homeAddress);
     }
 
@@ -23,6 +24,7 @@ public class AddressManager {
         Scanner scan = new Scanner(System.in);
         System.out.println("Please enter your business address: ");
         String businessAddress = scan.nextLine();
+        scan.close();
         return new BusinessAddress(businessAddress);
     }
 

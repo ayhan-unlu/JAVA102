@@ -1,7 +1,5 @@
 package _240709_Exceptions;
 
-import java.util.Scanner;
-
 public class Exceptions {
 /*    public static void connectTCMB(){
         //connecting to the servers... etc.

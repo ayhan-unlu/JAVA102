@@ -243,5 +243,6 @@ public class Mobile {
         String color=scan.nextLine();
 
         mobileList.add(new Mobile(mobileList.size()+1, price, discountRate, stockAmount, mobileName, mobileBrand, phoneMemory, screenSize, batteryPower, RAM, color));
+        scan.close();
     }
 }

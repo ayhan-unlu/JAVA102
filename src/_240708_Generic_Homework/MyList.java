@@ -8,12 +8,14 @@ public class MyList<T> {
     private int size;
     private T[] arr;
 
+    @SuppressWarnings("unchecked")
     MyList() {
         this.size = 0;
         this.capacity = 10;
         this.arr = (T[]) new Object[capacity];
     }
 
+    @SuppressWarnings("unchecked")
     MyList(int capacity) {
         this.size = 0;
         this.capacity = capacity;
@@ -121,6 +123,7 @@ public class MyList<T> {
     }
 
     // how to remove all elements in the list (in fact creating an empty list)
+    @SuppressWarnings("unchecked")
     public void clear() {
         arr = (T[]) new Object[10];
         size = 0;

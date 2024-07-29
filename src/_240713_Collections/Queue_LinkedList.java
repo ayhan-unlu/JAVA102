@@ -17,7 +17,7 @@ public class Queue_LinkedList {
 
         // q.remove();
         // q.remove("Çetindağ");
-        q.remove(2);
+        q.remove("2");
 
         // System.out.println(q.remove("patika"));
         // System.out.println(q.remove("Patika"));

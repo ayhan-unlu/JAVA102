@@ -1,14 +1,13 @@
 package _240721_InsuranceCompany;
 
-import java.util.ArrayList;
-import java.util.TreeSet;
-
 public class Main {
 
     public static void main(String[] args) {
 
-        AccountManager accountManager = new AccountManager();
-        accountManager.run();
+        AccountManager manager = new AccountManager();
+        manager.run();
+    }
+}
         /*
          * System.out.println("   546");
          * GetInput g = new GetInput();
@@ -47,5 +46,3 @@ public class Main {
          * // homeaddress.printAddressList(addressList);
          * 
          */
-    }
-}

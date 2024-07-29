@@ -1,8 +1,6 @@
 package _240713_Collections;
 
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Array_List {
@@ -59,6 +57,7 @@ public class Array_List {
 
         list.toString();
         Object [] objArray= list.toArray();
+        System.out.println(objArray);
         String[] str =cityList.toArray(new String[0]);
         System.out.println(str[0]+"*********");
         System.out.println(str[3]+"*********");

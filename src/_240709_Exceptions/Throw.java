@@ -1,6 +1,5 @@
 package _240709_Exceptions;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Throw {
@@ -23,6 +22,7 @@ public class Throw {
         System.out.print("Please enter your age: ");
 
         int age = input.nextInt();
+        System.out.println(input);
         // System.out.println(1 / 0);
         try {
             checkAge(age);

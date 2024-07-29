@@ -1,6 +1,5 @@
 package _240721_InsuranceCompany;
 
-import java.io.PrintStream;
 import java.util.Scanner;
 
 public class GetInput {

@@ -5,7 +5,6 @@ public class Main {
         //Out o = new Out();
         //o.run();
 
-       /// XXX Out.In in =  new Out.In();
 
        //Out.In in = o.getIn();
        //in.run();

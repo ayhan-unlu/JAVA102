@@ -121,7 +121,7 @@ public class Menu {
 
                         } catch (Exception e) {
                             printInvalidInput();
-                            runNotebookMenu(b, brandList, n, notebookList, m, mobileList); // TODO: handle exception
+                            runNotebookMenu(b, brandList, n, notebookList, m, mobileList);
                         }
                         break;
 
@@ -180,7 +180,7 @@ public class Menu {
 
                         } catch (Exception e) {
                             printInvalidInput();
-                            runMobileMenu(b, brandList, n, notebookList, m, mobileList); // TODO: handle exception
+                            runMobileMenu(b, brandList, n, notebookList, m, mobileList);
                         }
                         break;
 

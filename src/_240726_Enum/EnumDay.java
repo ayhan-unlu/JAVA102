@@ -26,6 +26,7 @@ public enum EnumDay {
     public void printDayIdiom() {
 
         String dayName = null;
+        System.out.println(dayName);
 
         switch (this) {
             case MONDAY:

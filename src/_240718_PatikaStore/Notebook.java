@@ -2,7 +2,6 @@ package _240718_PatikaStore;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -215,6 +214,7 @@ public class Notebook {
         notebookList.add(new Notebook(notebookList.size() + 1, price, discountRate, stockAmount, notebookName,
                 notebookBrand, RAM,
                 storage, screenSize));
+        scan.close();
     }
 
 }

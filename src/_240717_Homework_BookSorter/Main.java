@@ -1,6 +1,5 @@
 package _240717_Homework_BookSorter;
 
-import java.util.HashSet;
 import java.util.TreeSet;
 
 public class Main {
