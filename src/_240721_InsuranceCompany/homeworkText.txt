@@ -84,7 +84,7 @@ Yukarıdaki tanımları dikkate aldığımızda soyut sınıf olan "Account" sı
 
 
 
-kullanıcının login olma durumu (AuthenticationStatus)
+				kullanıcının login olma durumu (AuthenticationStatus)
 
 
 kullanıcı nesnesi (User)
@@ -93,7 +93,7 @@ kullanıcı nesnesi (User)
 kullanıcının yaptırmış olduğu sigortaların listesi (ArrayList)
 
 
-AuthenticationStatus tipinde bir enum tanımlayınız. Enum içinde SUCCESS ve FAIL isminde iki tane sabit tanımlayın. SUCCESS login işlemi başarılı ise kullanılacaktır. FAIL ise login olmamışsa kullanılacaktır.
+ tipinde bir enum tanımlayınız. Enum içinde SUCCESS ve FAIL isminde iki tane sabit tanımlayın. SUCCESS login işlemi başarılı ise kullanılacaktır. FAIL ise login olmamışsa kullanılacaktır.
 
 
 kullanıcının hesabına login olabilmesi için bir fonksiyon tanımlanacaktır. Bu fonksiyon email ve şifre bilgisi alacak ve gelen email şifre bilgisini User sınıfındaki email ve şifre ile kıyaslayacaktır. Eğer girilen bilgiler doğruysa giriş işlemi başarılı olacaktır. Ve kullanıcının login olma durumu SUCCESS'e çekilecektir. Giriş işlemi başarısız ise "InvalidAuthenticationException" tipinde bir hata fırlatacaktır. Bu hata sınıfını Exception isimli Java sınıfından kalıtım alarak sizin yazmanız gerekecektir.
@@ -118,3 +118,4 @@ AccountManager isminde bir sınıf tasarlayınız. Bu sınıf içinde TreeSet ti
 
 
 Klavyeden email ve şifre bilgisini alan bir sınıf tasarlayınız. Klavyeden alınan email ve şifre bilgisi ile AccountManager sınıfındaki "login" fonksiyonunu çağırın. Eğer geçerli bir kullanıcı ile giriş yapmışsanız bu fonksiyon size Account tipinde bir nesne dönecektir.
+
