@@ -14,7 +14,6 @@ class User {
     private Date lastLoginDate;
 
     public User(String firstName, String lastName, String email, String password, String profession, int age) {
-        super();//
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

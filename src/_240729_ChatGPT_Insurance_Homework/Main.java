@@ -9,8 +9,6 @@ public class Main {
         // Örnek kullanıcılar oluşturuluyor
         User user1 = new User("John", "Doe", "john@example.com", "password123", "Engineer", 30);
         User user2 = new User("Jane", "Smith", "jane@example.com", "password456", "Doctor", 28);
-System.out.println(user1);
-System.out.println(user2);
         Individual individualAccount = new Individual(user1);
         Enterprise enterpriseAccount = new Enterprise(user2);
 
@@ -24,7 +22,6 @@ System.out.println(user2);
 
         System.out.println("Password: ");
         String password = scanner.nextLine();
-        accountManager.login(email, password);//
 
         Account loggedInAccount = accountManager.login(email, password);
 
