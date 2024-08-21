@@ -1,0 +1,164 @@
+package _241308.com.patikadev.Model;
+
+
+import _241308.com.patikadev.Helper.DBConnector;
+import _241308.com.patikadev.Helper.Helper;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+public class User {
+
+    private int id;
+    private String name;
+    private String username;
+    private String password;
+    private String type;
+
+    public User() {
+    }
+
+    public User(int id, String name, String username, String password, String type) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public static ArrayList<User> getList() {
+        ArrayList<User> userList = new ArrayList<>();
+        String query = "SELECT * FROM user";
+        User obj;
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new User();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUsername(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setType(rs.getString("type"));
+                userList.add(obj);
+            }
+//            st.close();
+//               rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return userList;
+    }
+
+    public static boolean add(String name, String username, String password, String type) {
+        String query = "INSERT INTO user(name,username,password, type) VALUES(?,?,?,?)";
+//        boolean key = true;
+        User findUser = User.getFetch(username);
+        if (findUser != null) {
+//            Helper.showMessage("error");
+            Helper.showMessage("The username already exists. Please choose another one.");
+            return false;
+        }
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1, name);
+            pr.setString(2, username);
+            pr.setString(3, password);
+            pr.setString(4, type);
+//            pr.close();
+
+            int response = pr.executeUpdate();
+
+            if (response == -1) {
+                Helper.showMessage("error");
+            }
+            return response != -1;
+//            key = pr.executeUpdate() != -1;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+        //        return key;
+    }
+
+    public static User getFetch(String username) {
+        User obj = null;
+        String query = "SELECT * FROM user WHERE username=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1, username);
+            ResultSet rs = pr.executeQuery();
+
+//            while (rs.next()) {
+            if (rs.next()) {
+                //        obj=new User(rs.getInt("id"),rs.getString("name"),rs.getString("username"),rs.getString ("password"),rs.getString("type"));
+                obj = new User();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUsername(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setType(rs.getString("type"));
+//                break;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return obj;
+    }
+
+    public static boolean delete(int id) {
+        String query = "DELETE FROM user WHERE id=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1,id);
+            return pr.executeUpdate()!=-1;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+}
