@@ -90,9 +90,9 @@ public class User {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return userList;
     }
+
 
     public static boolean add(String name, String username, String password, String type) {
         String query = "INSERT INTO user(name,username,password, type) VALUES(?,?,?,?)";
@@ -154,11 +154,113 @@ public class User {
         String query = "DELETE FROM user WHERE id=?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1,id);
-            return pr.executeUpdate()!=-1;
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return true;
     }
+
+    public static boolean update(int id, String name, String username, String password, String type) {
+        String query = "UPDATE user SET name=?, username=?, password=?, type=? WHERE id=?";
+        User findUser = User.getFetch(username);
+//        if (findUser !=null&&!findUser.getUsername().equals(username)){
+        if (findUser != null && findUser.getId() != id) {
+            Helper.showMessage("The username already exists. Please choose another one.");
+            return false;
+        }
+
+        if (type.equals("operator") || type.equals("educator") || type.equals("student")) {
+        } else {
+            Helper.showMessage("Please choose a valid Type.");
+            return false;
+        }
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1, name);
+            pr.setString(2, username);
+            pr.setString(3, password);
+            pr.setString(4, type);
+            pr.setInt(5, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+    public static ArrayList<User> searchUserList(String query) {
+        ArrayList<User> userList = new ArrayList<>();
+        User obj;
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new User();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUsername(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setType(rs.getString("type"));
+                userList.add(obj);
+            }
+//            st.close();
+//               rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userList;
+    }
+
+    public static String searchQuery(String name, String username, String type) {
+        String query = "SELECT * FROM user WHERE username LIKE '%{{username}}%' AND name LIKE '%{{name}}%'";
+        query = query.replace("{{username}}", username);
+        query = query.replace("{{name}}", name);
+        if (!type.isEmpty()/* || type != null*/) {
+            query +=" AND type='{{type}}'";
+            query = query.replace("{{type}}", type);
+        }
+//        System.out.println(query);
+        return query;
+    }
+
+/*    public static ArrayList<User> searchUserList(String query) {
+        ArrayList<User> userList = new ArrayList<>();
+        query = "SELECT *FROM user";
+        User obj;
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new User();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUsername(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setType(rs.getString("type"));
+                userList.add(obj);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userList;
+    }
+
+    public static String searchQuery(String name, String username, String type) {
+
+//        String query = "SELECT * FROM user WHERE username LIKE '%"+username+"%' AND name LIKE '%{{name}}%' AND type LIKE '%{{type}}%'";
+        String query = "SELECT * FROM user WHERE username LIKE '%{{username}}%' AND name LIKE '%{{name}}%'";
+        query = query.replace("{{username}}", username);
+        query = query.replace("{{name}}", name);
+        if (!type.isEmpty()) {
+
+            query+=" AND type={{type}}'";
+            query = query.replace("{{type}}", type);
+        }
+//        System.out.println(query);
+        return query;
+
+    }*/
 }

@@ -10,16 +10,17 @@ import _241308.com.patikadev.Model.User;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class OperatorGUI extends JFrame {
     private JPanel wrapper;
     private JTabbedPane tab_operator;
     private JPanel panel_top;
     private JButton button_logout;
-    private JPanel panel_userlist;
+    private JPanel panel_user_list;
     private JLabel label_welcome;
     private JScrollPane scroll_userlist;
     private JTable table_userlist;
@@ -34,6 +35,14 @@ public class OperatorGUI extends JFrame {
     private JButton button_user_add;
     private JTextField field_user_id;
     private JButton button_user_delete;
+    private JTextField field_search_user_name;
+    private JTextField field_search_user_username;
+    private JLabel label_search_user_username;
+    private JLabel label_search_user_name;
+    private JLabel label_combobox_search_user_type;
+    private JComboBox combobox_search_user_type;
+    private JButton button_user_search;
+    private JPanel panel_patika_list;
     private DefaultTableModel model_userList;
     private Object[] row_userList;
 
@@ -55,10 +64,10 @@ public class OperatorGUI extends JFrame {
 
         //Model Userlist
 
-        model_userList = new DefaultTableModel(){
+        model_userList = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if(column ==0)
+                if (column == 0)
                     return false;
                 return super.isCellEditable(row, column);
             }
@@ -97,6 +106,29 @@ public class OperatorGUI extends JFrame {
                     field_user_id.setText(selected_user_id);
                 } catch (Exception ex) {
 //                    System.out.println(ex.getMessage());
+                }
+            }
+        });
+
+        table_userlist.getModel().addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    int user_id = Integer.parseInt(table_userlist.getValueAt(table_userlist.getSelectedRow(), 0).toString());
+                    String user_name = table_userlist.getValueAt(table_userlist.getSelectedRow(), 1).toString();
+                    String user_username = table_userlist.getValueAt(table_userlist.getSelectedRow(), 2).toString();
+                    String user_password = table_userlist.getValueAt(table_userlist.getSelectedRow(), 3).toString();
+                    String user_type = table_userlist.getValueAt(table_userlist.getSelectedRow(), 4).toString();
+
+                    if (User.update(user_id, user_name, user_username, user_password, user_type)) {
+                        Helper.showMessage("success");
+                        loadUserModel();
+                    }
+                    //else{
+                    //  Helper.showMessage("error");
+                    //}
+                    loadUserModel();
                 }
             }
         });
@@ -141,6 +173,28 @@ public class OperatorGUI extends JFrame {
 
             }
         });
+        button_user_search.addActionListener(e -> {
+            String name = field_search_user_name.getText();
+            String username = field_search_user_username.getText();
+            String type = combobox_search_user_type.getSelectedItem().toString();
+
+            String query = User.searchQuery(name, username, type);
+//            ArrayList<User> searchingUser = User.searchUserList(query);
+
+//            loadUserModel(searchingUser);
+
+            loadUserModel(User.searchUserList(query));
+
+            //  String type = combobox_search_user_type.getSelectedItem().toString();
+            //          String query = User.searchQuery(name, username, type);
+
+//            ArrayList<User> searchingUser = User.searchUserList(query);
+            //           loadUserModel(searchingUser);
+//            loadUserModel(User.searchUserList(query));
+        });
+        button_logout.addActionListener(e -> {
+            dispose();
+        });
     }
 
     public void loadUserModel() {
@@ -161,6 +215,41 @@ public class OperatorGUI extends JFrame {
 
     }
 
+    public void loadUserModel(ArrayList<User> list) {
+        DefaultTableModel clearModel = (DefaultTableModel) table_userlist.getModel();
+        clearModel.setRowCount(0);
+
+        for (User obj : list) {
+            int i = 0;
+            row_userList[i++] = obj.getId();
+            row_userList[i++] = obj.getName();
+            row_userList[i++] = obj.getUsername();
+            row_userList[i++] = obj.getPassword();
+            row_userList[i++] = obj.getType();
+
+            model_userList.addRow(row_userList);
+
+        }
+
+    }
+
+    /*
+        public void loadUserModel(ArrayList<User> list) {
+            DefaultTableModel clearModel = (DefaultTableModel) table_userlist.getModel();
+            clearModel.setRowCount(0);
+
+            for (User obj : list) {
+                int i = 0;
+                row_userList[i++] = obj.getId();
+                row_userList[i++] = obj.getName();
+                row_userList[i++] = obj.getUsername();
+                row_userList[i++] = obj.getPassword();
+                row_userList[i++] = obj.getType();
+
+                model_userList.addRow(row_userList);
+            }
+        }
+    */
     public static void main(String[] args) {
         Helper.setLayout();
         Operator op = new Operator();
