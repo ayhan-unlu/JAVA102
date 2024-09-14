@@ -63,8 +63,24 @@ public class Helper {
         JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static boolean confirm(String str) {
+        optionPaneTr();
+        String msg;
+        switch (str) {
+            case "sure":
+                msg = "Are You sure to execute this operation?";
+                break;
+            default:
+                msg = str;
+        }
+        return JOptionPane.showConfirmDialog(null, msg, "Last Decision", JOptionPane.YES_NO_OPTION) == 0;
+
+    }
+
     public static void optionPaneTr() {
         UIManager.put("OptionPane.okButtonText", "Okey");
         UIManager.put("OptionPane.background", Color.green);
+        UIManager.put("OptionPane.yesButtonText", "Sure");
+        UIManager.put("OptionPane.noButtonText", "Not Sure");
     }
 }
