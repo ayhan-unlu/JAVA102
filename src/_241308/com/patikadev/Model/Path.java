@@ -94,10 +94,17 @@ public class Path {
 
     public static boolean delete(int id) {
         String query = "DELETE FROM patika WHERE id = ?";
+        ArrayList<Course> courseList = Course.getList();
+        for (Course c : courseList) {
+            if (c.getPath_id()==id)
+            {
+                Course.delete(c.getId());
+            }
+        }
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1,id);
-            return pr.executeUpdate()!=-1;
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
