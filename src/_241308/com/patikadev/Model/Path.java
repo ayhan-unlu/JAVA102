@@ -92,12 +92,27 @@ public class Path {
         return obj;
     }
 
+    public static Path getFetch(String name) {
+        Path obj = null;
+        String query = "SELECT * FROM patika WHERE name=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1, name);
+            ResultSet rs=pr.executeQuery();
+            if(rs.next()){
+                obj=new Path(rs.getInt("id"),rs.getString("name"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return obj;
+    }
+
     public static boolean delete(int id) {
         String query = "DELETE FROM patika WHERE id = ?";
         ArrayList<Course> courseList = Course.getList();
         for (Course c : courseList) {
-            if (c.getPath_id()==id)
-            {
+            if (c.getPath_id() == id) {
                 Course.delete(c.getId());
             }
         }

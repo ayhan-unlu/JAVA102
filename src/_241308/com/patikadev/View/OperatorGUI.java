@@ -76,6 +76,9 @@ public class OperatorGUI extends JFrame {
     private JButton button_course_update;
     private JTextField field_course_update_course_id;
     private JLabel label_course_update_course_id;
+    private JButton button_course_delete;
+    private JLabel label_course_delete_course_id;
+    private JTextField field_course_delete_course_id;
     private DefaultTableModel model_user_list;
     private Object[] row_user_list;
     private DefaultTableModel model_path_list;
@@ -247,30 +250,32 @@ public class OperatorGUI extends JFrame {
 //            System.out.println("row selected");
 //            System.out.println(selected_course_id);
             try {
-                String selected_course_id = table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString();
-                field_course_update_course_id.setText(selected_course_id);
+                int selected_course_id = Integer.parseInt(table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString());
+
+                field_course_update_course_id.setText(String.valueOf(selected_course_id));
+                field_course_delete_course_id.setText(String.valueOf(selected_course_id));
                 for (Course c : Course.getList()) {
                     int int_selected_course_id = Integer.parseInt(field_course_update_course_id.getText());
                     System.out.println(selected_course_id);
                     if (c.getId() == int_selected_course_id) {
                         field_course_update_course_name.setText(c.getName());
                         field_course_update_language.setText(c.getLanguage());
+                        //  combobox_course_update_educator.setSelectedItem(User.getFetchByEducator(combobox_course_update_educator.getSelectedItem().toString()).getName());
+                        //        combobox_course_update_educator.setSelectedItem(c.getEducator().getName());
+                        //      combobox_course_update_path.setSelectedItem(c.getPath());
+                        //      loadCourseModel();                    }
                     }
                 }
             } catch (Exception exception) {
 //                 System.out.println(exception.getMessage());
             }
         });
-
         /*combobox_course_add_path.addItem(new Item(1,"1. Item"));
         combobox_course_add_path.addItem(new Item(2,"2. Item"));
         combobox_course_add_path.addItem(new Item(3,"3. Item"));*/
 //        loadPathCombobox();
-  //      loadEducatorCombobox();
-
+        //      loadEducatorCombobox();
         // ## CourseList
-
-
         button_user_add.addActionListener(e -> {
 //            if (field_user_name.getText().length() == 0 || field_user_username.getText().isEmpty() || field_user_password.getText().length() == 0 || field_user_password.getText().length() == 0) {
             if (Helper.isFieldEmpty(field_user_name) || Helper.isFieldEmpty(field_user_username) || Helper.isFieldEmpty(field_user_password)/*||Helper.isFieldEmpty(field_user_type)*/) {
@@ -367,11 +372,35 @@ public class OperatorGUI extends JFrame {
             if (Helper.isFieldEmpty(field_course_update_course_name) || Helper.isFieldEmpty(field_course_update_language)) {
                 Helper.showMessage("fill");
             } else {
+                int selected_course_id = Integer.parseInt(table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString());
 
-
+                field_course_update_course_id.setText(String.valueOf(selected_course_id));
+                // combobox_course_update_educator.setSelectedItem(User.getFetchByEducator(combobox_course_update_educator.getSelectedItem().toString()).getName());
+                // Course.update(id,user_id,path_id,name,language);
+                if (Course.update(selected_course_id, User.getFetchByEducator(combobox_course_update_educator.getSelectedItem().toString()).getId(), Path.getFetch(combobox_course_update_path.getSelectedItem().toString()).getId(), field_course_update_course_name.getText(), field_course_update_language.getText())) {
+                    Helper.showMessage("success");
+                    loadCourseModel();
+                } else {
+                    Helper.showMessage("error");
+                }
             }
-
-
+        });
+        button_course_delete.addActionListener(e -> {
+            if (Helper.isFieldEmpty(field_course_delete_course_id)) {
+                Helper.showMessage("fill");
+            } else {
+                if(Helper.confirm("sure")) {
+                    int selected_course_id = Integer.parseInt(table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString());
+                    field_course_delete_course_id.setText(String.valueOf(selected_course_id));
+                    if (Course.delete(selected_course_id)) {
+                        Helper.showMessage("success");
+                        loadCourseModel();
+                        field_course_delete_course_id.setText(null);
+                    } else {
+                        Helper.showMessage("error");
+                    }
+                }
+            }
         });
     }
 
@@ -436,7 +465,7 @@ public class OperatorGUI extends JFrame {
         combobox_course_add_path.removeAllItems();
         for (Path obj : Path.getList()) {
             combobox_course_add_path.addItem(new Item(obj.getId(), obj.getName()));
-            combobox_course_update_path.addItem(new Item(obj.getId(),obj.getName()));
+            combobox_course_update_path.addItem(new Item(obj.getId(), obj.getName()));
         }
     }
 

@@ -170,6 +170,28 @@ public class User {
         return obj;
     }
 
+    public static User getFetchByEducator(String name){
+        User obj=null;
+        String query="SELECT * FROM user WHERE name=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1,name);
+            ResultSet rs=pr.executeQuery();
+
+            if(rs.next()){
+                obj=new User();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUsername(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setType(rs.getString("type"));
+            }
+        }catch(SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return obj;
+    }
+
     public static boolean delete(int id) {
         String query = "DELETE FROM user WHERE id=?";
         ArrayList<Course> courseList = Course.getListByUser(id);
