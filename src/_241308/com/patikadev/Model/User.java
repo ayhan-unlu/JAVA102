@@ -98,11 +98,16 @@ public class User {
         String query = "INSERT INTO user(name,username,password, type) VALUES(?,?,?,?)";
 //        boolean key = true;
         User findUser = User.getFetch(username);
-        if (findUser != null) {
+        //      if (findUser != null && (findUser.getType() == "operator")) {
+        //        return false;
+        //  }
 //            Helper.showMessage("error");
+        //else if (findUser != null && (findUser.getType() != "operator")) {
+        if (findUser != null) {
             Helper.showMessage("The username already exists. Please choose another one.");
             return false;
         }
+
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setString(1, name);
@@ -149,6 +154,42 @@ public class User {
         return obj;
     }
 
+    public static User getFetch(String username, String password) {
+        User obj = null;
+        String query = "SELECT * FROM user WHERE username=? AND password=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1, username);
+            pr.setString(2, password);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                switch (rs.getString("type")) {
+                    case "operator":
+                        obj = new Operator();
+                        break;
+//                    case "educator":
+                    //    obj=new Educator();
+                    //                      break;
+                    //                case "student":
+//                        obj=new Student();
+                    //                  break;
+                    default:
+                        obj = new User();
+                        break;
+                }
+                //        obj =new User();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUsername(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setType(rs.getString("type"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return obj;
+    }
+
     public static User getFetch(int id) {
         User obj = null;
         String query = "SELECT * FROM user WHERE id=?";
@@ -170,23 +211,23 @@ public class User {
         return obj;
     }
 
-    public static User getFetchByEducator(String name){
-        User obj=null;
-        String query="SELECT * FROM user WHERE name=?";
+    public static User getFetchByEducator(String name) {
+        User obj = null;
+        String query = "SELECT * FROM user WHERE name=?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setString(1,name);
-            ResultSet rs=pr.executeQuery();
+            pr.setString(1, name);
+            ResultSet rs = pr.executeQuery();
 
-            if(rs.next()){
-                obj=new User();
+            if (rs.next()) {
+                obj = new User();
                 obj.setId(rs.getInt("id"));
                 obj.setName(rs.getString("name"));
                 obj.setUsername(rs.getString("username"));
                 obj.setPassword(rs.getString("password"));
                 obj.setType(rs.getString("type"));
             }
-        }catch(SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return obj;
@@ -198,7 +239,7 @@ public class User {
         for (Course c : courseList) {
             Course.delete(c.getId());
         }
-         try {
+        try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1, id);
 

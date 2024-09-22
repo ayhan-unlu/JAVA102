@@ -335,6 +335,7 @@ public class OperatorGUI extends JFrame {
         });
         button_logout.addActionListener(e -> {
             dispose();
+            LoginGUI loginGUI=new LoginGUI();
         });
         button_path_add.addActionListener(e -> {
             if (Helper.isFieldEmpty(field_path_name)) {
