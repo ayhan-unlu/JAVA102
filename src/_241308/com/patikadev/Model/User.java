@@ -29,6 +29,21 @@ public class User {
         this.type = type;
     }
 
+    public static void addOperator(String name, String username, String password, String type) {
+        if (User.controlExistingOperator(name, username, password, type)) {
+
+        } else {
+            User.add(name, username, password, type);
+        }
+    }
+
+    private static boolean controlExistingOperator(String name, String username, String password, String type) {
+        User findUser = User.getFetch(username);
+        if (findUser != null) {
+            return true;
+        } else return false;
+    }
+
     public int getId() {
         return id;
     }
@@ -210,6 +225,7 @@ public class User {
         }
         return obj;
     }
+
 
     public static User getFetchByEducator(String name) {
         User obj = null;

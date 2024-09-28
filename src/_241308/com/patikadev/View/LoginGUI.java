@@ -3,10 +3,10 @@ package _241308.com.patikadev.View;
 import _241308.com.patikadev.Helper.Config;
 import _241308.com.patikadev.Helper.Helper;
 import _241308.com.patikadev.Model.Operator;
-import _241308.com.patikadev.Model.Student;
 import _241308.com.patikadev.Model.User;
 
 import javax.swing.*;
+import java.awt.event.*;
 
 public class LoginGUI extends JFrame {
     private JPanel wrapper;
@@ -21,15 +21,14 @@ public class LoginGUI extends JFrame {
     private JLabel label_login_sign_up;
     private JTextField field_login_signup_username;
     private JTextField field_login_signup_password;
-    private JLabel label_login_signup_username;
-    private JLabel label_login_signup_password;
     private JButton button_login_signup;
     private JTextField field_login_signup_name;
-    private JLabel label_login_signup_name;
+    private JButton button_login_signup_menu;
+    private JLabel label_login_signup_menu;
 
     public LoginGUI() {
         add(wrapper);
-        setSize(400, 550);
+        setSize(400, 400);
         setLocation(Helper.screenCenterPoint("x", getSize()), Helper.screenCenterPoint("y", getSize()));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
@@ -60,26 +59,22 @@ public class LoginGUI extends JFrame {
                 }
             }
         });
-        button_login_signup.addActionListener(e -> {
-            if (Helper.isFieldEmpty(field_login_signup_name)||Helper.isFieldEmpty(field_login_signup_username) || Helper.isFieldEmpty(field_login_signup_password)) {
-                Helper.showMessage("fill");
-            }else{
-                User.add(field_login_signup_name.getText(),field_login_signup_username.getText(),field_login_signup_password.getText(),"student");
-                Helper.showMessage("New User added to the Database. Please close this window and Use User Login Section");
-                field_login_signup_name.setText(null);
-                field_login_signup_username.setText(null);
-                field_login_signup_password.setText(null);
+        button_login_signup_menu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                SignupGUI signupGUI = new SignupGUI();
             }
-
         });
     }
 
     public static void main(String[] args) {
         Helper.setLayout();
         LoginGUI loginGUI = new LoginGUI();
-//        Boolean op1=User.add("Mustafa Çetindağ","mustafa","1234","operator");
-  //      Boolean op2=User.add("Mahmut Çetindağ","mahmut","1234","operator");
-    //    Boolean op3=User.add("Mustafa Mahmut Çetindağ","mustafamahmut","1234","operator");
-
+        User.addOperator("Mustafa Çetindağ","mustafa","1234","operator");
+        User.addOperator("Mahmut Çetindağ","mahmut","1234","operator");
+        User.addOperator("Mahmut Mustafa Çetindağ","mahmutmustafa","1234","operator");
+        User.addOperator("Ayhan Unlu","ayhanunlu", "ayhanunlu","operator");
+        User.addOperator("a","a", "a","operator");
     }
 }
