@@ -22,7 +22,7 @@ public class OperatorGUI extends JFrame {
     private JPanel wrapper;
     private JTabbedPane tab_operator;
     private JPanel panel_top;
-    private JButton button_logout;
+    private JButton button_operator_logout;
     private JPanel panel_user_list;
     private JLabel label_welcome;
     private JScrollPane scroll_userlist;
@@ -53,8 +53,8 @@ public class OperatorGUI extends JFrame {
     private JTextField field_path_name;
     private JButton button_path_add;
     private JPanel panel_course_list;
-    private JScrollPane scroll_course_list;
-    private JTable table_course_list;
+    private JScrollPane scroll_operator_course_list;
+    private JTable table_operator_course_list;
     private JPanel panel_course_add;
     private JTextField field_course_add_course_name;
     private JLabel label_course_add_course_name;
@@ -84,8 +84,8 @@ public class OperatorGUI extends JFrame {
     private DefaultTableModel model_path_list;
     private Object[] row_path_list;
     private JPopupMenu pathMenu;
-    private DefaultTableModel model_course_list;
-    private Object[] row_course_list;
+    private DefaultTableModel model_operator_course_list;
+    private Object[] row_operator_course_list;
 
 
     public final Operator operator;
@@ -237,20 +237,20 @@ public class OperatorGUI extends JFrame {
         });
         // ## PathList
         // CourseList
-        model_course_list = new DefaultTableModel();
-        Object[] column_course_list = {"ID", "Course Name", "Educator", "Path", "Language"};
-        model_course_list.setColumnIdentifiers(column_course_list);
-        row_course_list = new Object[column_course_list.length];
+        model_operator_course_list = new DefaultTableModel();
+        Object[] column_operator_course_list = {"ID", "Course Name", "Educator", "Path", "Language"};
+        model_operator_course_list.setColumnIdentifiers(column_operator_course_list);
+        row_operator_course_list = new Object[column_operator_course_list.length];
         loadCourseModel();
-        table_course_list.setModel(model_course_list);
-        table_course_list.getColumnModel().getColumn(0).setMaxWidth(75);
-        table_course_list.getTableHeader().setReorderingAllowed(false);
+        table_operator_course_list.setModel(model_operator_course_list);
+        table_operator_course_list.getColumnModel().getColumn(0).setMaxWidth(75);
+        table_operator_course_list.getTableHeader().setReorderingAllowed(false);
 
-        table_course_list.getSelectionModel().addListSelectionListener(e -> {
+        table_operator_course_list.getSelectionModel().addListSelectionListener(e -> {
 //            System.out.println("row selected");
 //            System.out.println(selected_course_id);
             try {
-                int selected_course_id = Integer.parseInt(table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString());
+                int selected_course_id = Integer.parseInt(table_operator_course_list.getValueAt(table_operator_course_list.getSelectedRow(), 0).toString());
 
                 field_course_update_course_id.setText(String.valueOf(selected_course_id));
                 field_course_delete_course_id.setText(String.valueOf(selected_course_id));
@@ -333,7 +333,7 @@ public class OperatorGUI extends JFrame {
             //           loadUserModel(searchingUser);
 //            loadUserModel(User.searchUserList(query));
         });
-        button_logout.addActionListener(e -> {
+        button_operator_logout.addActionListener(e -> {
             dispose();
             LoginGUI loginGUI=new LoginGUI();
         });
@@ -373,7 +373,7 @@ public class OperatorGUI extends JFrame {
             if (Helper.isFieldEmpty(field_course_update_course_name) || Helper.isFieldEmpty(field_course_update_language)) {
                 Helper.showMessage("fill");
             } else {
-                int selected_course_id = Integer.parseInt(table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString());
+                int selected_course_id = Integer.parseInt(table_operator_course_list.getValueAt(table_operator_course_list.getSelectedRow(), 0).toString());
 
                 field_course_update_course_id.setText(String.valueOf(selected_course_id));
                 // combobox_course_update_educator.setSelectedItem(User.getFetchByEducator(combobox_course_update_educator.getSelectedItem().toString()).getName());
@@ -391,7 +391,7 @@ public class OperatorGUI extends JFrame {
                 Helper.showMessage("fill");
             } else {
                 if(Helper.confirm("sure")) {
-                    int selected_course_id = Integer.parseInt(table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString());
+                    int selected_course_id = Integer.parseInt(table_operator_course_list.getValueAt(table_operator_course_list.getSelectedRow(), 0).toString());
                     field_course_delete_course_id.setText(String.valueOf(selected_course_id));
                     if (Course.delete(selected_course_id)) {
                         Helper.showMessage("success");
@@ -406,18 +406,18 @@ public class OperatorGUI extends JFrame {
     }
 
     private void loadCourseModel() {
-        DefaultTableModel clearModel = (DefaultTableModel) table_course_list.getModel();
+        DefaultTableModel clearModel = (DefaultTableModel) table_operator_course_list.getModel();
         clearModel.setRowCount(0);
 
         int i = 0;
         for (Course obj : Course.getList()) {
             i = 0;
-            row_course_list[i++] = obj.getId();
-            row_course_list[i++] = obj.getName();
-            row_course_list[i++] = obj.getEducator().getName();
-            row_course_list[i++] = obj.getPath().getName();
-            row_course_list[i++] = obj.getLanguage();
-            model_course_list.addRow(row_course_list);
+            row_operator_course_list[i++] = obj.getId();
+            row_operator_course_list[i++] = obj.getName();
+            row_operator_course_list[i++] = obj.getEducator().getName();
+            row_operator_course_list[i++] = obj.getPath().getName();
+            row_operator_course_list[i++] = obj.getLanguage();
+            model_operator_course_list.addRow(row_operator_course_list);
         }
     }
 
@@ -506,5 +506,9 @@ public class OperatorGUI extends JFrame {
         op.setType("operator");
 //        DBConnector.getInstance();
         OperatorGUI opGUI = new OperatorGUI(op);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

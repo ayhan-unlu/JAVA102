@@ -304,14 +304,14 @@
             <properties/>
             <border type="none"/>
             <children>
-              <scrollpane id="496fd" binding="scroll_course_list">
+              <scrollpane id="496fd" binding="scroll_operator_course_list" custom-create="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="e9f16" class="javax.swing.JTable" binding="table_course_list">
+                  <component id="e9f16" class="javax.swing.JTable" binding="table_operator_course_list">
                     <constraints/>
                     <properties/>
                   </component>
@@ -547,7 +547,7 @@
               <text value="Welcome"/>
             </properties>
           </component>
-          <component id="4f7f3" class="javax.swing.JButton" binding="button_logout">
+          <component id="4f7f3" class="javax.swing.JButton" binding="button_operator_logout">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
