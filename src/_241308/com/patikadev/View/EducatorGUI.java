@@ -4,10 +4,13 @@ import _241308.com.patikadev.Helper.Config;
 import _241308.com.patikadev.Helper.Helper;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class EducatorGUI extends JFrame{
     private JPanel wrapper;
     private JLabel label_educator_welcome;
+    private JButton button_logout;
 
     public EducatorGUI(){
         add(wrapper);
@@ -17,5 +20,10 @@ public class EducatorGUI extends JFrame{
         setTitle(Config.PROJECT_TITLE);
         setResizable(false);
         setVisible(true);
+        button_logout.addActionListener(e -> {
+            dispose();
+            LoginGUI loginGUI = new LoginGUI();
+
+        });
     }
 }

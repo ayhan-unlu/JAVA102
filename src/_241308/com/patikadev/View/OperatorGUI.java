@@ -101,7 +101,7 @@ public class OperatorGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
         setVisible(true);
-        label_welcome.setText("Welcome : " + operator.getName());
+        label_welcome.setText("Welcome Operator " + operator.getName());
 
         // Userlist
 
@@ -335,7 +335,7 @@ public class OperatorGUI extends JFrame {
         });
         button_logout.addActionListener(e -> {
             dispose();
-            LoginGUI loginGUI=new LoginGUI();
+            LoginGUI loginGUI = new LoginGUI();
         });
         button_path_add.addActionListener(e -> {
             if (Helper.isFieldEmpty(field_path_name)) {
@@ -390,7 +390,7 @@ public class OperatorGUI extends JFrame {
             if (Helper.isFieldEmpty(field_course_delete_course_id)) {
                 Helper.showMessage("fill");
             } else {
-                if(Helper.confirm("sure")) {
+                if (Helper.confirm("sure")) {
                     int selected_course_id = Integer.parseInt(table_course_list.getValueAt(table_course_list.getSelectedRow(), 0).toString());
                     field_course_delete_course_id.setText(String.valueOf(selected_course_id));
                     if (Course.delete(selected_course_id)) {
@@ -439,12 +439,33 @@ public class OperatorGUI extends JFrame {
         int i;
         for (User obj : User.getList()) {
             i = 0;
-            row_user_list[i++] = obj.getId();
-            row_user_list[i++] = obj.getName();
-            row_user_list[i++] = obj.getUsername();
-            row_user_list[i++] = obj.getPassword();
-            row_user_list[i++] = obj.getType();
-            model_user_list.addRow(row_user_list);
+            if (obj.getType().equals("operator")) {
+            } else {
+                row_user_list[i++] = obj.getId();
+                row_user_list[i++] = obj.getName();
+                row_user_list[i++] = obj.getUsername();
+                row_user_list[i++] = obj.getPassword();
+                row_user_list[i++] = obj.getType();
+                model_user_list.addRow(row_user_list);
+            }
+        }
+    }
+
+    public void loadUserModel4EducatorMenu() {
+        DefaultTableModel clearModel = (DefaultTableModel) table_user_list.getModel();
+        clearModel.setRowCount(0);
+        int i;
+        for (User obj : User.getEducatorList()) {
+            i = 0;
+            if (obj.getType().equals("educator")) {
+            } else {
+                row_user_list[i++] = obj.getId();
+                row_user_list[i++] = obj.getName();
+                row_user_list[i++] = obj.getUsername();
+                row_user_list[i++] = obj.getPassword();
+                row_user_list[i++] = obj.getType();
+                model_user_list.addRow(row_user_list);
+            }
         }
     }
 
