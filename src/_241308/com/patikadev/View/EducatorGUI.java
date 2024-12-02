@@ -13,7 +13,7 @@ public class EducatorGUI extends JFrame{
     private JButton button_logout;
 
     public EducatorGUI(){
-        //check point 5
+        //check point 4
         add(wrapper);
         setSize(400,400);
         setLocation(Helper.screenCenterPoint("x",getSize()),Helper.screenCenterPoint("y",getSize()));
