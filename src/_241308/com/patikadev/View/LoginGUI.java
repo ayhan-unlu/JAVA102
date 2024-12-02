@@ -2,6 +2,7 @@ package _241308.com.patikadev.View;
 
 import _241308.com.patikadev.Helper.Config;
 import _241308.com.patikadev.Helper.Helper;
+//import _241308.com.patikadev.Model.Educator;
 import _241308.com.patikadev.Model.Operator;
 import _241308.com.patikadev.Model.User;
 
@@ -9,7 +10,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class LoginGUI extends JFrame {
-    //NEW start 29-11-24
+    //NEW start 02-12-24
     private JPanel wrapper;
     private JPanel wrapper_top;
     private JPanel wrapper_buttom;
@@ -50,7 +51,7 @@ public class LoginGUI extends JFrame {
                             OperatorGUI operatorGUI = new OperatorGUI((Operator) u);
                             break;
                         case "educator":
-                            EducatorGUI educatorGUI = new EducatorGUI(/*(Educator)u*/);
+                            EducatorGUI educatorGUI = new EducatorGUI(/*(Educator) u*/);
                             break;
                         case "student":
                             StudentGUI studentGUI = new StudentGUI();

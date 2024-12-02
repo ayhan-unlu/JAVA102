@@ -517,7 +517,7 @@ public class OperatorGUI extends JFrame {
             }
         }
     */
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         Helper.setLayout();
         Operator op = new Operator();
         op.setId(1);
@@ -527,5 +527,5 @@ public class OperatorGUI extends JFrame {
         op.setType("operator");
 //        DBConnector.getInstance();
         OperatorGUI opGUI = new OperatorGUI(op);
-    }
+    }*/
 }
