@@ -11,6 +11,7 @@ import java.awt.event.*;
 
 public class LoginGUI extends JFrame {
     //NEW start 02-12-24
+    //Checkpoint 241209
     private JPanel wrapper;
     private JPanel wrapper_top;
     private JPanel wrapper_buttom;
