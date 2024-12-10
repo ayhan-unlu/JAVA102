@@ -1,6 +1,7 @@
 package _241308.com.patikadev.Model;
 
 public class Educator extends User {
+
     public Educator() {
     }
 
