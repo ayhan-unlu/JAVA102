@@ -5,6 +5,7 @@ import _241308.com.patikadev.Helper.Helper;
 //import _241308.com.patikadev.Model.Educator;
 import _241308.com.patikadev.Model.Educator;
 import _241308.com.patikadev.Model.Operator;
+import _241308.com.patikadev.Model.Student;
 import _241308.com.patikadev.Model.User;
 
 import javax.swing.*;
@@ -56,7 +57,7 @@ public class LoginGUI extends JFrame {
                             EducatorGUI educatorGUI = new EducatorGUI((Educator) u);
                             break;
                         case "student":
-                            StudentGUI studentGUI = new StudentGUI();
+                            StudentGUI studentGUI = new StudentGUI((Student) u);
                             break;
                     }
                     dispose();

@@ -22,7 +22,7 @@ public class EducatorGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
         setResizable(false);
-        label_educator_welcome.setText("Welcome "+educator.getName());
+        label_educator_welcome.setText("Welcome " + educator.getName());
         setVisible(true);
         button_logout.addActionListener(e -> {
             dispose();
