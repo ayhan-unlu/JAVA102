@@ -8,6 +8,7 @@ import javax.swing.*;
 
 public class EducatorGUI extends JFrame {
     private JPanel wrapper;
+    private JPanel panel_top;
     private JLabel label_educator_welcome;
     private JButton button_logout;
     private JTabbedPane tab_educator;
@@ -22,7 +23,7 @@ public class EducatorGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
         setResizable(false);
-        label_educator_welcome.setText("Welcome " + educator.getName());
+        label_educator_welcome.setText("Welcome Educator " + educator.getName());
         setVisible(true);
         button_logout.addActionListener(e -> {
             dispose();
