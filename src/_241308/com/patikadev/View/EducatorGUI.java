@@ -10,7 +10,6 @@ public class EducatorGUI extends JFrame {
     private JPanel wrapper;
     private JLabel label_educator_welcome;
     private JButton button_logout;
-    private JTabbedPane tab_educator;
     private final Educator educator;
 
     public EducatorGUI(Educator educator) {
