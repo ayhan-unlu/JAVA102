@@ -7,5 +7,8 @@ public class Educator extends User {
 
     public Educator(int id, String name, String username, String password, String type) {
         super(id, name, username, password, type);
+
+        //EDUCATOR OBJECT DISAPPEAR
+        //CHECKPOINT 241216
     }
 }
