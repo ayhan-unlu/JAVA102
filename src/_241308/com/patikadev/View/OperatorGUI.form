@@ -216,7 +216,6 @@
                     <properties>
                       <model>
                         <item value=""/>
-                        <item value="operator"/>
                         <item value="educator"/>
                         <item value="student"/>
                       </model>

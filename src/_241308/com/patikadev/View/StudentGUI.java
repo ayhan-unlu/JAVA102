@@ -22,7 +22,7 @@ public class StudentGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
         setResizable(false);
-        label_student_welcome.setText("Welcome " + student.getName());
+        label_student_welcome.setText("Welcome Student " + student.getName());
         setVisible(true);
         button_logout.addActionListener(e -> {
             dispose();
