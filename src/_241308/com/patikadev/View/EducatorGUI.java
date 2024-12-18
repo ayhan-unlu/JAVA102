@@ -54,6 +54,7 @@ public class EducatorGUI extends JFrame {
         table_educator_course_list.setModel(model_educator_course_list);
 
         table_educator_course_list.getTableHeader().setReorderingAllowed(false);
+        table_educator_course_list.getColumnModel().getColumn(0).setMaxWidth(30);
 
 
         button_logout.addActionListener(e -> {
