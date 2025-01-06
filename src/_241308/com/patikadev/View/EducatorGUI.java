@@ -2,6 +2,7 @@ package _241308.com.patikadev.View;
 
 import _241308.com.patikadev.Helper.Config;
 import _241308.com.patikadev.Helper.Helper;
+import _241308.com.patikadev.Helper.Item;
 import _241308.com.patikadev.Model.Content;
 import _241308.com.patikadev.Model.Course;
 import _241308.com.patikadev.Model.Educator;
@@ -87,7 +88,12 @@ public class EducatorGUI extends JFrame {
         table_educator_content_list.setModel(model_educator_content_list);
         table_educator_content_list.getColumnModel().getColumn(0).setMaxWidth(75);
         table_educator_content_list.getTableHeader().setReorderingAllowed(false);
+        loadAddContentCourseIdCombobox(educator);
 
+        /*combobox_educator_content_add_course_id.addItem(new Item(1,"1. Item"));
+        combobox_educator_content_add_course_id.addItem(new Item(2,"2. Item"));
+        combobox_educator_content_add_course_id.addItem(new Item(3,"3.Item"));
+        */
 
 
         //##ModelEducatorContentList
@@ -121,6 +127,13 @@ public class EducatorGUI extends JFrame {
             row_educator_content_list[i++]=obj.getQuiz_questions();
             row_educator_content_list[i++]=obj.getCourse().getId();
             model_educator_content_list.addRow(row_educator_content_list);
+        }
+    }
+
+    public void loadAddContentCourseIdCombobox(Educator educator){
+        combobox_educator_content_add_course_id.removeAllItems();
+        for(Course obj:Course.getListByUser(educator.getId())){
+            combobox_educator_content_add_course_id.addItem(new Item(obj.getId(), obj.getName()));
         }
     }
 }
