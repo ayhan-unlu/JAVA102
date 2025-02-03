@@ -31,9 +31,22 @@ public class EducatorGUI extends JFrame {
     private JTextField field_educator_content_add_youtube_link;
     private JLabel label_educator_content_add_quiz_questions;
     private JTextField field_educator_content_add_quiz_questions;
-    private JLabel label_educator_content_add_course_id;
-    private JComboBox combobox_educator_content_add_course_id;
+    private JLabel label_educator_content_add_course_name;
+    private JComboBox combobox_educator_content_add_course_name;
     private JButton button_educator_content_add;
+    private JTextField field_educator_content_update_name;
+    private JLabel label_educator_content_update_name;
+    private JTextField field_educator_content_update_info;
+    private JTextField field_educator_content_update_youtube_link;
+    private JTextField field_educator_content_update_quiz_questions;
+    private JButton button_content_update;
+    private JComboBox combobox_educator_content_update_course_name;
+    private JLabel label_educator_content_update_course_name;
+    private JLabel label_educator_content_update_quiz_questions;
+    private JLabel label_educator_content_update_youtube_link;
+    private JLabel label_educator_content_update_info;
+    private JTextField field_educator_content_update_content_id;
+    private JLabel label_educator_content_update_content_id;
     private final Educator educator;
     private DefaultTableModel model_educator_course_list;
     private Object[] row_educator_course_list;
@@ -80,15 +93,40 @@ public class EducatorGUI extends JFrame {
 
         //ModelEducatorContentList
         model_educator_content_list = new DefaultTableModel();
-        Object [] column_educator_content_list={"id","name","info","youtube_link","quiz_questions","course_id"};
+        Object[] column_educator_content_list = {"id", "name", "info", "youtube_link", "quiz_questions", "course_name"};
         model_educator_content_list.setColumnIdentifiers(column_educator_content_list);
         row_educator_content_list = new Object[column_educator_content_list.length];
 
-        loadContentList();
+        loadContentModel();
         table_educator_content_list.setModel(model_educator_content_list);
         table_educator_content_list.getColumnModel().getColumn(0).setMaxWidth(75);
         table_educator_content_list.getTableHeader().setReorderingAllowed(false);
-        loadAddContentCourseIdCombobox(educator);
+        loadContentCourseNameCombobox(educator);
+
+        table_educator_content_list.getSelectionModel().addListSelectionListener(e -> {
+            //Item contentCourseNameItem=(Item) combobox_educator_content_update_course_name.getSelectedItem();
+            try {//System.out.println("Item Selected");
+                int selected_content_id = Integer.parseInt(table_educator_content_list.getValueAt(table_educator_content_list.getSelectedRow(), 0).toString());
+
+                //System.out.println(selected_content_id);
+                field_educator_content_update_content_id.setText(String.valueOf(selected_content_id));
+                for(Content c:Content.getList()){
+                    int int_selected_content_id=Integer.parseInt(field_educator_content_update_content_id.getText());
+                    System.out.println(selected_content_id);
+                    if(c.getId()==int_selected_content_id){
+                        field_educator_content_update_name.setText(c.getName());
+                        field_educator_content_update_info.setText(c.getInfo());
+                        field_educator_content_update_youtube_link.setText(c.getYoutube_link());
+                        field_educator_content_update_quiz_questions.setText(c.getQuiz_questions());
+
+                    }
+
+                }
+            } catch (Exception exception) {
+            }
+        });
+
+
 
         /*combobox_educator_content_add_course_id.addItem(new Item(1,"1. Item"));
         combobox_educator_content_add_course_id.addItem(new Item(2,"2. Item"));
@@ -105,35 +143,68 @@ public class EducatorGUI extends JFrame {
 
         });
         button_educator_content_add.addActionListener(e -> {
-            if(Helper.isFieldEmpty(field_educator_content_add_name)||Helper.isFieldEmpty(field_educator_content_add_info)||Helper.isFieldEmpty(field_educator_content_add_info)||Helper.isFieldEmpty(field_educator_content_add_youtube_link)||Helper.isFieldEmpty(field_educator_content_add_quiz_questions)){
+            if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {
                 Helper.showMessage("fill");
+            }
+
+        });
+        button_educator_content_add.addActionListener(e -> {
+            Item contentCourseNameItem = (Item) combobox_educator_content_add_course_name.getSelectedItem();
+            if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {
+                Helper.showMessage("fill");
+            } else {
+                if (Content.add(field_educator_content_add_name.getText(), field_educator_content_add_info.getText(), field_educator_content_add_youtube_link.getText(), field_educator_content_add_quiz_questions.getText(), contentCourseNameItem.getValue())) {
+                    Helper.showMessage("success");
+                    loadContentModel();
+                    field_educator_content_add_name.setText(null);
+                    field_educator_content_add_info.setText(null);
+                    field_educator_content_add_youtube_link.setText(null);
+                    field_educator_content_add_quiz_questions.setText(null);
+                } else {
+                    Helper.showMessage("error");
+                }
+
+            }
+
+        });
+        button_content_update.addActionListener(e -> {
+
+            if (Helper.isFieldEmpty(field_educator_content_update_name) || Helper.isFieldEmpty(field_educator_content_update_info) || Helper.isFieldEmpty(field_educator_content_update_youtube_link) || Helper.isFieldEmpty(field_educator_content_update_quiz_questions)) {
+                Helper.showMessage("fill");
+            } else {
+                int selected_content_id = Integer.parseInt(table_educator_content_list.getValueAt(table_educator_content_list.getSelectedRow(), 0).toString());
+                System.out.println(selected_content_id);
+                field_educator_content_update_content_id.setText(String.valueOf(selected_content_id));
+
+
             }
 
         });
     }
 
-    private void loadContentList() {
+    private void loadContentModel() {
 
-        DefaultTableModel clearModel= (DefaultTableModel)table_educator_content_list.getModel();
+        DefaultTableModel clearModel = (DefaultTableModel) table_educator_content_list.getModel();
         clearModel.setRowCount(0);
-        int i=0;
+        int i = 0;
 
-        for(Content obj: Content.getList()){
-            i=0;
-            row_educator_content_list[i++]=obj.getId();
-            row_educator_content_list[i++]=obj.getName();
-            row_educator_content_list[i++]=obj.getInfo();
-            row_educator_content_list[i++]=obj.getYoutube_link();
-            row_educator_content_list[i++]=obj.getQuiz_questions();
-            row_educator_content_list[i++]=obj.getCourse().getId();
+        for (Content obj : Content.getList()) {
+            i = 0;
+            row_educator_content_list[i++] = obj.getId();
+            row_educator_content_list[i++] = obj.getName();
+            row_educator_content_list[i++] = obj.getInfo();
+            row_educator_content_list[i++] = obj.getYoutube_link();
+            row_educator_content_list[i++] = obj.getQuiz_questions();
+            row_educator_content_list[i++] = obj.getCourse().getName();
             model_educator_content_list.addRow(row_educator_content_list);
         }
     }
 
-    public void loadAddContentCourseIdCombobox(Educator educator){
-        combobox_educator_content_add_course_id.removeAllItems();
-        for(Course obj:Course.getListByUser(educator.getId())){
-            combobox_educator_content_add_course_id.addItem(new Item(obj.getId(), obj.getName()));
+    public void loadContentCourseNameCombobox(Educator educator) {
+        combobox_educator_content_add_course_name.removeAllItems();
+        for (Course obj : Course.getListByUser(educator.getId())) {
+            combobox_educator_content_add_course_name.addItem(new Item(obj.getId(), obj.getName()));
         }
     }
+
 }
