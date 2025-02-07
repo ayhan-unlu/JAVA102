@@ -134,12 +134,25 @@ public class Content {
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setString(1, name);
-            pr.setString(2,info);
-            pr.setString(3,youtube_link);
-            pr.setString(4,quiz_questions);
-            pr.setString(5,course_name);
-            pr.setInt(6,id);
+            pr.setString(2, info);
+            pr.setString(3, youtube_link);
+            pr.setString(4, quiz_questions);
+            pr.setString(5, course_name);
+            pr.setInt(6, id);
+            return pr.executeUpdate() != -1;
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+    }
+
+    public static boolean delete(int id) {
+        String query = "DELETE FROM content WHERE id=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -39,7 +39,7 @@ public class EducatorGUI extends JFrame {
     private JTextField field_educator_content_update_info;
     private JTextField field_educator_content_update_youtube_link;
     private JTextField field_educator_content_update_quiz_questions;
-    private JButton button_content_update;
+    private JButton button_educator_content_update;
     private JComboBox combobox_educator_content_update_course_name;
     private JLabel label_educator_content_update_course_name;
     private JLabel label_educator_content_update_quiz_questions;
@@ -47,6 +47,14 @@ public class EducatorGUI extends JFrame {
     private JLabel label_educator_content_update_info;
     private JTextField field_educator_content_update_content_id;
     private JLabel label_educator_content_update_content_id;
+    private JLabel label_educator_content_delete_content_id;
+    private JTextField field_educator_content_delete_content_id;
+    private JButton button_educator_content_delete;
+    private JComboBox combobox_educator_content_search_content_name;
+    private JComboBox combobox_educator_content_search_course_name;
+    private JButton button_educator_content_search;
+    private JLabel label_educator_content_search_content_name;
+    private JLabel label_educator_content_search_course_name;
     private final Educator educator;
     private DefaultTableModel model_educator_course_list;
     private Object[] row_educator_course_list;
@@ -57,7 +65,7 @@ public class EducatorGUI extends JFrame {
         //check point 5
         this.educator = educator;
         add(wrapper);
-        setSize(1000, 500);
+        setSize(1000, 700);
         setLocation(Helper.screenCenterPoint("x", getSize()), Helper.screenCenterPoint("y", getSize()));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
@@ -101,7 +109,10 @@ public class EducatorGUI extends JFrame {
         table_educator_content_list.setModel(model_educator_content_list);
         table_educator_content_list.getColumnModel().getColumn(0).setMaxWidth(75);
         table_educator_content_list.getTableHeader().setReorderingAllowed(false);
-        loadContentCourseNameCombobox(educator);
+        loadContentAddCourseNameCombobox(educator);
+        loadContentUpdateCourseNameCombobox(educator);
+        loadContentSearchContentNameCombobox(educator);
+        loadContentSearchCourseNameCombobox(educator);
 
         table_educator_content_list.getSelectionModel().addListSelectionListener(e -> {
             //Item contentCourseNameItem=(Item) combobox_educator_content_update_course_name.getSelectedItem();
@@ -110,44 +121,39 @@ public class EducatorGUI extends JFrame {
 
                 //System.out.println(selected_content_id);
                 field_educator_content_update_content_id.setText(String.valueOf(selected_content_id));
-                for(Content c:Content.getList()){
-                    int int_selected_content_id=Integer.parseInt(field_educator_content_update_content_id.getText());
+                field_educator_content_delete_content_id.setText(String.valueOf(selected_content_id));
+                for (Content c : Content.getList()) {
+                    int int_selected_content_id = Integer.parseInt(field_educator_content_update_content_id.getText());
                     System.out.println(selected_content_id);
-                    if(c.getId()==int_selected_content_id){
+                    if (c.getId() == int_selected_content_id) {
                         field_educator_content_update_name.setText(c.getName());
                         field_educator_content_update_info.setText(c.getInfo());
                         field_educator_content_update_youtube_link.setText(c.getYoutube_link());
                         field_educator_content_update_quiz_questions.setText(c.getQuiz_questions());
-
                     }
-
                 }
             } catch (Exception exception) {
             }
         });
-
-
 
         /*combobox_educator_content_add_course_id.addItem(new Item(1,"1. Item"));
         combobox_educator_content_add_course_id.addItem(new Item(2,"2. Item"));
         combobox_educator_content_add_course_id.addItem(new Item(3,"3.Item"));
         */
 
-
         //##ModelEducatorContentList
-
 
         button_logout.addActionListener(e -> {
             dispose();
             LoginGUI loginGUI = new LoginGUI();
-
         });
+
         button_educator_content_add.addActionListener(e -> {
             if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {
                 Helper.showMessage("fill");
             }
-
         });
+
         button_educator_content_add.addActionListener(e -> {
             Item contentCourseNameItem = (Item) combobox_educator_content_add_course_name.getSelectedItem();
             if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {
@@ -163,27 +169,51 @@ public class EducatorGUI extends JFrame {
                 } else {
                     Helper.showMessage("error");
                 }
-
             }
-
         });
-        button_content_update.addActionListener(e -> {
 
+        button_educator_content_update.addActionListener(e -> {
             if (Helper.isFieldEmpty(field_educator_content_update_name) || Helper.isFieldEmpty(field_educator_content_update_info) || Helper.isFieldEmpty(field_educator_content_update_youtube_link) || Helper.isFieldEmpty(field_educator_content_update_quiz_questions)) {
                 Helper.showMessage("fill");
             } else {
                 int selected_content_id = Integer.parseInt(table_educator_content_list.getValueAt(table_educator_content_list.getSelectedRow(), 0).toString());
                 System.out.println(selected_content_id);
                 field_educator_content_update_content_id.setText(String.valueOf(selected_content_id));
-
-
+                if (Content.update(selected_content_id, field_educator_content_update_name.getText(), field_educator_content_update_info.getText(), field_educator_content_update_youtube_link.getText(), field_educator_content_update_quiz_questions.getText(), combobox_educator_content_update_course_name.getSelectedItem().toString())) {
+                    Helper.showMessage("success");
+                    loadContentModel();
+                    field_educator_content_update_content_id.setText(null);
+                    field_educator_content_update_name.setText(null);
+                    field_educator_content_update_info.setText(null);
+                    field_educator_content_update_youtube_link.setText(null);
+                    field_educator_content_update_quiz_questions.setText(null);
+                    field_educator_content_delete_content_id.setText(null);
+                } else {
+                    Helper.showMessage("error");
+                }
             }
+        });
 
+        button_educator_content_delete.addActionListener(e -> {
+            if (Helper.isFieldEmpty(field_educator_content_delete_content_id)) {
+                Helper.showMessage("fill");
+            } else {
+                if (Helper.confirm("sure")) {
+                    int selected_content_id = Integer.parseInt(table_educator_content_list.getValueAt(table_educator_content_list.getSelectedRow(), 0).toString());
+                    field_educator_content_delete_content_id.setText(String.valueOf(selected_content_id));
+                    if (Content.delete(selected_content_id)) {
+                        Helper.showMessage("success");
+                        loadContentModel();
+                        field_educator_content_delete_content_id.setText(null);
+                    } else {
+                        Helper.showMessage("error");
+                    }
+                }
+            }
         });
     }
 
     private void loadContentModel() {
-
         DefaultTableModel clearModel = (DefaultTableModel) table_educator_content_list.getModel();
         clearModel.setRowCount(0);
         int i = 0;
@@ -200,11 +230,32 @@ public class EducatorGUI extends JFrame {
         }
     }
 
-    public void loadContentCourseNameCombobox(Educator educator) {
+    public void loadContentAddCourseNameCombobox(Educator educator) {
         combobox_educator_content_add_course_name.removeAllItems();
         for (Course obj : Course.getListByUser(educator.getId())) {
             combobox_educator_content_add_course_name.addItem(new Item(obj.getId(), obj.getName()));
         }
     }
 
+    public void loadContentUpdateCourseNameCombobox(Educator educator) {
+        combobox_educator_content_update_course_name.removeAllItems();
+        for (Course obj : Course.getListByUser(educator.getId())) {
+            combobox_educator_content_update_course_name.addItem(new Item(obj.getId(), obj.getName()));
+        }
+    }
+
+    public void loadContentSearchContentNameCombobox(Educator educator){
+        combobox_educator_content_search_content_name.removeAllItems();
+        for(Content c: Content.getList()){
+            combobox_educator_content_search_content_name.addItem(new Item(c.getId(),c.getName()));
+        }
+    }
+
+    public void loadContentSearchCourseNameCombobox(Educator educator){
+        combobox_educator_content_search_course_name.removeAllItems();
+
+        for(Course obj:Course.getListByUser(educator.getId())){
+            combobox_educator_content_search_course_name.addItem(new Item(obj.getId(),obj.getName()));
+        }
+    }
 }
