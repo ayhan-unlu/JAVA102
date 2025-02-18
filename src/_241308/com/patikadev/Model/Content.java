@@ -183,4 +183,34 @@ public class Content {
         return obj;
     }
 
+    public static String searchQuery(String name, String course_name) {
+        String query = "SELECT * FROM content WHERE name LIKE '%{{name}}%' AND course_name LIKE '%{{course_name}}%'";
+        query = query.replace("{{name}}", name);
+        query = query.replace("{{course_name}}", course_name);
+        System.out.println(query);
+        return query;
+    }
+
+    public static ArrayList<Content> searchContentList(String query) {
+        ArrayList<Content> contentList = new ArrayList<>();
+        Content obj;
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs =st.executeQuery(query);
+            while (rs.next()){
+                obj=new Content();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setInfo(rs.getString("info"));
+                obj.setYoutube_link(rs.getString("youtube_link"));
+                obj.setQuiz_questions(rs.getString("quiz_questions"));
+                obj.setCourse_name(rs.getString("course_name"));
+                contentList.add(obj);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return contentList;
+    }
+
 }

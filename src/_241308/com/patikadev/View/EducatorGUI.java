@@ -9,6 +9,9 @@ import _241308.com.patikadev.Model.Educator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class EducatorGUI extends JFrame {
     private JPanel wrapper;
@@ -211,9 +214,18 @@ public class EducatorGUI extends JFrame {
                 }
             }
         });
+        button_educator_content_search.addActionListener(e -> {
+
+            String name= combobox_educator_content_search_content_name.getSelectedItem().toString();
+            String course_name=combobox_educator_content_search_course_name.getSelectedItem().toString();
+
+            String query= Content.searchQuery(name,course_name);
+
+            loadContentModel(Content.searchContentList(query));
+        });
     }
 
-    private void loadContentModel() {
+    public void loadContentModel() {
         DefaultTableModel clearModel = (DefaultTableModel) table_educator_content_list.getModel();
         clearModel.setRowCount(0);
         int i = 0;
@@ -226,6 +238,22 @@ public class EducatorGUI extends JFrame {
             row_educator_content_list[i++] = obj.getYoutube_link();
             row_educator_content_list[i++] = obj.getQuiz_questions();
             row_educator_content_list[i++] = obj.getCourse().getName();
+            model_educator_content_list.addRow(row_educator_content_list);
+        }
+    }
+
+    public void loadContentModel(ArrayList<Content> list){
+        DefaultTableModel clearModel = (DefaultTableModel) table_educator_content_list.getModel();
+        clearModel.setRowCount(0);
+
+        for(Content obj:list){
+            int i=0;
+            row_educator_content_list[i++]=obj.getId();
+            row_educator_content_list[i++]=obj.getName();
+            row_educator_content_list[i++]=obj.getInfo();
+            row_educator_content_list[i++]=obj.getYoutube_link();
+            row_educator_content_list[i++]=obj.getQuiz_questions();
+            row_educator_content_list[i++]=obj.getCourse_name();
             model_educator_content_list.addRow(row_educator_content_list);
         }
     }
@@ -246,14 +274,18 @@ public class EducatorGUI extends JFrame {
 
     public void loadContentSearchContentNameCombobox(Educator educator){
         combobox_educator_content_search_content_name.removeAllItems();
+
+        combobox_educator_content_search_content_name.addItem(new Item(0,""));
         for(Content c: Content.getList()){
             combobox_educator_content_search_content_name.addItem(new Item(c.getId(),c.getName()));
+
         }
     }
 
     public void loadContentSearchCourseNameCombobox(Educator educator){
         combobox_educator_content_search_course_name.removeAllItems();
 
+        combobox_educator_content_search_course_name.addItem(new Item(0,""));
         for(Course obj:Course.getListByUser(educator.getId())){
             combobox_educator_content_search_course_name.addItem(new Item(obj.getId(),obj.getName()));
         }
