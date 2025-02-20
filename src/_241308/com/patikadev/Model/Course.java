@@ -130,6 +130,26 @@ public class Course {
         return courseList;
     }
 
+    public static ArrayList<Course> getListByPath(int path_id) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        Course obj;
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM course WHERE path_id = "+path_id);
+            while(rs.next()){
+                int id=rs.getInt("id");
+                int user_id=rs.getInt("user_id");
+                int pathid=rs.getInt("path_id");
+                String name=rs.getString("name");
+                String language=rs.getString("language");
+                obj=new Course(id,user_id,pathid,name,language);
+                courseList.add(obj);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }return courseList;
+    }
+
     public static boolean add(int user_id, int path_id, String name, String language) {
         String query = "INSERT INTO course(user_id, path_id, name, language) VALUES (?,?,?,?)";
         try {
@@ -162,13 +182,13 @@ public class Course {
         Course foundCourse = Course.getFetch(id);
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1,user_id);
-            pr.setInt(2,path_id);
-            pr.setString(3,name);
-            pr.setString(4,language);
-            pr.setInt(5,id);
-            return pr.executeUpdate() !=-1;
-        }catch(SQLException throwables){
+            pr.setInt(1, user_id);
+            pr.setInt(2, path_id);
+            pr.setString(3, name);
+            pr.setString(4, language);
+            pr.setInt(5, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return true;
@@ -214,4 +234,5 @@ public class Course {
             throwables.printStackTrace();
         }
         return obj;
-    }}
+    }
+}

@@ -9,6 +9,8 @@ import _241308.com.patikadev.Model.Student;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -38,8 +40,13 @@ public class StudentGUI extends JFrame {
         setVisible(true);
 
         studentJoinPathMenu = new JPopupMenu();
-        JMenuItem joinMenu = new JMenuItem("Join Path");
+        JMenuItem joinMenu = new JMenuItem("Get Course List");
         studentJoinPathMenu.add(joinMenu);
+
+        joinMenu.addActionListener(e -> {
+            int selected_id = Integer.parseInt(table_student_path_list.getValueAt(table_student_path_list.getSelectedRow(), 0).toString());
+            StudentPathJoinGUI joinGUI = new StudentPathJoinGUI(Path.getFetch(selected_id));
+        });
 
         //Model Student Path List
         model_student_path_list = new DefaultTableModel();
@@ -56,10 +63,10 @@ public class StudentGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-           //     System.out.println(e.getPoint().toString());
-                Point point =e.getPoint();
-                int selected_row=table_student_path_list.rowAtPoint(point);
-                table_student_path_list.setRowSelectionInterval(selected_row,selected_row);
+                //     System.out.println(e.getPoint().toString());
+                Point point = e.getPoint();
+                int selected_row = table_student_path_list.rowAtPoint(point);
+                table_student_path_list.setRowSelectionInterval(selected_row, selected_row);
             }
         });
 
