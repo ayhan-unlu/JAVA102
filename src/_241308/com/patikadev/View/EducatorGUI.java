@@ -151,12 +151,12 @@ public class EducatorGUI extends JFrame {
             LoginGUI loginGUI = new LoginGUI();
         });
 
-        button_educator_content_add.addActionListener(e -> {
+    /*    button_educator_content_add.addActionListener(e -> {
             if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {
                 Helper.showMessage("fill");
             }
         });
-
+*/
         button_educator_content_add.addActionListener(e -> {
             Item contentCourseNameItem = (Item) combobox_educator_content_add_course_name.getSelectedItem();
             if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {

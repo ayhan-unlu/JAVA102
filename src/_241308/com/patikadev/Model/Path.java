@@ -39,7 +39,7 @@ public class Path {
         Path obj;
         try {
             Statement st = DBConnector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM patika");
+            ResultSet rs = st.executeQuery("SELECT * FROM path");
             while (rs.next()) {
                 obj = new Path(rs.getInt("id"), rs.getString("name"));
                 pathList.add(obj);
@@ -51,7 +51,7 @@ public class Path {
     }
 
     public static boolean add(String name) {
-        String query = "INSERT INTO patika (name) VALUES (?)";
+        String query = "INSERT INTO path (name) VALUES (?)";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setString(1, name);
@@ -63,7 +63,7 @@ public class Path {
     }
 
     public static boolean update(int id, String name) {
-        String query = "UPDATE patika SET name = ? WHERE id = ?";
+        String query = "UPDATE path SET name = ? WHERE id = ?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setString(1, name);
@@ -77,7 +77,7 @@ public class Path {
 
     public static Path getFetch(int id) {
         Path obj = null;
-        String query = "SELECT * FROM patika WHERE id = ?";
+        String query = "SELECT * FROM path WHERE id = ?";
 
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
@@ -94,7 +94,7 @@ public class Path {
 
     public static Path getFetch(String name) {
         Path obj = null;
-        String query = "SELECT * FROM patika WHERE name=?";
+        String query = "SELECT * FROM path WHERE name=?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setString(1, name);
@@ -109,7 +109,7 @@ public class Path {
     }
 
     public static boolean delete(int id) {
-        String query = "DELETE FROM patika WHERE id = ?";
+        String query = "DELETE FROM path WHERE id = ?";
         ArrayList<Course> courseList = Course.getList();
         for (Course c : courseList) {
             if (c.getPath_id() == id) {

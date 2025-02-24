@@ -111,6 +111,30 @@ public class Content {
         return contentList;
     }
 
+    public static ArrayList<Content> getListByCourseName(String course_name) {
+        ArrayList<Content> contentList = new ArrayList<>();
+        Content obj;
+
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM content WHERE course_name = " + course_name);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String info = rs.getString("info");
+                String youtube_link = rs.getString("youtube_link");
+                String quiz_questions = rs.getString("quiz_questions");
+                String coursename = rs.getString("course_name");
+                obj = new Content(id, name, info, youtube_link, quiz_questions, coursename);
+                contentList.add(obj);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return contentList;
+    }
+
     public static boolean add(String name, String info, String youtube_link, String quiz_questions, String course_name) {
         String query = "INSERT INTO content (name,info,youtube_link,quiz_questions,course_name) VALUES (?,?,?,?,?)";
 
@@ -196,9 +220,9 @@ public class Content {
         Content obj;
         try {
             Statement st = DBConnector.getInstance().createStatement();
-            ResultSet rs =st.executeQuery(query);
-            while (rs.next()){
-                obj=new Content();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new Content();
                 obj.setId(rs.getInt("id"));
                 obj.setName(rs.getString("name"));
                 obj.setInfo(rs.getString("info"));

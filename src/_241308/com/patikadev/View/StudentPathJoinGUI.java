@@ -7,6 +7,8 @@ import _241308.com.patikadev.Model.Path;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StudentPathJoinGUI extends JFrame {
     private JPanel wrapper;
