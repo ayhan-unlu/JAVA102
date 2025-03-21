@@ -30,3 +30,7 @@ GROUP BY customer_id
 ORDER BY COUNT(payment_id) DESC;
 */
 
+SELECT customer.customer_id, customer.first_name, customer.last_name, COUNT(payment.payment_id) FROM payment
+INNER JOIN customer ON customer.customer_id = payment.customer_id
+GROUP BY customer.customer_id, payment.customer_id
+ORDER BY COUNT(payment.payment_id) DESC;
