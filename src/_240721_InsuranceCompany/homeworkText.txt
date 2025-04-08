@@ -10,7 +10,7 @@ Sigorta firması için bir yazılım yaptığınızı düşünün. Sigorta firma
 isim (String),
 
 
-soyisim (String),
+soyisim (String),*//*
 
 
 email (String),
