@@ -1,11 +1,11 @@
 package _250407_Insurance_Company_Project.Account;
 
-import _240721_InsuranceCompany.Address;
+import _250407_Insurance_Company_Project.Address.Address;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class User {
+public class User extends Account{
     String firstName;
     String lastName;
     String email;
@@ -15,7 +15,7 @@ public class User {
     ArrayList<Address> addressList;
     Date lastLoginDate;
 
-    User(String firstName, String lastName, String email, String password, String occupation, int age, ArrayList<Address> addressList, Date lastLoginDate){
+    User(String firstName, String lastName, String email, String password, String occupation, int age, ArrayList<Address> addressList, Date lastLoginDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -26,57 +26,59 @@ public class User {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName (String firstName){
-        this.firstName=firstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName){
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
-    public void setEmail(String email){
+
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getOccupation(){
+    public String getOccupation() {
         return occupation;
     }
-    public void setOccupation(String occupation){
+
+    public void setOccupation(String occupation) {
         this.occupation = occupation;
     }
 
-    public int getAge(){
+    public int getAge() {
         return age;
     }
 
-    public void setAge(int age){
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public ArrayList<Address> getAddressList(){
+    public ArrayList<Address> getAddressList() {
         return addressList;
     }
 
-    public void setAddressList(ArrayList<Address> addressList){
+    public void setAddressList(ArrayList<Address> addressList) {
         this.addressList = addressList;
     }
 
-    public Date getLastLoginDate(){
+    public Date getLastLoginDate() {
         return lastLoginDate;
     }
 
-    public void setLastLoginDate(Date lastLoginDate){
+    public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
     }
 }

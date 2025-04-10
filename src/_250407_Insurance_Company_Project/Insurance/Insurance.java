@@ -43,6 +43,6 @@ public abstract class Insurance {
         this.endDate = endDate;
     }
 
-    abstract int calculate();
+    abstract double calculate();
 
 }
