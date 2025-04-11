@@ -20,7 +20,48 @@ public abstract class Account {
         this.insuranceList = insuranceList;
     }
 
-    public Account(){}
+    public AuthenticationStatus getAuthenticationStatus() {
+        return authenticationStatus;
+    }
+
+    public void setAuthenticationStatus(AuthenticationStatus authenticationStatus) {
+        this.authenticationStatus = authenticationStatus;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ArrayList<Insurance> getInsuranceList(){
+        return insuranceList;
+    }
+
+    public void setInsuranceList(ArrayList<Insurance> insuranceList){
+        this.insuranceList = insuranceList;
+    }
+
+    public String getInputEmail(){
+        return inputEmail;
+    }
+
+    public void setInputEmail(String inputEmail){
+        this.inputEmail=inputEmail;
+    }
+
+    public String getInputPassword(){
+        return inputPassword;
+    }
+
+    public void setInputPassword(String inputPassword){
+        this.inputPassword = inputPassword;
+    }
+
+    public Account() {
+    }
 
     public AuthenticationStatus login() {
         Scanner scanner = new Scanner(System.in);
@@ -31,15 +72,14 @@ public abstract class Account {
         inputPassword = scanner.nextLine();
 
 
-
         scanner.close();
-        if((inputEmail.equals("a"))&&(inputPassword.equals("a"))){
-            System.out.println(inputEmail+", "+inputPassword+" <--> a,a");
+        if ((inputEmail.equals("a")) && (inputPassword.equals("a"))) {
+            System.out.println(inputEmail + ", " + inputPassword + " <--> a,a");
 
-            authenticationStatus=AuthenticationStatus.SUCCESS;
-        }else{
-            System.out.println(inputEmail+", "+inputPassword+" <-X-> a,a");
-            authenticationStatus=AuthenticationStatus.FAIL;
+            authenticationStatus = AuthenticationStatus.SUCCESS;
+        } else {
+            System.out.println(inputEmail + ", " + inputPassword + " <-X-> a,a");
+            authenticationStatus = AuthenticationStatus.FAIL;
         }
         System.out.println(authenticationStatus);
 
@@ -48,9 +88,9 @@ public abstract class Account {
 
     TreeSet<Account> accountTreeSet = new TreeSet<Account>();
 
-    final void showUserInfo(User user){
+    final void showUserInfo(User user) {
         System.out.println("User Information");
-        System.out.println(user.getFirstName()+" "+user.getLastName()+" ");
+        System.out.println(user.getFirstName() + " " + user.getLastName() + " ");
     }
 
 

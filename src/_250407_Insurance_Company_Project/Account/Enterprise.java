@@ -1,4 +1,4 @@
 package _250407_Insurance_Company_Project.Account;
 
-public class Enterprise {
+public class Enterprise extends Account{
 }

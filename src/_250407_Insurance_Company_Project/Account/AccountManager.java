@@ -21,7 +21,8 @@ public class AccountManager {
         //System.out.println(authenticationStatus);
 
         //return authenticationStatus;
-        Account account = new Account();
+        Account account = new Account() {
+        };
 
         return account;
     }
