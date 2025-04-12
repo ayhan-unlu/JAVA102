@@ -19,6 +19,10 @@ public class Main {
         accountManager.login(inputScanner.scanLoginInfo());
     }
 
+    public static void runFromMac(){
+
+    }
+
     public static void run() {
         int menuInput;
         boolean condition = true;
