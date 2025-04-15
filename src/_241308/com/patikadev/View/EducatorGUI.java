@@ -173,9 +173,10 @@ public class EducatorGUI extends JFrame {
                     Helper.showMessage("error");
                 }
             }
+            loadContentSearchContentNameCombobox(educator);
         });
 
-        button_educator_content_update.addActionListener(e -> {
+        button_educator_content_update.addActionListener(   e -> {
             if (Helper.isFieldEmpty(field_educator_content_update_name) || Helper.isFieldEmpty(field_educator_content_update_info) || Helper.isFieldEmpty(field_educator_content_update_youtube_link) || Helper.isFieldEmpty(field_educator_content_update_quiz_questions)) {
                 Helper.showMessage("fill");
             } else {

@@ -22,6 +22,7 @@ public class StudentCourseEnrollGUI extends JFrame{
     private DefaultTableModel model_student_course_enroll_content_list;
     private Object[] row_student_course_enroll_content_list;
     private Course course;
+    private Content content;
 
     public StudentCourseEnrollGUI(Course course){
         this.course=course;

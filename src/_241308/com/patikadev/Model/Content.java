@@ -117,7 +117,8 @@ public class Content {
 
         try {
             Statement st = DBConnector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM content WHERE course_name = " + course_name);
+            ResultSet rs = st.executeQuery("SELECT * FROM content WHERE course_name = "+course_name);
+
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
