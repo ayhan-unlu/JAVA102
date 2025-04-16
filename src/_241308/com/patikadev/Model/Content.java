@@ -30,6 +30,7 @@ public class Content {
         this.youtube_link = youtube_link;
         this.quiz_questions = quiz_questions;
         this.course = Course.getFetch(course_name);
+        this.course_name = course_name;
     }
 
     public int getId() {
@@ -111,13 +112,15 @@ public class Content {
         return contentList;
     }
 
-    public static ArrayList<Content> getListByCourseName(String course_name) {
+    public static ArrayList<Content> getListByCourse(Course course) {
         ArrayList<Content> contentList = new ArrayList<>();
         Content obj;
+        String query = "SELECT * FROM content WHERE course_name = ?";
 
         try {
-            Statement st = DBConnector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM content WHERE course_name = "+course_name);
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1,course.getName());
+            ResultSet rs = pr.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -125,8 +128,8 @@ public class Content {
                 String info = rs.getString("info");
                 String youtube_link = rs.getString("youtube_link");
                 String quiz_questions = rs.getString("quiz_questions");
-                String coursename = rs.getString("course_name");
-                obj = new Content(id, name, info, youtube_link, quiz_questions, coursename);
+                String course_name = rs.getString("course_name");
+                obj = new Content(id, name, info, youtube_link, quiz_questions, course_name);
                 contentList.add(obj);
             }
 
@@ -199,7 +202,6 @@ public class Content {
                 obj.setInfo(rs.getString("info"));
                 obj.setYoutube_link(rs.getString("youtube_link"));
                 obj.setQuiz_questions(rs.getString("quiz_questions"));
-
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -207,6 +209,28 @@ public class Content {
 
         return obj;
     }
+
+ public static Content getFetch(String course_name){
+        Content obj =null;
+        String query = "SELECT * FROM content WHERE course_name=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1,course_name);
+            ResultSet rs = pr.executeQuery();
+            if(rs.next()){
+                obj = new Content();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setInfo(rs.getString("info"));
+                obj.setYoutube_link(rs.getString("youtube_link"));
+                obj.setQuiz_questions(rs.getString("quiz_questions"));
+                obj.setCourse_name(rs.getString("course_name"));
+            }
+        }catch(SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return obj;
+ }
 
     public static String searchQuery(String name, String course_name) {
         String query = "SELECT * FROM content WHERE name LIKE '%{{name}}%' AND course_name LIKE '%{{course_name}}%'";

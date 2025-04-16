@@ -79,6 +79,7 @@ public class OperatorGUI extends JFrame {
     private JButton button_course_delete;
     private JLabel label_course_delete_course_id;
     private JTextField field_course_delete_course_id;
+    private JTabbedPane panel_content_list;
     private DefaultTableModel model_user_list;
     private Object[] row_user_list;
     private DefaultTableModel model_path_list;

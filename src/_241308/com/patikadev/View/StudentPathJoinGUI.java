@@ -44,15 +44,12 @@ public class StudentPathJoinGUI extends JFrame {
         table_student_join_course_list.setModel(model_student_join_course_list);
 
 
-        button_student_join_path.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selected_course_id = (Course.getFetch((table_student_join_course_list.getValueAt(table_student_join_course_list.getSelectedRow(),3).toString()))).getId();
-                System.out.println(selected_course_id);
-                System.out.println(Course.getFetch(selected_course_id).getName());
-                StudentCourseEnrollGUI studentCourseEnrollGUI = new StudentCourseEnrollGUI(Course.getFetch(selected_course_id));
+        button_student_join_path.addActionListener(e -> {
+            int selected_course_id = (Course.getFetch((table_student_join_course_list.getValueAt(table_student_join_course_list.getSelectedRow(),3).toString()))).getId();
+            System.out.println(selected_course_id);
+            System.out.println(Course.getFetch(selected_course_id).getName());
+            StudentCourseEnrollGUI studentCourseEnrollGUI = new StudentCourseEnrollGUI(Course.getFetch(selected_course_id));
 
-            }
         });
     }
     private void loadStudentJoinCourseModel(int path_id){
