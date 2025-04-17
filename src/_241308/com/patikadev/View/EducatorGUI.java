@@ -65,7 +65,7 @@ public class EducatorGUI extends JFrame {
     private Object[] row_educator_content_list;
 
     public EducatorGUI(Educator educator) {
-        //check point 5
+
         this.educator = educator;
         add(wrapper);
         setSize(1000, 700);
@@ -139,11 +139,6 @@ public class EducatorGUI extends JFrame {
             }
         });
 
-        /*combobox_educator_content_add_course_id.addItem(new Item(1,"1. Item"));
-        combobox_educator_content_add_course_id.addItem(new Item(2,"2. Item"));
-        combobox_educator_content_add_course_id.addItem(new Item(3,"3.Item"));
-        */
-
         //##ModelEducatorContentList
 
         button_logout.addActionListener(e -> {
@@ -151,12 +146,6 @@ public class EducatorGUI extends JFrame {
             LoginGUI loginGUI = new LoginGUI();
         });
 
-    /*    button_educator_content_add.addActionListener(e -> {
-            if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {
-                Helper.showMessage("fill");
-            }
-        });
-*/
         button_educator_content_add.addActionListener(e -> {
             Item contentCourseNameItem = (Item) combobox_educator_content_add_course_name.getSelectedItem();
             if (Helper.isFieldEmpty(field_educator_content_add_name) || Helper.isFieldEmpty(field_educator_content_add_info) || Helper.isFieldEmpty(field_educator_content_add_youtube_link) || Helper.isFieldEmpty(field_educator_content_add_quiz_questions)) {
@@ -209,12 +198,18 @@ public class EducatorGUI extends JFrame {
                         Helper.showMessage("success");
                         loadContentModel();
                         field_educator_content_delete_content_id.setText(null);
+                        field_educator_content_update_content_id.setText(null);
+                        field_educator_content_update_name.setText(null);
+                        field_educator_content_update_info.setText(null);
+                        field_educator_content_update_youtube_link.setText(null);
+                        field_educator_content_update_quiz_questions.setText(null);
                     } else {
                         Helper.showMessage("error");
                     }
                 }
             }
         });
+
         button_educator_content_search.addActionListener(e -> {
 
             String name= combobox_educator_content_search_content_name.getSelectedItem().toString();
@@ -229,7 +224,7 @@ public class EducatorGUI extends JFrame {
     public void loadContentModel() {
         DefaultTableModel clearModel = (DefaultTableModel) table_educator_content_list.getModel();
         clearModel.setRowCount(0);
-        int i = 0;
+        int i ;
 
         for (Content obj : Content.getList()) {
             i = 0;

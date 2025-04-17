@@ -3,10 +3,7 @@ package _241308.com.patikadev.View;
 //import _241308.com.patikadev.Helper.Config;
 
 import _241308.com.patikadev.Helper.*;
-import _241308.com.patikadev.Model.Course;
-import _241308.com.patikadev.Model.Operator;
-import _241308.com.patikadev.Model.Path;
-import _241308.com.patikadev.Model.User;
+import _241308.com.patikadev.Model.*;
 //import _241308.com.patikadev.Helper.Helper;
 
 import javax.swing.*;
@@ -79,7 +76,42 @@ public class OperatorGUI extends JFrame {
     private JButton button_course_delete;
     private JLabel label_course_delete_course_id;
     private JTextField field_course_delete_course_id;
-    private JTabbedPane panel_content_list;
+    private JPanel panel_content_list;
+    private JLabel label_operator_content_list_content_name;
+    private JLabel label_operator_content_list_course_name;
+    private JComboBox combobox_operator_content_search_content_name;
+    private JComboBox combobox_operator_content_search_course_name;
+    private JButton button_operator_content_search;
+    private JScrollPane scroll_operator_content_list;
+    private JTable table_operator_content_list;
+    private JPanel panel_operator_content_add;
+    private JTextField field_operator_content_add_content_name;
+    private JTextField field_operator_content_add_info;
+    private JTextField field_operator_content_add_youtube_link;
+    private JTextField field_operator_content_add_quiz_questions;
+    private JButton button_operator_content_add;
+    private JTextField field_operator_content_update_content_name;
+    private JTextField field_operator_content_update_info;
+    private JTextField field_operator_content_update_youtube_link;
+    private JTextField field_operator_content_update_quiz_questions;
+    private JTextField field_operator_content_update_content_id;
+    private JButton button_operator_content_update;
+    private JTextField field_operator_content_delete_content_id;
+    private JButton button_operator_content_delete;
+    private JLabel label_operator_content_add_content_name;
+    private JLabel label_operator_content_update_content_name;
+    private JComboBox combobox_operator_content_add_course_name;
+    private JComboBox combobox_operator_content_update_course_name;
+    private JLabel label_operator_content_add_info;
+    private JLabel label_operator_content_update_info;
+    private JLabel label_operator_content_update_course_name;
+    private JLabel label__operator_content_update_quiz_questions;
+    private JLabel label__operator_content_update_youtube_link;
+    private JLabel label__operator_content_add_youtube_link;
+    private JLabel label__operator_content_add_quiz_questions;
+    private JLabel label__operator_content_update_content_id;
+    private JLabel label__operator_content_delete_content_id;
+    private JLabel label_operator_content_add_course_name;
     private DefaultTableModel model_user_list;
     private Object[] row_user_list;
     private DefaultTableModel model_path_list;
@@ -87,6 +119,8 @@ public class OperatorGUI extends JFrame {
     private JPopupMenu pathMenu;
     private DefaultTableModel model_course_list;
     private Object[] row_course_list;
+    private DefaultTableModel model_content_list;
+    private Object[] row_content_list;
 
 
     public final Operator operator;
@@ -94,7 +128,7 @@ public class OperatorGUI extends JFrame {
     public OperatorGUI(Operator operator) {
         this.operator = operator;
         add(wrapper);
-        setSize(1000, 500);
+        setSize(1000, 700);
         int x = Helper.screenCenterPoint("x", getSize());
         int y = Helper.screenCenterPoint("y", getSize());
         setLocation(x, y);
@@ -277,6 +311,54 @@ public class OperatorGUI extends JFrame {
 //        loadPathCombobox();
         //      loadEducatorCombobox();
         // ## CourseList
+
+        //Content List
+
+        model_content_list = new DefaultTableModel();
+        Object [] column_operator_content_list = {"id", "name", "info", "youtube_link", "quiz_questions", "course_name"};
+        model_content_list.setColumnIdentifiers(column_operator_content_list);
+        row_content_list = new Object[column_operator_content_list.length];
+
+        loadContentModel();
+        table_operator_content_list.setModel(model_content_list);
+        table_operator_content_list.getColumnModel().getColumn(0).setMaxWidth(75);
+        table_operator_content_list.getTableHeader().setReorderingAllowed(false);
+
+        loadContentSearchContentNameCombobox();
+        loadContentSearchCourseNameCombobox();
+        loadContentAddCourseNameCombobox();
+        loadContentUpdateCourseNameCombobox();
+
+        table_operator_content_list.getSelectionModel().addListSelectionListener(e -> {
+
+            try
+            {int selected_content_id=Integer.parseInt(table_operator_content_list.getValueAt(table_operator_content_list.getSelectedRow(),0).toString());
+            field_operator_content_update_content_id.setText(String.valueOf(selected_content_id));
+            field_operator_content_delete_content_id.setText(String.valueOf(selected_content_id));
+            for(Content obj:Content.getList()){
+                int int_selected_content_id = Integer.parseInt(field_operator_content_update_content_id.getText());
+                if(obj.getId()==int_selected_content_id){
+                    field_operator_content_update_content_name.setText(obj.getName());
+                    field_operator_content_update_info.setText(obj.getInfo());
+                    field_operator_content_update_youtube_link.setText(obj.getYoutube_link());
+                    field_operator_content_update_quiz_questions.setText(obj.getQuiz_questions());
+                }
+            }}catch(Exception eException){
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+        //# Content List
+
+
         button_user_add.addActionListener(e -> {
 //            if (field_user_name.getText().length() == 0 || field_user_username.getText().isEmpty() || field_user_password.getText().length() == 0 || field_user_password.getText().length() == 0) {
             if (Helper.isFieldEmpty(field_user_name) || Helper.isFieldEmpty(field_user_username) || Helper.isFieldEmpty(field_user_password)/*||Helper.isFieldEmpty(field_user_type)*/) {
@@ -404,7 +486,116 @@ public class OperatorGUI extends JFrame {
                 }
             }
         });
+        button_operator_content_search.addActionListener(e -> {
+            String name = combobox_operator_content_search_content_name.getSelectedItem().toString();
+            String course_name=combobox_operator_content_search_course_name.getSelectedItem().toString();
+
+            String query = Content.searchQuery(name,course_name);
+            loadContentModel(Content.searchContentList(query));
+
+        });
+        button_operator_content_add.addActionListener(e -> {
+//            Item contentCourseNameItem = (Item) combobox_operator_content_add_course_name.getSelectedItem();
+            if(Helper.isFieldEmpty(field_operator_content_add_content_name)||Helper.isFieldEmpty(field_operator_content_add_info)||Helper.isFieldEmpty(field_operator_content_add_youtube_link)||Helper.isFieldEmpty(field_operator_content_add_quiz_questions)){
+                Helper.showMessage("fill");
+            }else{
+                if(Content.add(field_operator_content_add_content_name.getText(),field_operator_content_add_info.getText(),field_operator_content_add_youtube_link.getText(),field_operator_content_add_quiz_questions.getText(),combobox_operator_content_add_course_name.getSelectedItem().toString())){
+                    Helper.showMessage("success");
+                    loadContentModel();
+                    field_operator_content_add_content_name.setText(null);
+                    field_operator_content_add_info.setText(null);
+                    field_operator_content_add_youtube_link.setText(null);
+                    field_operator_content_add_quiz_questions.setText(null);
+                }else{
+                    Helper.showMessage("error");
+                }
+            }
+
+            loadContentSearchContentNameCombobox();
+
+        });
+        button_operator_content_update.addActionListener(e -> {
+            if(Helper.isFieldEmpty(field_operator_content_update_content_name)||Helper.isFieldEmpty(field_operator_content_update_info)||Helper.isFieldEmpty(field_operator_content_update_youtube_link)||Helper.isFieldEmpty(field_operator_content_update_quiz_questions)){
+                Helper.showMessage("fill");
+            }else{
+                int selected_content_id = Integer.parseInt(table_operator_content_list.getValueAt(table_operator_content_list.getSelectedRow(),0).toString());
+                field_operator_content_update_content_id.setText(String.valueOf(selected_content_id));
+                if(Content.update(selected_content_id,field_operator_content_update_content_name.getText(),field_operator_content_update_info.getText(),field_operator_content_update_youtube_link.getText(),field_operator_content_update_quiz_questions.getText(),combobox_operator_content_update_course_name.getSelectedItem().toString())){
+                    Helper.showMessage("success");
+                    loadContentModel();
+                    field_operator_content_update_content_id.setText(null);
+                    field_operator_content_update_content_name.setText(null);
+                    field_operator_content_update_info.setText(null);
+                    field_operator_content_update_youtube_link.setText(null);
+                    field_operator_content_update_quiz_questions.setText(null);
+                    field_operator_content_delete_content_id.setText(null);
+                }else{
+                    Helper.showMessage("error");
+                }
+            }
+
+        });
+        button_operator_content_delete.addActionListener(e -> {
+            if(Helper.isFieldEmpty(field_operator_content_delete_content_id)){
+                Helper.showMessage("fill");
+            }else{
+                if(Helper.confirm("sure")){
+                    int selected_content_id = Integer.parseInt(table_operator_content_list.getValueAt(table_operator_content_list.getSelectedRow(),0).toString());
+                    field_operator_content_delete_content_id.setText(String.valueOf(selected_content_id));
+                    if(Content.delete(selected_content_id)){
+                        Helper.showMessage("success");
+                        loadContentModel();
+                        field_operator_content_delete_content_id.setText(null);
+                        field_operator_content_update_content_id.setText(null);
+                        field_operator_content_update_content_name.setText(null);
+                        field_operator_content_update_info.setText(null);
+                        field_operator_content_update_youtube_link.setText(null);
+                        field_operator_content_update_quiz_questions.setText(null);
+                    }else{
+                        Helper.showMessage("error");
+                    }
+                }
+            }
+
+        });
     }
+
+
+
+    private void loadContentModel(){
+        DefaultTableModel clearModel = (DefaultTableModel) table_operator_content_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+        for(Content obj : Content.getList()){
+            i=0;
+            row_content_list[i++] = obj.getId();
+            row_content_list[i++] = obj.getName();
+            row_content_list[i++] = obj.getInfo();
+            row_content_list[i++] = obj.getYoutube_link();
+            row_content_list[i++] = obj.getQuiz_questions();
+            row_content_list[i++] = obj.getCourse_name();
+            model_content_list.addRow(row_content_list);
+        }
+    }
+
+    public void loadContentModel(ArrayList<Content> list){
+        DefaultTableModel clearModel = (DefaultTableModel) table_operator_content_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+        for (Content obj : list){
+            i=0;
+            row_content_list[i++] = obj.getId();
+            row_content_list[i++]=obj.getName();
+            row_content_list[i++]=obj.getInfo();
+            row_content_list[i++]=obj.getYoutube_link();
+            row_content_list[i++]=obj.getQuiz_questions();
+            row_content_list[i++]=obj.getCourse_name();
+            model_content_list.addRow(row_content_list);
+        }
+    }
+
 
     private void loadCourseModel() {
         DefaultTableModel clearModel = (DefaultTableModel) table_course_list.getModel();
@@ -503,30 +694,39 @@ public class OperatorGUI extends JFrame {
         }
     }
 
-    /*
-        public void loadUserModel(ArrayList<User> list) {
-            DefaultTableModel clearModel = (DefaultTableModel) table_userlist.getModel();
-            clearModel.setRowCount(0);
-            for (User obj : list) {
-                int i = 0;
-                row_userList[i++] = obj.getId();
-                row_userList[i++] = obj.getName();
-                row_userList[i++] = obj.getUsername();
-                row_userList[i++] = obj.getPassword();
-                row_userList[i++] = obj.getType();
-                model_userList.addRow(row_userList);
-            }
+    public void loadContentSearchContentNameCombobox(){
+        combobox_operator_content_search_content_name.removeAllItems();
+        combobox_operator_content_search_content_name.addItem(new Item(0,""));
+
+        for(Content obj:Content.getList()){
+            combobox_operator_content_search_content_name.addItem(new Item(obj.getId(),obj.getName()));
         }
-    */
-/*    public static void main(String[] args) {
-        Helper.setLayout();
-        Operator op = new Operator();
-        op.setId(1);
-        op.setName("Mahmut Mustafa Çetindağ");
-        op.setUsername("mustafa");
-        op.setPassword("1234");
-        op.setType("operator");
-//        DBConnector.getInstance();
-        OperatorGUI opGUI = new OperatorGUI(op);
-    }*/
+    }
+
+    public void loadContentSearchCourseNameCombobox(){
+        combobox_operator_content_search_course_name.removeAllItems();
+        combobox_operator_content_search_course_name.addItem(new Item(0,""));
+
+        for(Course obj:Course.getList()){
+            combobox_operator_content_search_course_name.addItem(new Item(obj.getId(),obj.getName()));
+        }
+    }
+
+    public void loadContentAddCourseNameCombobox(){
+        combobox_operator_content_add_course_name.removeAllItems();
+        combobox_operator_content_add_course_name.addItem(new Item(0,""));
+
+        for(Course obj:Course.getList()){
+            combobox_operator_content_add_course_name.addItem(new Item(obj.getId(),obj.getName()));
+        }
+    }
+
+    public void loadContentUpdateCourseNameCombobox(){
+        combobox_operator_content_update_course_name.removeAllItems();
+        combobox_operator_content_update_course_name.addItem(new Item(0,""));
+
+        for(Course obj: Course.getList()){
+            combobox_operator_content_update_course_name.addItem(new Item(obj.getId(), obj.getName()));
+        }
+    }
 }
