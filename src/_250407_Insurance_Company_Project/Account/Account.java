@@ -60,7 +60,7 @@ public abstract class Account {
         this.inputPassword = inputPassword;
     }
 
-    public Account() {
+   public Account() {
     }
 
     public AuthenticationStatus login() {
@@ -92,6 +92,4 @@ public abstract class Account {
         System.out.println("User Information");
         System.out.println(user.getFirstName() + " " + user.getLastName() + " ");
     }
-
-
 }

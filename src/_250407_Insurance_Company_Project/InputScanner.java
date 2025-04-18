@@ -1,4 +1,4 @@
-package _250407_Insurance_Company_Project.Account;
+package _250407_Insurance_Company_Project;
 
 import _250407_Insurance_Company_Project.Insurance.Insurance;
 
