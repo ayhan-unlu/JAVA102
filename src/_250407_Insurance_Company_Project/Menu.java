@@ -19,8 +19,8 @@ public class Menu {
                 switch (menuInput) {
                     case 1 -> {
                         System.out.println("LOGIN BEGINS");
-                        // logInMenu();
-                        Menu.run1();
+                        logInMenu();
+                        //Menu.run1();
                     }
                     case 2 -> {
                         System.out.println("CREATE ACCOUNT BEGINS");
@@ -41,7 +41,7 @@ public class Menu {
 
         InputScanner inputScanner = new InputScanner();
         AccountManager accountManager = new AccountManager();
-        accountManager.login(inputScanner.scanLoginInfo());
+      //  accountManager.login(inputScanner.scanLoginInfo());
     }
 
     public static void runFromMac(){

@@ -1,20 +1,63 @@
 package _250407_Insurance_Company_Project.Address;
 
-public class HomeAddress implements Address {
-    String homeAddress;
+public abstract class HomeAddress implements Address {
 
-    HomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress;
+    int id;
+    String address;
+    String city;
+    String zipCode;
+    String type;
 
+    public HomeAddress (int id, String address, String city, String zipCode, String type){
+        this.id=id;
+        this.address=address;
+        this.city=city;
+        this.zipCode=zipCode;
+        this.type=type;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id=id;
     }
 
     public String getAddress(){
-        return homeAddress;
+        return address;
     }
 
-    public void setAddress(String homeAddress){
-        this.homeAddress = homeAddress;
+    public void setAddress(String address){
+        this.address=address;
     }
+
+    public String getCity(){
+        return city;
+    }
+
+    public void setCity(String city){
+        this.city = city;
+    }
+
+    public String getZipCode(){
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode){
+        this.zipCode = zipCode;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
+
+
+
 
 
 }
