@@ -1,2 +1,2 @@
 Patika.dev 
-Java 102 Project
+Java 102 Project Insurance Company

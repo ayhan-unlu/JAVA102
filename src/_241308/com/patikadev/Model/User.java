@@ -269,7 +269,6 @@ public class User {
     public static boolean update(int id, String name, String username, String password, String type) {
         String query = "UPDATE user SET name=?, username=?, password=?, type=? WHERE id=?";
         User findUser = User.getFetch(username);
-//        if (findUser !=null&&!findUser.getUsername().equals(username)){
         if (findUser != null && findUser.getId() != id) {
             Helper.showMessage("The username already exists. Please choose another one.");
             return false;
