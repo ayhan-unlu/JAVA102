@@ -18,6 +18,16 @@ public class Hotel {
     private String email;
     private String phone;
     private String star;
+    private String facility_feature;
+    private ArrayList<Boolean> facilityFeatureList;
+    private boolean freeParking;
+    private boolean freeWifi;
+    private boolean pool;
+    private boolean fitnessCenter;
+    private boolean hotelConcierge;
+    private boolean spa;
+    private boolean roomService;
+
 
     public Hotel() {
     }
@@ -31,6 +41,7 @@ public class Hotel {
         this.email = email;
         this.phone = phone;
         this.star = star;
+        //this.facilityFeatureList = facilityFeatureList;
     }
 
     public static ArrayList<Hotel> getList() {
@@ -53,6 +64,7 @@ public class Hotel {
                 obj.setEmail(rs.getString("email"));
                 obj.setPhone(rs.getString("phone"));
                 obj.setStar(rs.getString("star"));
+                obj.setFacility_feature(rs.getString("facility_feature"));
                 hotelList.add(obj);
             }
         } catch (SQLException e) {
@@ -88,9 +100,41 @@ public class Hotel {
         return obj;
     }
 
-    public static boolean add(String name, String city, String region, String address, String email, String phone, String star) {
+    public static Hotel getFetch(int id) {
 
-        String query = "INSERT INTO hotel(name, city, region, address, email, phone, star) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "SELECT * FROM hotel WHERE id = ?";
+
+
+        Hotel obj = null;
+        try {
+
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, id);
+            ResultSet rs = pr.executeQuery();
+
+            if (rs.next()) {
+                int fetchId = rs.getInt("id");
+                String name = rs.getString("name");
+                String city = rs.getString("city");
+                String region = rs.getString("region");
+                String address = rs.getString("address");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String star = rs.getString("star");
+                String facility_feature = rs.getString("facility_feature");
+                obj = new Hotel(id, name, city, region, address, email, phone, star);
+
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return obj;
+    }
+
+    public static boolean add(String name, String city, String region, String address, String email, String phone, String star, String facility_feature) {
+
+        String query = "INSERT INTO hotel(name, city, region, address, email, phone, star, facility_feature) VALUES(?, ?, ?, ?, ?, ?, ?,?)";
         Hotel foundHotel = Hotel.getFetch(name);
 
         if (foundHotel != null) {
@@ -106,6 +150,7 @@ public class Hotel {
             pr.setString(5, email);
             pr.setString(6, phone);
             pr.setString(7, star);
+            pr.setString(8, facility_feature);
 
             int response = pr.executeUpdate();
             if (response == -1) {
@@ -122,12 +167,54 @@ public class Hotel {
         String query = "DELETE FROM hotel WHERE id = ?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1,id);
-            return pr.executeUpdate() !=-1;
-        }catch(SQLException e){
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return true;
+    }
+
+    public static boolean update(int id, String name, String city, String region, String address, String email, String phone, String star/*, String facility_feature*/) {
+        //    String query = "UPDATE hotel SET name = ?, city = ?, region = ?, address = ?, email = ?, phone = ?, star = ?, facility_feature = ? WHERE id =?";
+        String query = "UPDATE hotel SET name = ?, city = ?, region = ?, address = ?, email = ?, phone = ?, star = ? WHERE id =?";
+
+        Hotel foundHotel = Hotel.getFetch(name);
+        if ((foundHotel != null) && (foundHotel.getId() != id)) {
+            Helper.showMessage("exist");
+            return false;
+        }
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1, name);
+            pr.setString(2, city);
+            ;
+            pr.setString(3, region);
+            pr.setString(4, address);
+            pr.setString(5, email);
+            pr.setString(6, phone);
+            pr.setString(7, star);
+            //     pr.setString(8, facility_feature);
+            pr.setInt(8, id);
+            return pr.executeUpdate() != -1;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+    public static ArrayList<Boolean> createFacilityFeatureList(boolean freeParking, boolean freeWifi, boolean pool, boolean fitnessCenter, boolean hotelCorcierge, boolean spa, boolean roomService) {
+        ArrayList<Boolean> facilityFeatureList = new ArrayList<>();
+        facilityFeatureList.add(freeParking);
+        facilityFeatureList.add(freeWifi);
+        facilityFeatureList.add(pool);
+        facilityFeatureList.add(fitnessCenter);
+        facilityFeatureList.add(hotelCorcierge);
+        facilityFeatureList.add(spa);
+        facilityFeatureList.add(roomService);
+
+        return facilityFeatureList;
     }
 
     public int getId() {
@@ -192,6 +279,22 @@ public class Hotel {
 
     public void setStar(String star) {
         this.star = star;
+    }
+
+    public String getFacility_feature() {
+        return facility_feature;
+    }
+
+    public void setFacility_feature(String facility_feature) {
+        this.facility_feature = facility_feature;
+    }
+
+    public ArrayList<Boolean> getFacilityFeatureList() {
+        return facilityFeatureList;
+    }
+
+    public void setFacilityFeatureList(ArrayList<Boolean> facilityFeatureList) {
+        this.facilityFeatureList = facilityFeatureList;
     }
 
 
