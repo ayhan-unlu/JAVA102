@@ -71,7 +71,6 @@ public class AdminGUI extends JFrame {
     private JButton button_admin_hotel_delete;
     private JLabel label_admin_hotel_delete_hotel_id;
     private JComboBox combobox_admin_hotel_add_star;
-    private JLabel label_admin_hotel_add_feature;
     private JCheckBox checkbox_admin_hotel_add_feature_free_parking;
     private JCheckBox checkbox_admin_hotel_add_feature_free_wifi;
     private JCheckBox checkbox_admin_hotel_add_feature_pool;
@@ -95,13 +94,12 @@ public class AdminGUI extends JFrame {
     private JCheckBox checkbox_admin_feature_add_fitness_center;
     private JCheckBox checkbox_admin_feature_add_hotel_concierge;
     private JCheckBox checkbox_admin_feature_add_spa;
-    private JComboBox combobox_admin_feature_add_hotel_name;
+    // private JComboBox combobox_admin_feature_add_hotel_name;
     private JPanel panel_admin_accommodation;
     private JScrollPane scroll_panel_admin_accommodation;
     private JPanel panel_admin_accommodation_add;
     private JTable table_admin_accommodation_list;
     private JLabel label_admin_accommodation_add_title;
-    private JLabel label_admin_accommodation_add_hotel_id;
     private JTextField field_admin_accommodation_add_hotel_id;
     private JLabel label_admin_accommodation_add_hotel_name;
     private JComboBox combobox_admin_accommodation_add_hotel_name;
@@ -113,7 +111,53 @@ public class AdminGUI extends JFrame {
     private JCheckBox checkbox_admin_accommodation_add_bed_only;
     private JCheckBox checkbox_admin_accommodation_add_excluding_alcohol_full_credit;
     private JButton button_admin_accommodation_add_;
-    private JComboBox combobox_admin_feature_add_hotel_id;
+    private JComboBox combobox_admin_feature_add_hotel_name;
+    private JPanel panel_admin_room;
+    private JScrollPane scroll_panel_admin_room;
+    private JPanel panel_admin_room_add;
+    private JTable table_admin_room_list;
+    private JLabel label_admin_room_add_title;
+    private JLabel label_admin_room_add_hotel_name;
+    private JComboBox combobox_admin_room_add_hotel_name;
+    private JPanel panel_admin_season;
+    private JScrollPane scroll_panel_admin_season;
+    private JPanel panel_admin_season_add;
+    private JTable table_admin_season_list;
+    private JLabel label_admin_season_add_title;
+    private JLabel label_admin_season_add_hotel_name;
+    private JCheckBox checkbox_admin_season_add_season_1;
+    private JCheckBox checkbox_admin_season_add_season_2;
+    private JButton button_admin_season_add;
+    private JComboBox combobox_admin_season_add_hotel_name;
+    private JLabel label_admin_room_add_room_type;
+    private JComboBox combobox_admin_room_add_room_type;
+    private JButton button_admin_room_add;
+    private JLabel label_admin_room_add_stock;
+    private JTextField field_admin_room_add_stock;
+    private JPanel panel_admin_roomfeature;
+    private JScrollPane scroll_panel_admin_roomfeature;
+    private JTable table_admin_roomfeature_list;
+    private JPanel panel_admin_roomfeature_add;
+    private JLabel label_admin_roomfeature_add_title;
+    private JLabel label_admin_roomfeature_add_room_id;
+    private JComboBox combobox_admin_roomfeature_add_room_id;
+    private JTextField field_admin_roomfeature_bed_count;
+    private JTextField field_admin_roomfeature_squaremeters;
+    private JCheckBox checkbox_admin_roomfeature_tv;
+    private JCheckBox checkbox_admin_roomfeature_minibar;
+    private JCheckBox checkbox_admin_roomfeature_console;
+    private JCheckBox checkbox_admin_roomfeature_safe;
+    private JCheckBox checkbox_admin_roomfeature_projector;
+    private JButton button_admin_roomfeature_add;
+    private JLabel label_admin_roomfeature_bed_count;
+    private JLabel label_admin_roomfeature_squaremeters;
+    private JPanel panel_admin_calculation;
+    private JComboBox combobox_admin_calculation_room_id;
+    private JLabel label_admin_calculation_title;
+    private JLabel label_admin_calculation_room_id;
+    private JButton button_admin_calculation_calculate;
+    private JTextField field_admin_calculation_calculated_coefficient;
+    private JLabel label_admin_calculation_calculated_coefficient;
     private DefaultTableModel model_admin_user_list;
     private Object[] row_admin_user_list;
     private DefaultTableModel model_admin_hotel_list;
@@ -122,6 +166,12 @@ public class AdminGUI extends JFrame {
     private Object[] row_admin_feature_list;
     private DefaultTableModel model_admin_accommodation_list;
     private Object[] row_admin_accommodation_list;
+    private DefaultTableModel model_admin_season_list;
+    private Object[] row_admin_season_list;
+    private DefaultTableModel model_admin_room_list;
+    private Object[] row_admin_room_list;
+    private DefaultTableModel model_admin_roomfeature_list;
+    private Object[] row_admin_roomfeature_list;
 
     public AdminGUI(Admin admin) {
         this.admin = admin;
@@ -199,7 +249,7 @@ public class AdminGUI extends JFrame {
         model_admin_hotel_list.setColumnIdentifiers(column_admin_hotel_list);
         row_admin_hotel_list = new Object[column_admin_hotel_list.length];
         loadAdminHotelListModel();
-       // loadAdminFeatureHotelNameCombobox();
+        // loadAdminFeatureHotelNameCombobox();
 
 
         table_admin_hotel_list.setModel(model_admin_hotel_list);
@@ -235,7 +285,7 @@ public class AdminGUI extends JFrame {
                 }
                 loadAdminHotelListModel();
 
-        //        loadAdminFeatureHotelNameCombobox();
+                //        loadAdminFeatureHotelNameCombobox();
 
             }
         });
@@ -259,8 +309,8 @@ public class AdminGUI extends JFrame {
         model_admin_feature_list.setColumnIdentifiers(column_admin_feature_list);
         row_admin_feature_list = new Object[column_admin_feature_list.length];
         loadAdminFeatureListModel();
-      //  loadAdminFeatureHotelNameCombobox();
-        loadAdminFeatureHotelIdCombobox();
+        //  loadAdminFeatureHotelNameCombobox();
+        loadAdminHotelNameCombobox(combobox_admin_feature_add_hotel_name);
 
         table_admin_feature_list.setModel(model_admin_feature_list);
         table_admin_feature_list.getTableHeader().setReorderingAllowed(false);
@@ -277,12 +327,12 @@ public class AdminGUI extends JFrame {
                 return super.isCellEditable(row, column);
             }
         };
-        Object[] column_admin_accommodation_list = {"id", "hotel_id", "ultra_all_inclusive", "all_in", "bed_and_breakfast", "full_board", "half_board", "bed_only", "excluding_alcohol_full_creadit"};
+        Object[] column_admin_accommodation_list = {"Id", "Hotel Id", "Ultra Al Inclusive", "All In", "Bed And Breakfast", "Full Board", "Half Board", "Bed Only", "Excluding Alcohol Full Credit"};
         model_admin_accommodation_list.setColumnIdentifiers(column_admin_accommodation_list);
         row_admin_accommodation_list = new Object[column_admin_accommodation_list.length];
 
         loadAdminAccommodationListModel();
-        loadAdminAccommodationHotelNameCombobox();
+        loadAdminHotelNameCombobox(combobox_admin_accommodation_add_hotel_name);
         table_admin_accommodation_list.setModel(model_admin_accommodation_list);
         table_admin_accommodation_list.getTableHeader().setReorderingAllowed(false);
         table_admin_accommodation_list.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -290,6 +340,88 @@ public class AdminGUI extends JFrame {
 
 
         //##ModelAccommodationList-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //ModelSeasonList-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        model_admin_season_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1)
+                    return false;
+                return super.isCellEditable(row, column);
+            }
+        };
+
+        Object[] column_admin_season_list = {"Id", "Hotel Id", "Season 1(01.01.2025-31.05.2025)", "Season 2(01.06.2025-31.12.2025)"};
+        model_admin_season_list.setColumnIdentifiers(column_admin_season_list);
+        row_admin_season_list = new Object[column_admin_season_list.length];
+        loadAdminSeasonListModel();
+        loadAdminHotelNameCombobox(combobox_admin_season_add_hotel_name);
+        table_admin_season_list.setModel(model_admin_season_list);
+        table_admin_season_list.getTableHeader().setReorderingAllowed(false);
+        table_admin_season_list.getColumnModel().getColumn(0).setMaxWidth(50);
+        table_admin_season_list.getColumnModel().getColumn(1).setMaxWidth(50);
+
+
+        //##ModelSeasonList-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //ModelRoomList-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        model_admin_room_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1)
+                    return false;
+                return super.isCellEditable(row, column);
+            }
+        };
+
+        Object[] column_admin_room_list = {"Id", "Hotel Id", "Room Type", "Stock"};
+        //  System.out.println(column_admin_room_list.length);
+        model_admin_room_list.setColumnIdentifiers(column_admin_room_list);
+        row_admin_room_list = new Object[column_admin_room_list.length];
+
+        loadAdminRoomListModel();
+        loadAdminHotelNameCombobox(combobox_admin_room_add_hotel_name);
+        table_admin_room_list.setModel(model_admin_room_list);
+        table_admin_room_list.getTableHeader().setReorderingAllowed(false);
+//        table_admin_room_list.getColumnModel().getColumn(0).setMaxWidth(50);
+//        table_admin_room_list.getColumnModel().getColumn(1).setMaxWidth(70);
+
+        //##ModelRoomList-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        //ModelRoomfeatureList-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        model_admin_roomfeature_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1 || column == 2) {
+                    return false;
+                }
+                return super.isCellEditable(row, column);
+            }
+        };
+
+        Object[] column_admin_roomfeature_list = {"Id", "Hotel Id", "Room Id", "Bed Count", "Square Meters", "Tv", "Minibar", "Console", "Safe", "Projector"};
+        model_admin_roomfeature_list.setColumnIdentifiers(column_admin_roomfeature_list);
+        row_admin_roomfeature_list = new Object[column_admin_roomfeature_list.length];
+        loadAdminRoomfeatureListModel();
+        loadAdminRoomIdCombobox(combobox_admin_roomfeature_add_room_id);
+
+        table_admin_roomfeature_list.setModel(model_admin_roomfeature_list);
+        table_admin_roomfeature_list.getTableHeader().setReorderingAllowed(false);
+
+
+        //##ModelRoomfeatureList-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        //Admin Calculation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+        loadAdminRoomIdCombobox(combobox_admin_calculation_room_id);
+
+        //##Admin Calculation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
         button_admin_user_add.addActionListener(e -> {
 
             ArrayList<JTextField> adminUserAddTextFieldList = new ArrayList<>();
@@ -378,14 +510,14 @@ public class AdminGUI extends JFrame {
             String phone = field_admin_hotel_add_phone.getText();
 
             ArrayList<Boolean> adminHotelAddFacilityFeatureList = new ArrayList<>();
-            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_free_parking.isSelected());
-            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_free_wifi.isSelected());
-            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_pool.isSelected());
-            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_fitness_center.isSelected());
-            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_hotel_corcierge.isSelected());
-            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_spa.isSelected());
-            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_room_service.isSelected());
-//Feature.createStringHotelFeatureList(field_admin_hotel_add)
+//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_free_parking.isSelected());
+//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_free_wifi.isSelected());
+//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_pool.isSelected());
+//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_fitness_center.isSelected());
+//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_hotel_corcierge.isSelected());
+//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_spa.isSelected());
+//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_room_service.isSelected());
+////Feature.createStringHotelFeatureList(field_admin_hotel_add)
             String stringHotelFacilityFeatureList = "";
             for (int i = 0; i <= adminHotelAddFacilityFeatureList.size() - 1; i++) {
                 if (adminHotelAddFacilityFeatureList.get(i)) {
@@ -415,11 +547,11 @@ public class AdminGUI extends JFrame {
                     }
                 }
             }
-            if (checkbox_admin_hotel_add_feature_free_parking.isSelected()) {
-                boolean freeParking = true;
-            }
-            if (checkbox_admin_hotel_add_feature_free_wifi.isSelected()) {
-            }
+//            if (checkbox_admin_hotel_add_feature_free_parking.isSelected()) {
+//                boolean freeParking = true;
+//            }
+//            if (checkbox_admin_hotel_add_feature_free_wifi.isSelected()) {
+//            }
 
 
             //   String star = field_admin_hotel_add_star.getText();
@@ -429,16 +561,17 @@ public class AdminGUI extends JFrame {
             if (Helper.isAnyFieldEmpty(adminHotelAddTextFieldList) || combobox_admin_hotel_add_star.getSelectedItem().toString().isEmpty()) {
                 Helper.showMessage("fill");
             } else {
-                if (Hotel.add(name, city, region, address, email, phone, star, stringHotelFacilityFeatureList)) {
+                if (Hotel.add(name, city, region, address, email, phone, star/*, stringHotelFacilityFeatureList*/)) {
                     Helper.showMessage("success");
                     loadAdminHotelListModel();
-                 //   loadAdminFeatureHotelNameCombobox();
+                    //   loadAdminFeatureHotelNameCombobox();
                 }
             }
             for (int i = 0; i <= adminHotelAddTextFieldList.size() - 1; i++) {
                 adminHotelAddTextFieldList.get(i).setText("");
             }
-            loadAdminFeatureHotelIdCombobox();
+            loadAdminHotelNameCombobox(combobox_admin_feature_add_hotel_name);
+            loadAdminHotelNameCombobox(combobox_admin_accommodation_add_hotel_name);
             combobox_admin_hotel_add_star.setSelectedItem("");
         });
         button_admin_hotel_delete.addActionListener(e -> {
@@ -450,7 +583,7 @@ public class AdminGUI extends JFrame {
                     if (Hotel.delete(selectedHotelId)) {
                         Helper.showMessage("success");
                         loadAdminHotelListModel();
-                   //     loadAdminFeatureHotelNameCombobox();
+                        //     loadAdminFeatureHotelNameCombobox();
                     } else {
                         Helper.showMessage("error");
                     }
@@ -460,8 +593,9 @@ public class AdminGUI extends JFrame {
         });
 
         button_admin_feature_add.addActionListener(e -> {
-         //   Item hotelNameItem = (Item) combobox_admin_feature_add_hotel_name.getSelectedItem();
-            int hotel_id = (Integer) Integer.parseInt(combobox_admin_feature_add_hotel_id.getSelectedItem().toString());
+            //   Item hotelNameItem = (Item) combobox_admin_feature_add_hotel_name.getSelectedItem();
+            String selectedHotelName = combobox_admin_feature_add_hotel_name.getSelectedItem().toString();
+
             boolean free_parking = checkbox_admin_feature_add_free_parking.isSelected();
             boolean free_wifi = checkbox_admin_feature_add_free_wifi.isSelected();
             boolean pool = checkbox_admin_feature_add_pool.isSelected();
@@ -471,16 +605,18 @@ public class AdminGUI extends JFrame {
             boolean room_service = checkbox_admin_feature_add_room_service.isSelected();
 
 
-            if (combobox_admin_feature_add_hotel_id.getSelectedItem().toString().isEmpty()) {
+            if (combobox_admin_feature_add_hotel_name.getSelectedItem().toString().isEmpty()) {
                 Helper.showMessage("fill");
             } else {
+                int hotel_id = (Hotel.getFetch(selectedHotelName)).getId();
+
                 if (Feature.add(hotel_id, free_parking, free_wifi, pool, fitness_center, hotel_concierge, spa, room_service)) {
                     Helper.showMessage("success");
                     loadAdminFeatureListModel();
                 }
             }
-            field_admin_feature_add_hotel_id.setText(null);
-         //   combobox_admin_feature_add_hotel_name.setSelectedItem(combobox_admin_feature_add_hotel_name.getItemAt(0));
+            //   field_admin_feature_add_hotel_id.setText(null);
+            //  combobox_admin_feature_add_hotel_name.set
         });
 
 //        combobox_admin_feature_add_hotel_name.addActionListener(e -> {
@@ -498,16 +634,19 @@ public class AdminGUI extends JFrame {
 ////                }
 ////            }
 //}   });
-        combobox_admin_accommodation_add_hotel_name.addActionListener(e -> {
-            Item hotelNameItem = (Item) combobox_admin_accommodation_add_hotel_name.getSelectedItem();
-            for (Hotel obj : Hotel.getList()) {
-                if (hotelNameItem.getKey() == obj.getId()) {
-                    field_admin_accommodation_add_hotel_id.setText(String.valueOf(obj.getId()));
-                }
-            }
-        });
+//        combobox_admin_accommodation_add_hotel_name.addActionListener(e -> {
+//            Item hotelNameItem = (Item) combobox_admin_accommodation_add_hotel_name.getSelectedItem();
+//            for (Hotel obj : Hotel.getList()) {
+//                if (hotelNameItem.getKey() == obj.getId()) {
+//                    field_admin_accommodation_add_hotel_id.setText(String.valueOf(obj.getId()));
+//                }
+//            }
+//        });
         button_admin_accommodation_add_.addActionListener(e -> {
-            int hotel_id = (Integer) Integer.parseInt(field_admin_accommodation_add_hotel_id.getText());
+
+            String selectedHotelName = combobox_admin_accommodation_add_hotel_name.getSelectedItem().toString();
+
+            //int hotel_id = (Integer) Integer.parseInt(field_admin_accommodation_add_hotel_id.getText());
             boolean ultra_all_inclusive = checkbox_admin_accommodation_add_ultra_all_inclusive.isSelected();
             boolean all_in = checkbox_admin_accommodation_add_all_in.isSelected();
             boolean bed_and_breakfast = checkbox_admin_accommodation_add_bed_and_breakfast.isSelected();
@@ -516,16 +655,78 @@ public class AdminGUI extends JFrame {
             boolean bed_only = checkbox_admin_accommodation_add_bed_only.isSelected();
             boolean excluding_alcohol_full_credit = checkbox_admin_accommodation_add_excluding_alcohol_full_credit.isSelected();
 
-            if (field_admin_accommodation_add_hotel_id.getText().isEmpty()) {
+            if (combobox_admin_accommodation_add_hotel_name.getSelectedItem().toString().isEmpty()) {
                 Helper.showMessage("fill");
             } else {
+                int hotel_id = (Hotel.getFetch(selectedHotelName)).getId();
                 if (Accommodation.add(hotel_id, ultra_all_inclusive, all_in, bed_and_breakfast, full_board, half_board, bed_only, excluding_alcohol_full_credit)) {
                     Helper.showMessage("success");
                     loadAdminAccommodationListModel();
                 }
-                field_admin_accommodation_add_hotel_id.setText(null);
-                combobox_admin_accommodation_add_hotel_name.setSelectedItem(combobox_admin_accommodation_add_hotel_name.getItemAt(0));
+//                field_admin_accommodation_add_hotel_id.setText(null);
+                //              combobox_admin_accommodation_add_hotel_name.setSelectedItem(combobox_admin_accommodation_add_hotel_name.getItemAt(0));
 
+            }
+
+        });
+        button_admin_season_add.addActionListener(e -> {
+            if (combobox_admin_season_add_hotel_name.getSelectedItem().toString().isEmpty()) {
+                Helper.showMessage("fill");
+            } else {
+                int hotel_id = Helper.getHotelIdFromSelectedHotelName(combobox_admin_season_add_hotel_name);
+                boolean season_1 = checkbox_admin_season_add_season_1.isSelected();
+                boolean season_2 = checkbox_admin_season_add_season_2.isSelected();
+
+                if (Season.add(hotel_id, season_1, season_2)) {
+                    Helper.showMessage("success");
+                    loadAdminSeasonListModel();
+                }
+            }
+
+        });
+        button_admin_room_add.addActionListener(e -> {
+            if (combobox_admin_room_add_hotel_name.getSelectedItem().toString().isEmpty() || combobox_admin_room_add_room_type.getSelectedItem().toString().isEmpty() || field_admin_room_add_stock.getText().isEmpty()) {
+                Helper.showMessage("fill");
+            } else {
+                int hotel_id = Helper.getHotelIdFromSelectedHotelName(combobox_admin_room_add_hotel_name);
+                String room_type = combobox_admin_room_add_room_type.getSelectedItem().toString();
+                int stock = (Integer) Integer.parseInt(field_admin_room_add_stock.getText());
+
+                if (Room.add(hotel_id, room_type, stock)) {
+                    Helper.showMessage("success");
+                    loadAdminRoomListModel();
+                }
+            }
+        });
+        button_admin_roomfeature_add.addActionListener(e -> {
+            if (combobox_admin_roomfeature_add_room_id.getSelectedItem().toString().isEmpty() || field_admin_roomfeature_bed_count.getText().isEmpty() || field_admin_roomfeature_squaremeters.getText().isEmpty()) {
+                Helper.showMessage("fill");
+            } else {
+                int room_id = (Integer) Integer.parseInt(combobox_admin_roomfeature_add_room_id.getSelectedItem().toString());
+                int hotel_id = Room.getFetch(room_id).getHotel_id();
+                int bed_count = (Integer) Integer.parseInt(field_admin_roomfeature_bed_count.getText());
+                int squaremeters = (Integer) Integer.parseInt(field_admin_roomfeature_squaremeters.getText());
+                boolean tv = checkbox_admin_roomfeature_tv.isSelected();
+                boolean minibar = checkbox_admin_roomfeature_minibar.isSelected();
+                boolean console = checkbox_admin_roomfeature_console.isSelected();
+                boolean safe = checkbox_admin_roomfeature_safe.isSelected();
+                boolean projector = checkbox_admin_roomfeature_projector.isSelected();
+                if(Roomfeature.add(hotel_id,room_id,bed_count,squaremeters,tv,minibar,console,safe,projector)){
+                    Helper.showMessage("success");
+                    loadAdminRoomfeatureListModel();
+                }
+
+
+            }
+        });
+        button_admin_calculation_calculate.addActionListener(e -> {
+            if(combobox_admin_calculation_room_id.getSelectedItem().toString().isEmpty()){
+                Helper.showMessage("fill");
+            }
+            else{
+                int selectedRoom_id= (Integer) Integer.parseInt(combobox_admin_calculation_room_id.getSelectedItem().toString());
+                double calculatedCurrentCoefficient=Price.calculateCurrentCoefficient(selectedRoom_id);
+                field_admin_calculation_calculated_coefficient.setText(String.valueOf(calculatedCurrentCoefficient));
             }
 
         });
@@ -635,19 +836,85 @@ public class AdminGUI extends JFrame {
         }
     }
 
-    public void loadAdminAccommodationHotelNameCombobox() {
-        combobox_admin_accommodation_add_hotel_name.removeAllItems();
-        combobox_admin_accommodation_add_hotel_name.addItem(new Item(0, ""));
+    public void loadAdminSeasonListModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) table_admin_season_list.getModel();
+        clearModel.setRowCount(0);
+        int i;
+        for (Season obj : Season.getList()) {
+            i = 0;
+            row_admin_season_list[i++] = obj.getId();
+            row_admin_season_list[i++] = obj.getHotel_id();
+            row_admin_season_list[i++] = obj.isSeason_1();
+            row_admin_season_list[i++] = obj.isSeason_2();
+            model_admin_season_list.addRow(row_admin_season_list);
 
-        for (Hotel obj : Hotel.getList()) {
-            combobox_admin_accommodation_add_hotel_name.addItem(new Item(obj.getId(), obj.getName()));
         }
     }
 
-    public void loadAdminFeatureHotelIdCombobox(){
-        combobox_admin_feature_add_hotel_id.removeAllItems();
-        for(Hotel obj:Hotel.getList()){
-            combobox_admin_feature_add_hotel_id.addItem(new Item(obj.getId(),obj.getName()));
+    public void loadAdminRoomListModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) table_admin_room_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+
+        for (Room obj : Room.getList()) {
+            i = 0;
+            row_admin_hotel_list[i++] = obj.getId();
+            row_admin_room_list[i++] = obj.getHotel_id();
+            row_admin_room_list[i++] = obj.getRoom_type();
+            row_admin_room_list[i++] = obj.getStock();
+            model_admin_room_list.addRow(row_admin_room_list);
+            //model_admin_room_list.addRow(row_admin_room_list);
+        }
+    }
+
+    public void loadAdminRoomfeatureListModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) table_admin_roomfeature_list.getModel();
+        clearModel.setRowCount(0);
+        int i;
+        for (Roomfeature obj : Roomfeature.getList()) {
+            i = 0;
+            row_admin_roomfeature_list[i++] = obj.getId();
+            row_admin_roomfeature_list[i++] = obj.getHotel_id();
+            row_admin_roomfeature_list[i++] = obj.getRoom_id();
+            row_admin_roomfeature_list[i++] = obj.getBed_count();
+            row_admin_roomfeature_list[i++] = obj.getSquaremeters();
+            row_admin_roomfeature_list[i++] = obj.isTv();
+            row_admin_roomfeature_list[i++] = obj.isMinibar();
+            row_admin_roomfeature_list[i++] = obj.isConsole();
+            row_admin_roomfeature_list[i++] = obj.isSafe();
+            row_admin_roomfeature_list[i++] = obj.isProjector();
+            model_admin_roomfeature_list.addRow(row_admin_roomfeature_list);
+
+        }
+    }
+
+//    public void loadAdminAccommodationHotelNameCombobox() {
+//        combobox_admin_accommodation_add_hotel_name.removeAllItems();
+//        combobox_admin_accommodation_add_hotel_name.addItem(new Item(0, ""));
+//
+//        for (Hotel obj : Hotel.getList()) {
+//            combobox_admin_accommodation_add_hotel_name.addItem(new Item(obj.getId(), obj.getName()));
+//        }
+//    }
+
+    public void loadAdminHotelNameCombobox(JComboBox combobox) {
+        combobox.removeAllItems();
+        combobox.addItem(new Item(0, ""));
+        for (Hotel obj : Hotel.getList()) {
+//            System.out.println(obj.getId());
+//            System.out.println("--");
+//            System.out.println(obj.getName());
+            combobox.addItem(new Item(obj.getId(), obj.getName()));
+        }
+    }
+
+    public void loadAdminRoomIdCombobox(JComboBox combobox) {
+        combobox.removeAllItems();
+        combobox.addItem(new Item(0, ""));
+        for (Room obj : Room.getList()) {
+            combobox.addItem(new Item(obj.getId(), String.valueOf(obj.getId())));
+
         }
     }
 }

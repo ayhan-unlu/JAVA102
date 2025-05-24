@@ -138,7 +138,7 @@ public class StaffGUI extends JFrame {
                         field_staff_hotel_add_address.getText(),
                         field_staff_hotel_add_email.getText(),
                         field_staff_hotel_add_phone.getText(),
-                        field_staff_hotel_add_star.getText(),"")) {
+                        field_staff_hotel_add_star.getText()/*,""*/)) {
                     Helper.showMessage("success");
 
                     loadStaffHotelListModel();

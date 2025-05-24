@@ -35,7 +35,6 @@ public class Feature {
         this.hotel_concierge = hotel_concierge;
         this.spa = spa;
         this.room_service = room_service;
-
     }
 
     public static ArrayList<Feature> getList() {
@@ -120,7 +119,7 @@ public class Feature {
 
             return response != -1;
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return true;
     }

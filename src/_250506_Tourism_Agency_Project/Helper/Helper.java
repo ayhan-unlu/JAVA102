@@ -1,5 +1,7 @@
 package _250506_Tourism_Agency_Project.Helper;
 
+import _250506_Tourism_Agency_Project.Model.Hotel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -52,6 +54,12 @@ public class Helper {
         for (int i = 0; i <= fieldList.size() - 1; i++) {
             fieldList.get(i).setText("");
         }
+    }
+
+    public static int getHotelIdFromSelectedHotelName(JComboBox combobox){
+        String selectedHotelName = combobox.getSelectedItem().toString();
+        int hotel_id = Hotel.getFetch(selectedHotelName).getId();
+        return hotel_id;
     }
 
     public static void showMessage(String string) {
