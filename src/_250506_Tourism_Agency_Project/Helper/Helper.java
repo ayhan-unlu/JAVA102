@@ -1,6 +1,7 @@
 package _250506_Tourism_Agency_Project.Helper;
 
 import _250506_Tourism_Agency_Project.Model.Hotel;
+import _250506_Tourism_Agency_Project.Model.Room;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +57,7 @@ public class Helper {
         }
     }
 
-    public static int getHotelIdFromSelectedHotelName(JComboBox combobox){
+    public static int getHotelIdFromSelectedHotelName(JComboBox combobox) {
         String selectedHotelName = combobox.getSelectedItem().toString();
         int hotel_id = Hotel.getFetch(selectedHotelName).getId();
         return hotel_id;
@@ -106,9 +107,46 @@ public class Helper {
             default:
                 message = str;
         }
-        return JOptionPane.showConfirmDialog(null, message,"Confirmation Required", JOptionPane.YES_NO_OPTION)==0;
-
+        return JOptionPane.showConfirmDialog(null, message, "Confirmation Required", JOptionPane.YES_NO_OPTION) == 0;
     }
+
+    public static int createIntFromStringDate(String selectedDate) {
+        int dateInt = 0;
+        int season;
+        String preparedString = "";
+
+        preparedString += selectedDate.substring(6, 10);
+//        System.out.println(preparedString);
+        preparedString += selectedDate.substring(3, 5);
+//        System.out.println(preparedString);
+        preparedString += selectedDate.substring(0, 2);
+//        System.out.println(preparedString);
+        dateInt = (Integer) Integer.parseInt(preparedString);
+//        System.out.println(dateInt+"int");
+        if (dateInt < 20250631) {
+//            System.out.println("Season 1");
+            season = 1;
+        } else {
+//            System.out.println("Season 2");
+            season = 2;
+        }
+        return season;
+    }
+
+    public static int convertComboboxItemToInt(JComboBox combobox) {
+        int selectedInt = 0;
+        if (combobox.getSelectedItem().toString().equals("")) return selectedInt;
+        selectedInt = (Integer) Integer.parseInt(combobox.getSelectedItem().toString());
+        return selectedInt;
+    }
+
+    public static boolean stockController(int room_id) {
+        if ( Room.getFetch(room_id).getStock()==0) return false;
+            else return true;
+    }
+//    public static void main(String[] args) {
+//        Helper.createIntFromStringDate("12.06.2025");
+//    }
 
     public static void optionPaneTR() {
         UIManager.put("OptionPane.okButtonText", "Tamam");

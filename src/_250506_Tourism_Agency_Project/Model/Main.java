@@ -9,6 +9,5 @@ public class Main {
      //   Admin defaultAdmin = new Admin();
         LoginGUI loginGUI = new LoginGUI();
       //  AdminGUI adminGUI = new AdminGUI(defaultAdmin);
-
     }
 }

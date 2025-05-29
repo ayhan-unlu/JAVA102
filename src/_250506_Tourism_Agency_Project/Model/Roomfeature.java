@@ -101,12 +101,12 @@ public class Roomfeature {
 
     public static boolean add(int hotel_id, int room_id, int bed_count, int squaremeters, boolean tv, boolean minibar, boolean console, boolean safe, boolean projector) {
 
-        Roomfeature foundRoomfeature = Roomfeature.getFetch(room_id);
         String query = "INSERT INTO roomfeature (hotel_id, room_id, bed_count, squaremeters, tv, minibar ,console, safe, projector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        System.out.println(foundRoomfeature.getHotel_id()+"hotel_id");
+        Roomfeature foundRoomfeature = Roomfeature.getFetch(room_id);
+
+     //   System.out.println(foundRoomfeature.getHotel_id()+"hotel_id");
         if (foundRoomfeature != null) {
             Helper.showMessage("exist");
-            return false;
         } else {
             try {
                 PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);

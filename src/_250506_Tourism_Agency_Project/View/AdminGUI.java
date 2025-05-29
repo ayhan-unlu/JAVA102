@@ -152,12 +152,57 @@ public class AdminGUI extends JFrame {
     private JLabel label_admin_roomfeature_bed_count;
     private JLabel label_admin_roomfeature_squaremeters;
     private JPanel panel_admin_calculation;
-    private JComboBox combobox_admin_calculation_room_id;
-    private JLabel label_admin_calculation_title;
-    private JLabel label_admin_calculation_room_id;
-    private JButton button_admin_calculation_calculate;
+    private JComboBox combobox_admin_calculation_coefficient_room_id;
+    private JLabel label_admin_calculation_coefficient;
+    private JLabel label_admin_calculation_coefficient_room_id;
+    private JButton button_admin_calculation_calculate_coefficient;
     private JTextField field_admin_calculation_calculated_coefficient;
     private JLabel label_admin_calculation_calculated_coefficient;
+    private JLabel label_admin_calculation_room_price;
+    private JLabel label_admin_calculation_adult_guest_number;
+    private JComboBox combobox_admin_calculation_adult_guest_number;
+    private JComboBox combobox_admin_calculation_child_guest_number;
+    private JLabel lable_admin_calculation_start_date;
+    private JLabel label_admin_calculation_duration;
+    private JTextField field_admin_calculation_start_date;
+    private JTextField field_admin_calculation_duration;
+    private JButton button_admin_calculation_calcultate_room_price;
+    private JLabel label_admin_calculation_room_price_room_id;
+    private JComboBox combobox_admin_calculation_room_price_room_id;
+    private JLabel label_admin_calculation_calculated_room_price;
+    private JTextField field_admin_calculation_calculated_room_price;
+    private JPanel panel_admin_search;
+    private JPanel panel_admin_search_top;
+    private JLabel label_admin_search_title;
+    private JLabel label_admin_search_start_date;
+    private JTextField field_admin_search_start_date;
+    private JLabel label_admin_search_end_date;
+    private JTextField field_admin_search_end_date;
+    private JLabel label_admin_search_city;
+    private JComboBox combobox_admin_search_city;
+    private JComboBox combobox_admin_search_hotel_name;
+    private JLabel label_admin_search_hotel_name;
+    private JButton button_admin_search;
+    private JScrollPane scroll_panel_admin_search_list;
+    private JTable table_admin_search_list;
+    private JLabel label_admin_search_list;
+    private JPanel panel_admin_price;
+    private JScrollPane scroll_panel_admin_price_list;
+    private JTable table_admin_price_list;
+    private JLabel label_admin_price_add_title;
+    private JLabel label_admin_price_add_room_id;
+    private JComboBox combobox_admin_price_add_room_id;
+    private JLabel label_admin_price_add_season_1;
+    private JLabel label_admin_price_add_adult_price_1;
+    private JTextField field_admin_price_add_adult_price_1;
+    private JLabel label_admin_price_add_child_price_1;
+    private JTextField field_admin_price_add_child_price_1;
+    private JButton button_admin_price_add;
+    private JTextField field_admin_price_add_adult_price_2;
+    private JTextField field_admin_price_add_child_price_2;
+    private JLabel label_admin_price_add_season_2;
+    private JLabel label_admin_price_add_adult_price_2;
+    private JLabel label_admin_price_add_child_price_2;
     private DefaultTableModel model_admin_user_list;
     private Object[] row_admin_user_list;
     private DefaultTableModel model_admin_hotel_list;
@@ -172,6 +217,10 @@ public class AdminGUI extends JFrame {
     private Object[] row_admin_room_list;
     private DefaultTableModel model_admin_roomfeature_list;
     private Object[] row_admin_roomfeature_list;
+    private DefaultTableModel model_admin_search_list;
+    private Object[] row_admin_search_list;
+    private DefaultTableModel model_admin_price_list;
+    private Object[] row_admin_price_list;
 
     public AdminGUI(Admin admin) {
         this.admin = admin;
@@ -417,9 +466,51 @@ public class AdminGUI extends JFrame {
 
 
         //Admin Calculation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
-        loadAdminRoomIdCombobox(combobox_admin_calculation_room_id);
+        loadAdminRoomIdCombobox(combobox_admin_calculation_coefficient_room_id);
+        loadAdminRoomIdCombobox(combobox_admin_calculation_room_price_room_id);
 
         //##Admin Calculation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //Admin Search Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+        model_admin_search_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1) return false;
+                return super.isCellEditable(row, column);
+            }
+        };
+
+
+        Object[] column_admin_search_list = {"Room Id", "Hotel Id", "Hotel Name", "Room Type", "Stock"};
+        model_admin_search_list.setColumnIdentifiers(column_admin_search_list);
+        row_admin_search_list = new Object[column_admin_search_list.length];
+        loadAdminSearchListModel();
+        loadAdminSearchCityCombobox(combobox_admin_search_city);
+        loadAdminHotelNameCombobox(combobox_admin_search_hotel_name);
+        table_admin_search_list.setModel(model_admin_search_list);
+        table_admin_search_list.getTableHeader().setReorderingAllowed(false);
+
+        //##Admin Search Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //Admin Price Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        model_admin_price_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1 || column == 2) return false;
+                return super.isCellEditable(row, column);
+            }
+        };
+
+        Object[] column_admin_price_list = {"Id", "Hotel Id", "Room Id", "Adult Price Season 1", "Adult Price Season 2", "Child Price Season 1", "Child Price Season 2"};
+        model_admin_price_list.setColumnIdentifiers(column_admin_price_list);
+        row_admin_price_list = new Object[column_admin_price_list.length];
+        loadAdminPriceListModel();
+        loadAdminRoomIdCombobox(combobox_admin_price_add_room_id);
+        table_admin_price_list.setModel(model_admin_price_list);
+
+
+        //##Admin Price Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
         button_admin_user_add.addActionListener(e -> {
@@ -695,6 +786,8 @@ public class AdminGUI extends JFrame {
                 if (Room.add(hotel_id, room_type, stock)) {
                     Helper.showMessage("success");
                     loadAdminRoomListModel();
+                    loadAdminRoomIdCombobox(combobox_admin_roomfeature_add_room_id);
+                    loadAdminRoomIdCombobox(combobox_admin_calculation_coefficient_room_id);
                 }
             }
         });
@@ -711,24 +804,79 @@ public class AdminGUI extends JFrame {
                 boolean console = checkbox_admin_roomfeature_console.isSelected();
                 boolean safe = checkbox_admin_roomfeature_safe.isSelected();
                 boolean projector = checkbox_admin_roomfeature_projector.isSelected();
-                if(Roomfeature.add(hotel_id,room_id,bed_count,squaremeters,tv,minibar,console,safe,projector)){
+                if (Roomfeature.add(hotel_id, room_id, bed_count, squaremeters, tv, minibar, console, safe, projector)) {
                     Helper.showMessage("success");
                     loadAdminRoomfeatureListModel();
                 }
-
-
             }
         });
-        button_admin_calculation_calculate.addActionListener(e -> {
-            if(combobox_admin_calculation_room_id.getSelectedItem().toString().isEmpty()){
+        button_admin_calculation_calculate_coefficient.addActionListener(e -> {
+            if (combobox_admin_calculation_coefficient_room_id.getSelectedItem().toString().isEmpty()) {
                 Helper.showMessage("fill");
-            }
-            else{
-                int selectedRoom_id= (Integer) Integer.parseInt(combobox_admin_calculation_room_id.getSelectedItem().toString());
-                double calculatedCurrentCoefficient=Price.calculateCurrentCoefficient(selectedRoom_id);
+            } else {
+                int selectedRoom_id = (Integer) Integer.parseInt(combobox_admin_calculation_coefficient_room_id.getSelectedItem().toString());
+                double calculatedCurrentCoefficient = Calculation.calculateCurrentCoefficient(selectedRoom_id);
                 field_admin_calculation_calculated_coefficient.setText(String.valueOf(calculatedCurrentCoefficient));
             }
 
+        });
+        button_admin_calculation_calcultate_room_price.addActionListener(e -> {
+            if (combobox_admin_calculation_room_price_room_id.getSelectedItem().toString().isEmpty() || combobox_admin_calculation_adult_guest_number.getSelectedItem().toString().isEmpty() || field_admin_calculation_start_date.getText().isEmpty() || field_admin_calculation_duration.getText().isEmpty()) {
+                Helper.showMessage("fill");
+            } else {
+                int selected_room_id = (Integer) Integer.parseInt(combobox_admin_calculation_room_price_room_id.getSelectedItem().toString());
+                int adultGuestNumber = Helper.convertComboboxItemToInt(combobox_admin_calculation_adult_guest_number);
+                int childGuestNumber = Helper.convertComboboxItemToInt(combobox_admin_calculation_child_guest_number);
+                int selectedSeason = Season.seasonDecider(field_admin_calculation_start_date.getText());
+                int duration = (Integer) Integer.parseInt(field_admin_calculation_duration.getText());
+                double calculatedRoomPrice = Calculation.calculateReservationPrice(selected_room_id, adultGuestNumber, childGuestNumber, selectedSeason, duration);
+
+                field_admin_calculation_calculated_room_price.setText(String.valueOf(calculatedRoomPrice));
+
+
+            }
+
+        });
+        button_admin_search.addActionListener(e -> {
+            if ((field_admin_search_start_date.getText().isEmpty() || field_admin_search_end_date.getText().isEmpty()) && combobox_admin_search_city.getSelectedItem().toString().isEmpty() && combobox_admin_search_hotel_name.getSelectedItem().toString().isEmpty()) {
+                Helper.showMessage("fill");
+            } else {
+                if (field_admin_search_start_date.getText().isEmpty() && field_admin_search_end_date.getText().isEmpty() && combobox_admin_search_hotel_name.getSelectedItem().toString().isEmpty()) {
+                    String selectedCity = combobox_admin_search_city.getSelectedItem().toString();
+                    loadAdminSearchListModel(Room.getListByCity(selectedCity));
+                }
+                if (field_admin_search_start_date.getText().isEmpty() && field_admin_search_end_date.getText().isEmpty() && combobox_admin_search_city.getSelectedItem().toString().isEmpty()) {
+                    String selectedHotelName = combobox_admin_search_hotel_name.getSelectedItem().toString();
+                    loadAdminSearchListModel(Room.getListByHotelName(selectedHotelName));
+                }
+                if (combobox_admin_search_city.getSelectedItem().toString().isEmpty() && combobox_admin_search_hotel_name.getSelectedItem().toString().isEmpty()) {
+                    String selectedStartDate = field_admin_search_start_date.getText();
+                    String selectedEndDate = field_admin_search_end_date.getText();
+                    int selectedSeason = Season.seasonDecider(selectedStartDate);
+                    loadAdminSearchListModel(Room.getListBySeason(selectedSeason));
+                }
+            }
+        });
+        button_admin_price_add.addActionListener(e -> {
+            ArrayList<JTextField> textFieldList = new ArrayList<>();
+            textFieldList.add(field_admin_price_add_adult_price_1);
+            textFieldList.add(field_admin_price_add_adult_price_2);
+            textFieldList.add(field_admin_price_add_child_price_1);
+            textFieldList.add(field_admin_price_add_child_price_2);
+            if (combobox_admin_price_add_room_id.getSelectedItem().toString().isEmpty() || Helper.isAnyFieldEmpty(textFieldList)) {
+                Helper.showMessage("fill");
+            } else {
+                int room_id = (Integer) Integer.parseInt(combobox_admin_price_add_room_id.getSelectedItem().toString());
+                int hotel_id = Room.getFetch(room_id).getHotel_id();
+                int adult_price_1 = (Integer) Integer.parseInt(field_admin_price_add_adult_price_1.getText());
+                int adult_price_2 = (Integer) Integer.parseInt(field_admin_price_add_adult_price_2.getText());
+                int child_price_1 = (Integer) Integer.parseInt(field_admin_price_add_child_price_1.getText());
+                int child_price_2 = (Integer) Integer.parseInt(field_admin_price_add_child_price_2.getText());
+                if(Price.add(hotel_id,room_id,adult_price_1,adult_price_2,child_price_1,child_price_2)){
+                    Helper.showMessage("success");
+                    loadAdminPriceListModel();
+                }
+            }
         });
     }
 
@@ -847,7 +995,6 @@ public class AdminGUI extends JFrame {
             row_admin_season_list[i++] = obj.isSeason_1();
             row_admin_season_list[i++] = obj.isSeason_2();
             model_admin_season_list.addRow(row_admin_season_list);
-
         }
     }
 
@@ -885,9 +1032,91 @@ public class AdminGUI extends JFrame {
             row_admin_roomfeature_list[i++] = obj.isSafe();
             row_admin_roomfeature_list[i++] = obj.isProjector();
             model_admin_roomfeature_list.addRow(row_admin_roomfeature_list);
+        }
+    }
+
+    public void loadAdminSearchListModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) table_admin_search_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+        for (Room obj : Room.getList()) {
+            i = 0;
+            row_admin_search_list[i++] = obj.getId();
+            row_admin_search_list[i++] = obj.getHotel_id();
+            row_admin_search_list[i++] = Hotel.getFetch(obj.getHotel_id()).getName();
+            row_admin_search_list[i++] = obj.getRoom_type();
+            row_admin_search_list[i++] = obj.getStock();
+            model_admin_search_list.addRow(row_admin_search_list);
+        }
+    }
+
+    public void loadAdminSearchListModel(ArrayList<Room> roomListByCity) {
+        DefaultTableModel clearModel = (DefaultTableModel) table_admin_search_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+        for (Room obj : roomListByCity) {
+            i = 0;
+            row_admin_search_list[i++] = obj.getId();
+            row_admin_search_list[i++] = obj.getHotel_id();
+            row_admin_search_list[i++] = Hotel.getFetch(obj.getHotel_id()).getName();
+            row_admin_search_list[i++] = obj.getRoom_type();
+            row_admin_search_list[i++] = obj.getStock();
+            model_admin_search_list.addRow(row_admin_search_list);
+        }
+    }
+
+    public void loadAdminPriceListModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) table_admin_price_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+        for (Price obj : Price.getList()) {
+            i = 0;
+            row_admin_price_list[i++] = obj.getId();
+            row_admin_price_list[i++] = obj.getHotel_id();
+            row_admin_price_list[i++] = obj.getRoom_id();
+            row_admin_price_list[i++] = obj.getAdult_price_1();
+            row_admin_price_list[i++] = obj.getAdult_price_2();
+            row_admin_price_list[i++] = obj.getChild_price_1();
+            row_admin_price_list[i++] = obj.getChild_price_2();
+            model_admin_price_list.addRow(row_admin_price_list);
 
         }
     }
+
+
+//    public void loadcompleteRoomInfoList(){
+//        DefaultTableModel clearModel = (DefaultTableModel) table_admin_search_list.getModel();
+//        clearModel.setRowCount(0);
+//
+//        int i;
+//        for(Object obj:Room.getCompleteRoomInfoList()){
+//            Room room=new Room();
+//            room=
+//            for(int i=0;i<=5,i++){
+//                switch (i) {
+//                    case 0:
+//                        i=0;
+//                        row_admin_search_list[i++]=obj[0].getId();
+//                        break;
+//                    case:1:
+//break;
+//                    case 2:
+//                        break;
+//                    case 3:
+//                        break;
+//                    case 4:
+//                        break;
+//                    case 5:
+//                        break;
+//                    default :
+//                        break;
+//                }
+//            }
+//        }
+//    }
 
 //    public void loadAdminAccommodationHotelNameCombobox() {
 //        combobox_admin_accommodation_add_hotel_name.removeAllItems();
@@ -916,5 +1145,18 @@ public class AdminGUI extends JFrame {
             combobox.addItem(new Item(obj.getId(), String.valueOf(obj.getId())));
 
         }
+    }
+
+
+    public void loadAdminSearchCityCombobox(JComboBox combobox) {
+        combobox.removeAllItems();
+        combobox.addItem(new Item(0, ""));
+        for (Hotel obj : Hotel.getList()) {
+            combobox.addItem(new Item(obj.getId(), obj.getCity()));
+        }
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

@@ -95,6 +95,12 @@ public class Season {
         return true;
     }
 
+    public static int seasonDecider(String selectedDate){
+        int season;
+        season= Helper.createIntFromStringDate(selectedDate);
+return season;
+    }
+
 //    public Season getFetch(int hotel_id){
 //        String query = "SELECT * FROM season WHERE"
 //    }
