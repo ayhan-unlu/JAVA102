@@ -52,6 +52,37 @@ public class Room {
         return roomList;
     }
 
+//
+//    public static ArrayList<Room> searchRoomList(String query) {
+//        ArrayList<Room> searchList = new ArrayList<>();
+//        Room obj;
+//        try {
+//            Statement st = DBConnector.getInstance().createStatement();
+//            ResultSet rs = st.executeQuery(query);
+//            while(rs.next()){
+//                obj = new Room();
+//                obj.setId (rs.getInt ("id"));
+//                obj.setHotel_id (rs.getInt ("hotel_id"));
+//                obj.setRoom_type (rs.getString ("room_type"));
+//                obj.setStock (rs.getInt ("stock"));
+//                searchList.add(obj);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return searchList;
+//    }
+
+//    public static String searchQuery(String start_date, String end_date, String city, String hotel_name){
+//
+//        String query ="SELECT room.id,room.hotel_id, hotel.name, room.room_type, room.stock FROM room JOIN hotel ON hotel.id=room.hotel_id JOIN season ON season.hotel_id=room.hotel_id WHERE";
+//        if(!city.isEmpty()){
+//            query += "hotel.city="+city;
+//        }
+//       // "hotel.city='ist' AND season.season_2=true AND hotel.name = 'first'";
+//        System.out.println(query);
+//        return query;
+//    }
 
     public static ArrayList<Room> getListByCity(String city) {
         ArrayList<Room> roomListByCity = new ArrayList<>();
@@ -185,7 +216,7 @@ public class Room {
     }
 
     public static Room getFetch(int id) {
-        Room obj = null;
+        Room obj = new Room();
         String query = "SELECT * FROM room WHERE id=?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);

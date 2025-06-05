@@ -10,8 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Price {
-    Hotel hotel;
-    Room room;
+    //    Hotel hotel;
+//    Room room;
     private int id;
     private int hotel_id;
     private int room_id;
@@ -59,6 +59,58 @@ public class Price {
         return priceList;
     }
 
+    public static String searchQuery(String start_date, String end_date, String city, int room_id) {
+        String query = "SELECT * FROM room JOIN hotel ON hotel.id=room.hotel_id JOIN season ON season.hotel_id=room.hotel_id WHERE room.id='%{{room_id}}%'";
+
+        query = query.replace("%{{room_id}}%", String.valueOf(room_id));
+        if (!city.isEmpty()) {
+            query += "AND hotel.city ='__city__'";
+            query = query.replace("__city__", city);
+        }
+
+        if (!((String.valueOf(start_date).isEmpty()) || String.valueOf(end_date).isEmpty())) {
+            boolean season_1;
+            if (Season.seasonDecider(start_date) == 1) {
+
+                query += "AND season.season_1 ='__season_1__'";
+                /*boolean???*/
+                query = query.replace("__season_1__", "true");
+            }
+            if (Season.seasonDecider(start_date) == 2) {
+                query += "AND season.season_2 = '__season_2__'";
+                query = query.replace("__season_2__", "true");
+            }
+        }
+        return query;
+    }
+
+    public static ArrayList<Price> search(String start_date, String end_date, String city, int room_id) {
+        ArrayList<Price> searchList = null;
+        Price obj = null;
+        String query = Price.searchQuery(start_date, end_date, city, room_id);
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                obj = new Price();
+                obj.setId(rs.getInt("id"));
+                obj.setHotel_id(rs.getInt("hotel_id"));
+                obj.setRoom_id(rs.getInt("room_id"));
+                obj.setAdult_price_1(rs.getInt("adult_price_1"));
+                obj.setAdult_price_2(rs.getInt("adult_price_2"));
+                obj.setChild_price_1(rs.getInt("child_price_1"));
+                obj.setChild_price_2(rs.getInt("child_price_2"));
+                searchList.add(obj);
+
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return searchList;
+    }
+
     public static Price getFetch(int room_id) {
         Price obj = null;
         String query = "SELECT * FROM price WHERE room_id=?";
@@ -75,7 +127,6 @@ public class Price {
                 obj.setAdult_price_2(rs.getInt("adult_price_2"));
                 obj.setChild_price_1(rs.getInt("child_price_1"));
                 obj.setChild_price_2(rs.getInt("child_price_2"));
-
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -88,6 +88,36 @@ public class Accommodation {
         return obj;
     }
 
+    public static String createStringHotelAccommodationTypeList(int hotel_id){
+        String accommodationList = "";
+
+        Accommodation currentAccommodation = Accommodation.getFetch(hotel_id);
+
+        if(currentAccommodation.isUltra_all_inclusive()){
+            accommodationList += " Ultra All Inclusive ";
+        }
+        if(currentAccommodation.isAll_in()){
+            accommodationList += " All In ";
+        }
+        if(currentAccommodation.isBed_and_breakfast()){
+            accommodationList += " Bed And Breakfast ";
+        }
+        if(currentAccommodation.isFull_board()){
+            accommodationList += " Full Board ";
+        }
+        if(currentAccommodation.isHalf_board()){
+            accommodationList += " Half Board ";
+        }
+        if(currentAccommodation.isBed_only()){
+            accommodationList += " Bed Only ";
+        }
+        if(currentAccommodation.isExcluding_alcohol_full_credit()){
+            accommodationList += " Excluding Alcohol Full Credit ";
+        }
+
+        return accommodationList;
+    }
+
     public static boolean add(int hotel_id, boolean ultra_all_inclusive, boolean all_in, boolean bed_and_breakfast, boolean full_board, boolean half_board, boolean bed_only, boolean excluding_alcohol_full_credit) {
         String query = "INSERT INTO accommodation (hotel_id,ultra_all_inclusive,all_in, bed_and_breakfast,full_board, half_board,bed_only,excluding_alcohol_full_credit) VALUES(?,?,?,?,?,?,?,?)";
 

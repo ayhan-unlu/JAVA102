@@ -1,7 +1,9 @@
 package _250506_Tourism_Agency_Project.Helper;
 
+import _250506_Tourism_Agency_Project.Model.Feature;
 import _250506_Tourism_Agency_Project.Model.Hotel;
 import _250506_Tourism_Agency_Project.Model.Room;
+import _250506_Tourism_Agency_Project.Model.Roomfeature;
 
 import javax.swing.*;
 import java.awt.*;
@@ -133,6 +135,12 @@ public class Helper {
         return season;
     }
 
+    public static int calculateDuration(String check_in_date, String check_out_date) {
+        int duration = 0;
+        duration = Helper.createIntFromStringDate(check_out_date) - Helper.createIntFromStringDate(check_in_date);
+        return duration;
+    }
+
     public static int convertComboboxItemToInt(JComboBox combobox) {
         int selectedInt = 0;
         if (combobox.getSelectedItem().toString().equals("")) return selectedInt;
@@ -141,12 +149,84 @@ public class Helper {
     }
 
     public static boolean stockController(int room_id) {
-        if ( Room.getFetch(room_id).getStock()==0) return false;
-            else return true;
+        if (Room.getFetch(room_id).getStock() == 0) return false;
+        else return true;
     }
-//    public static void main(String[] args) {
-//        Helper.createIntFromStringDate("12.06.2025");
-//    }
+
+    public static String createStringFeatureList(Hotel hotel) {
+
+        String hotelFeatureList = "";
+
+        hotelFeatureList += hotel.getName() + ", ";
+        hotelFeatureList += hotel.getCity() + ": ";
+
+        Feature feature = Feature.getFetch(hotel.getId());
+
+        if (feature.isFree_wifi()) hotelFeatureList += " Free Wifi ";
+        if (feature.isFree_parking()) hotelFeatureList += " Free Parking ";
+        if (feature.isPool()) hotelFeatureList += " Pool ";
+        if (feature.isFitness_center()) hotelFeatureList += " Fitness Center ";
+        if (feature.isHotel_concierge()) hotelFeatureList += " Hotel Concierge ";
+        if (feature.isSpa()) hotelFeatureList += " Spa ";
+        if (feature.isRoom_service()) hotelFeatureList += " 24/7 Room Service ";
+
+        return hotelFeatureList;
+    }
+
+    public static String createStringFeatureList(Room room) {
+        String roomFeatureList = "";
+
+        Roomfeature roomfeature = Roomfeature.getFetch(room.getId());
+
+        if (roomfeature.getBed_count() != 0) roomFeatureList += " Bed Count: " + roomfeature.getBed_count() + " ";
+        if (roomfeature.getSquaremeters() != 0)
+            roomFeatureList += "Squaremeters: " + roomfeature.getSquaremeters() + " ";
+        if (roomfeature.isTv()) roomFeatureList += " Tv ";
+        if (roomfeature.isMinibar()) roomFeatureList += " Minibar ";
+        if (roomfeature.isConsole()) roomFeatureList += " Console ";
+        if (roomfeature.isSafe()) roomFeatureList += " Safe ";
+        if (roomfeature.isProjector()) roomFeatureList += " Projector ";
+
+        return roomFeatureList;
+    }
+
+    public static int calculateGuestCount(String guest_1_name, String guest_2_name) {
+        int guestCount = 0;
+        if (!guest_1_name.isEmpty()) guestCount += 1;
+        if (!guest_2_name.isEmpty()) guestCount += 1;
+        return guestCount;
+    }
+
+    public static int calculateGuestCount(String guest_3_name) {
+        int guestCount = 0;
+        if (!guest_3_name.isEmpty()) guestCount += 1;
+        return guestCount;
+
+    }
+
+    public static void decreaseRoomStockOne(int room_id) {
+        Room currentRoom = Room.getFetch(room_id);
+        System.out.println("room_id "+room_id);
+        int stock = currentRoom.getStock();
+        System.out.println(stock);
+        currentRoom.setStock(stock-1);
+        stock = currentRoom.getStock();
+        System.out.println(stock);
+
+    }
+
+    public static void increaseRoomStockOne(int room_id){
+        Room currentRoom=Room.getFetch(room_id);
+        int stock = currentRoom.getStock();
+        currentRoom.setStock(stock+1);
+    }
+
+    public static void main(String[] args) {
+        Hotel hotel = Hotel.getFetch(1);
+        System.out.println(createStringFeatureList(hotel));
+        System.out.println(createStringFeatureList(Room.getFetch(1)));
+        // Helper.createIntFromStringDate("12.06.2025");
+    }
 
     public static void optionPaneTR() {
         UIManager.put("OptionPane.okButtonText", "Tamam");

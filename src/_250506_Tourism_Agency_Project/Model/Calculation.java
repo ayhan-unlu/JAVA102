@@ -10,16 +10,16 @@ public class Calculation {
     private int roomfeature_id;
     private int adultGuestNumber;
     private int childGuestNumber;
-    private static double currentCoefficient;
+    private double currentCoefficient;
     private double calculatedPrice;
 
     private Hotel hotel;
 
-    Calculation() {
+    public Calculation() {
 
     }
 
-    Calculation(int id, int hotel_id, int room_id, int accommodation_id, int season_id, int feature_id, int roomfeature_id, int adultGuestNumber, int childGuestNumber, double currentCoefficient, double calculatedPrice) {
+    public Calculation(int id, int hotel_id, int room_id, int accommodation_id, int season_id, int feature_id, int roomfeature_id, int adultGuestNumber, int childGuestNumber, double currentCoefficient, double calculatedPrice) {
         this.id = id;
         this.hotel_id = hotel_id;
         this.room_id = room_id;
@@ -34,13 +34,15 @@ public class Calculation {
     }
 
     public static double calculateCurrentCoefficient(int room_id) {
-        currentCoefficient = 1;
-        int selectedHotel_id=Room.getFetch(room_id).getHotel_id();
+        int currentCoefficient = 1;
+
+        int selectedHotel_id = Room.getFetch(room_id).getHotel_id();
         Hotel selectedHotel = Hotel.getFetch(selectedHotel_id);
 
         //Hotel Stars----------------------------------------------------------
-
-        switch (selectedHotel.getStar()) {
+        String star = "0";
+        star = selectedHotel.getStar();
+        switch (star) {
             case "1":
                 currentCoefficient *= 1;
                 break;
@@ -98,47 +100,47 @@ public class Calculation {
 
         //Season----------------------------------------------------------
         Season selectedSeason = Season.getFetch(selectedHotel_id);
-        if(selectedSeason.isSeason_1()) currentCoefficient*=1.1;
-        else if(selectedSeason.isSeason_2()) currentCoefficient*=1.5;
-        else currentCoefficient*=1;
+        if (selectedSeason.isSeason_1()) currentCoefficient *= 1.1;
+        else if (selectedSeason.isSeason_2()) currentCoefficient *= 1.5;
+        else currentCoefficient *= 1;
         //##Season----------------------------------------------------------
 
         //Features----------------------------------------------------------
         Feature selectedFeature = Feature.getFetch(selectedHotel_id);
-        if(selectedFeature.isFree_wifi()) currentCoefficient *=1.1;
-        if(selectedFeature.isFree_parking()) currentCoefficient *=1.2;
-        if(selectedFeature.isHotel_concierge()) currentCoefficient *=1.3;
-        if(selectedFeature.isFitness_center()) currentCoefficient *=1.4;
-        if(selectedFeature.isSpa()) currentCoefficient *=1.5;
-        if(selectedFeature.isPool()) currentCoefficient *=1.6;
-        if(selectedFeature.isRoom_service()) currentCoefficient *=1.7;
+        if (selectedFeature.isFree_wifi()) currentCoefficient *= 1.1;
+        if (selectedFeature.isFree_parking()) currentCoefficient *= 1.2;
+        if (selectedFeature.isHotel_concierge()) currentCoefficient *= 1.3;
+        if (selectedFeature.isFitness_center()) currentCoefficient *= 1.4;
+        if (selectedFeature.isSpa()) currentCoefficient *= 1.5;
+        if (selectedFeature.isPool()) currentCoefficient *= 1.6;
+        if (selectedFeature.isRoom_service()) currentCoefficient *= 1.7;
         //##Features----------------------------------------------------------
 
         //Room Features----------------------------------------------------------
 
         Roomfeature selectedRoomfeature = Roomfeature.getFetch(room_id);
-        if(selectedRoomfeature.getBed_count()>1) currentCoefficient*=1.1;
-        if(selectedRoomfeature.getSquaremeters()>20) currentCoefficient*=1.2;
-        if(selectedRoomfeature.isTv()) currentCoefficient*=1.1;
-        if(selectedRoomfeature.isMinibar()) currentCoefficient*=1.1;
-        if(selectedRoomfeature.isConsole()) currentCoefficient*=1.1;
-        if(selectedRoomfeature.isSafe()) currentCoefficient*=1.1;
-        if(selectedRoomfeature.isProjector()) currentCoefficient*=1.1;
+        if (selectedRoomfeature.getBed_count() > 1) currentCoefficient *= 1.1;
+        if (selectedRoomfeature.getSquaremeters() > 20) currentCoefficient *= 1.2;
+        if (selectedRoomfeature.isTv()) currentCoefficient *= 1.1;
+        if (selectedRoomfeature.isMinibar()) currentCoefficient *= 1.1;
+        if (selectedRoomfeature.isConsole()) currentCoefficient *= 1.1;
+        if (selectedRoomfeature.isSafe()) currentCoefficient *= 1.1;
+        if (selectedRoomfeature.isProjector()) currentCoefficient *= 1.1;
 
         //##Room Features----------------------------------------------------------
         return currentCoefficient;
     }
 
-    public static double calculateReservationPrice(int room_id,int adultGuestNumber,int childGuestNumber,int selectedSeason,int duration){
-        double reservationPrice=1;
-        double currentCoefficient=Calculation.calculateCurrentCoefficient(room_id);
+    public static double calculateReservationPrice(int room_id, int adultGuestNumber, int childGuestNumber, int selectedSeason, int duration) {
+        double reservationPrice = 1;
+        double currentCoefficient = Calculation.calculateCurrentCoefficient(room_id);
 
-        reservationPrice=currentCoefficient*(adultGuestNumber*2+childGuestNumber)*duration;
-        if(selectedSeason==1){
-            reservationPrice*=1;
+        reservationPrice = currentCoefficient * (adultGuestNumber * 2 + childGuestNumber) * duration;
+        if (selectedSeason == 1) {
+            reservationPrice *= 1;
         }
-        if(selectedSeason==2){
-            reservationPrice*=1.5;
+        if (selectedSeason == 2) {
+            reservationPrice *= 1.5;
         }
 
         return reservationPrice;

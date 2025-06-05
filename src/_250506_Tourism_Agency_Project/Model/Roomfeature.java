@@ -81,7 +81,7 @@ public class Roomfeature {
             ResultSet rs = pr.executeQuery();
 
             if (rs.next()) {
-                obj=new Roomfeature();
+                obj = new Roomfeature();
                 obj.setId(rs.getInt("id"));
                 obj.setHotel_id(rs.getInt("hotel_id"));
                 obj.setRoom_id(rs.getInt("room_id"));
@@ -104,7 +104,7 @@ public class Roomfeature {
         String query = "INSERT INTO roomfeature (hotel_id, room_id, bed_count, squaremeters, tv, minibar ,console, safe, projector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Roomfeature foundRoomfeature = Roomfeature.getFetch(room_id);
 
-     //   System.out.println(foundRoomfeature.getHotel_id()+"hotel_id");
+        //   System.out.println(foundRoomfeature.getHotel_id()+"hotel_id");
         if (foundRoomfeature != null) {
             Helper.showMessage("exist");
         } else {
@@ -119,17 +119,45 @@ public class Roomfeature {
                 pr.setBoolean(7, console);
                 pr.setBoolean(8, safe);
                 pr.setBoolean(9, projector);
-                int response =pr.executeUpdate();
+                int response = pr.executeUpdate();
 
-                if(response==-1){
+                if (response == -1) {
                     Helper.showMessage("error");
                 }
-                return response!=-1;
+                return response != -1;
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         }
         return true;
+    }
+
+    public static String createStringRoomFeatureList(int room_id) {
+        String roomFeatureList = "";
+        Roomfeature currentRoomfeature = Roomfeature.getFetch(room_id);
+
+        if (currentRoomfeature.getBed_count() > 0) {
+            roomFeatureList += " Bed Count: " + currentRoomfeature.getBed_count();
+        }
+        if (currentRoomfeature.getSquaremeters() > 0) {
+            roomFeatureList += " Squaremeters: " + currentRoomfeature.getSquaremeters();
+        }
+        if (currentRoomfeature.isTv()) {
+            roomFeatureList += " Tv ";
+        }
+        if (currentRoomfeature.isMinibar()) {
+            roomFeatureList += " Minibar ";
+        }
+        if (currentRoomfeature.isConsole()) {
+            roomFeatureList += " Console ";
+        }
+        if (currentRoomfeature.isSafe()) {
+            roomFeatureList += " Safe ";
+        }
+        if (currentRoomfeature.isProjector()) {
+            roomFeatureList += " Projector ";
+        }
+        return roomFeatureList;
     }
 
     public int getId() {

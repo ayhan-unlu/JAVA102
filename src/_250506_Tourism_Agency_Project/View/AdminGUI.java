@@ -203,6 +203,54 @@ public class AdminGUI extends JFrame {
     private JLabel label_admin_price_add_season_2;
     private JLabel label_admin_price_add_adult_price_2;
     private JLabel label_admin_price_add_child_price_2;
+    private JPanel panel_admin_reservation;
+    private JLabel label_admin_reservation_welcome;
+    private JPanel panel_admin_reservation_room;
+    private JPanel panel_admin_reservation_contact;
+    private JPanel panel_admin_reservation_guest;
+    private JPanel panel_admin_reservation_info;
+    private JPanel panel_admin_reservation_buttons;
+    private JLabel label_admin_reservation_room_hotel_info;
+    private JLabel label_admin_reservation_contact_info;
+    private JLabel label_admin_reservation_guest_info;
+    private JLabel label_admin_reservation_info;
+    private JButton button_admin_reservation_add;
+    private JTextField field_admin_reservation_hotel_feature;
+    private JLabel label_admin_reservation_room_feature;
+    private JTextField field_admin_reservation_room_feature;
+    private JLabel label_admin_reservation_accommodation;
+    private JTextField field_admin_reservation_accommodation;
+    private JLabel label_admin_reservation_season;
+    private JTextField field_admin_reservation_season;
+    private JLabel label_admin_reservation_contact_name;
+    private JTextField field_admin_reservation_contact_name;
+    private JTextField field_admin_reservation_contact_note;
+    private JLabel label_admin_reservation_contact_tel;
+    private JTextField field_admin_reservation_contact_tel;
+    private JTextField field_admin_reservation_contact_email;
+    private JLabel label_admin_reservation_contact_email;
+    private JLabel label_admin_reservation_guest_1;
+    private JLabel label_admin_reservation_guest_2;
+    private JLabel label_admin_reservation_guest_3;
+    private JTextField field_admin_reservation_guest_1_name;
+    private JTextField field_admin_reservation_guest_1_country;
+    private JTextField field_admin_reservation_guest_1_id_no;
+    private JTextField field_admin_reservation_guest_2_name;
+    private JTextField field_admin_reservation_guest_2_country;
+    private JTextField field_admin_reservation_guest_2_id_no;
+    private JTextField field_admin_reservation_guest_3_name;
+    private JTextField field_admin_reservation_guest_3_country;
+    private JTextField field_admin_reservation_guest_3_id_no;
+    private JLabel label_admin_reservation_guest_info_name;
+    private JLabel label_admin_reservation_guest_info_country;
+    private JLabel label_admin_reservation_guest_info_id_no;
+    private JScrollPane scroll_panel_admin_reservation;
+    private JTable table_admin_reservation_list;
+    private JLabel label_admin_reservation_room_id;
+    private JComboBox combobox_admin_reservation_room_id;
+    private JLabel label_admin_reservation_contact_note;
+    private JLabel label_admin_reservation_contact_id_no;
+    private JTextField field_admin_reservation_contact_id_no;
     private DefaultTableModel model_admin_user_list;
     private Object[] row_admin_user_list;
     private DefaultTableModel model_admin_hotel_list;
@@ -221,6 +269,10 @@ public class AdminGUI extends JFrame {
     private Object[] row_admin_search_list;
     private DefaultTableModel model_admin_price_list;
     private Object[] row_admin_price_list;
+    private DefaultTableModel model_admin_reservation_list;
+    private Object[] row_admin_reservation_list;
+    private Hotel hotel;
+    private Room room;
 
     public AdminGUI(Admin admin) {
         this.admin = admin;
@@ -511,6 +563,24 @@ public class AdminGUI extends JFrame {
 
 
         //##Admin Price Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //Admin Reservation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
+        model_admin_reservation_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1 || column == 2 || column == 3) return false;
+                return super.isCellEditable(row, column);
+            }
+        };
+
+        Object[] column_admin_reservation_list = {"Reservation Id", "Hotel Id", "Room Id", "Accommodation Id", "Season", "Contact Person", " Tel", "Email", "Note", "Adult Guests", "Child(ren)", "Price"};
+        model_admin_reservation_list.setColumnIdentifiers(column_admin_reservation_list);
+        row_admin_reservation_list = new Object[column_admin_reservation_list.length];
+        loadAdminReservationListModel();
+        loadAdminRoomIdCombobox(combobox_admin_reservation_room_id);
+        table_admin_reservation_list.setModel(model_admin_reservation_list);
+
+        //##Admin Reservation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
         button_admin_user_add.addActionListener(e -> {
@@ -841,6 +911,12 @@ public class AdminGUI extends JFrame {
             if ((field_admin_search_start_date.getText().isEmpty() || field_admin_search_end_date.getText().isEmpty()) && combobox_admin_search_city.getSelectedItem().toString().isEmpty() && combobox_admin_search_hotel_name.getSelectedItem().toString().isEmpty()) {
                 Helper.showMessage("fill");
             } else {
+                String start_date = field_admin_search_start_date.getText();
+                String end_date = field_admin_search_end_date.getText();
+                String city = combobox_admin_search_city.getSelectedItem().toString();
+                String hotel_name = combobox_admin_search_hotel_name.getSelectedItem().toString();
+//loadAdminSearchListModel(Room.searchRoomList(Room.searchQuery(start_date,end_date,city,hotel_name)));
+//loadAdminSearchListModel(Price.search(field_admin_search_start_date.getText(), field_admin_search_end_date.getText(), combobox_admin_search_city.getSelectedItem().toString(),Hotel.getFetch(combobox_admin_search_hotel_name.getSelectedItem().toString()).getId());
                 if (field_admin_search_start_date.getText().isEmpty() && field_admin_search_end_date.getText().isEmpty() && combobox_admin_search_hotel_name.getSelectedItem().toString().isEmpty()) {
                     String selectedCity = combobox_admin_search_city.getSelectedItem().toString();
                     loadAdminSearchListModel(Room.getListByCity(selectedCity));
@@ -872,11 +948,91 @@ public class AdminGUI extends JFrame {
                 int adult_price_2 = (Integer) Integer.parseInt(field_admin_price_add_adult_price_2.getText());
                 int child_price_1 = (Integer) Integer.parseInt(field_admin_price_add_child_price_1.getText());
                 int child_price_2 = (Integer) Integer.parseInt(field_admin_price_add_child_price_2.getText());
-                if(Price.add(hotel_id,room_id,adult_price_1,adult_price_2,child_price_1,child_price_2)){
+                if (Price.add(hotel_id, room_id, adult_price_1, adult_price_2, child_price_1, child_price_2)) {
                     Helper.showMessage("success");
                     loadAdminPriceListModel();
                 }
             }
+
+            for (int i = 0; i < textFieldList.size() - 1; i++) {
+                textFieldList.get(i).setText("");
+            }
+        });
+        button_admin_reservation_add.addActionListener(e -> {
+            ArrayList<JTextField> textFieldList = new ArrayList<>();
+
+            textFieldList.add(field_admin_reservation_contact_name);
+            textFieldList.add(field_admin_reservation_contact_id_no);
+            textFieldList.add(field_admin_reservation_contact_tel);
+            textFieldList.add(field_admin_reservation_contact_email);
+            textFieldList.add(field_admin_reservation_contact_note);
+            textFieldList.add(field_admin_reservation_guest_1_name);
+            textFieldList.add(field_admin_reservation_guest_1_country);
+            textFieldList.add(field_admin_reservation_guest_1_id_no);
+
+            if (Helper.isAnyFieldEmpty(textFieldList) || combobox_admin_reservation_room_id.getSelectedItem().toString().isEmpty())
+                Helper.showMessage("fill");
+            else {
+                if (!combobox_admin_reservation_room_id.getSelectedItem().toString().isEmpty()) {
+                    int room_id = (Integer) Integer.parseInt(combobox_admin_reservation_room_id.getSelectedItem().toString());
+                    Hotel hotel = Hotel.getFetch(Room.getFetch(room_id).getHotel_id());
+                    int hotel_id = hotel.getId();
+                    field_admin_reservation_hotel_feature.setText(Feature.createStringHotelFeatureList(hotel_id));
+                    field_admin_reservation_room_feature.setText(Roomfeature.createStringRoomFeatureList(room_id));
+                    field_admin_reservation_accommodation.setText(Accommodation.createStringHotelAccommodationTypeList(hotel_id));
+                    int selectedAccommodation_id = 1;
+                    int accommodation_id = selectedAccommodation_id;
+                    field_admin_reservation_season.setText("1");
+                    String check_in_date = "12.06.2025";
+                    String check_out_date = "15_06_2025";
+                    String contact_name = field_admin_reservation_contact_name.getText();
+                    String contact_tel = field_admin_reservation_contact_tel.getText();
+                    String contact_email = field_admin_reservation_contact_email.getText();
+                    String contact_id_no = field_admin_reservation_contact_id_no.getText();
+                    String contact_note = field_admin_reservation_contact_note.getText();
+                    String guest_1_name = field_admin_reservation_guest_1_name.getText();
+                    String guest_1_country = field_admin_reservation_guest_1_country.getText();
+                    String guest_1_id_no = field_admin_reservation_guest_1_id_no.getText();
+                    String guest_2_name = field_admin_reservation_guest_2_name.getText();
+                    String guest_2_country = field_admin_reservation_guest_2_country.getText();
+                    String guest_2_id_no = field_admin_reservation_guest_2_id_no.getText();
+                    String guest_3_name = field_admin_reservation_guest_3_name.getText();
+                    String guest_3_country = field_admin_reservation_guest_3_country.getText();
+                    String guest_3_id_no = field_admin_reservation_guest_3_id_no.getText();
+
+
+                    if (Reservation.add(
+                            room_id,
+                            hotel_id,
+                            selectedAccommodation_id,
+                            check_in_date,
+                            check_out_date,
+                            contact_name,
+                            contact_tel,
+                            contact_email,
+                            contact_id_no,
+                            contact_note,
+                            guest_1_name,
+                            guest_1_country,
+                            guest_1_id_no,
+                            "adult",
+                            guest_2_name,
+                            guest_2_country,
+                            guest_2_id_no,
+                            "adult",
+                            guest_3_name,
+                            guest_3_country,
+                            guest_3_id_no,
+                            "child")) {
+                        Helper.showMessage("success");
+                        Helper.decreaseRoomStockOne(room_id);
+                        loadAdminReservationListModel();
+                        loadAdminRoomListModel();
+                    }
+                }
+            }
+
+
         });
     }
 
@@ -1006,7 +1162,7 @@ public class AdminGUI extends JFrame {
 
         for (Room obj : Room.getList()) {
             i = 0;
-            row_admin_hotel_list[i++] = obj.getId();
+            row_admin_room_list[i++] = obj.getId();
             row_admin_room_list[i++] = obj.getHotel_id();
             row_admin_room_list[i++] = obj.getRoom_type();
             row_admin_room_list[i++] = obj.getStock();
@@ -1086,6 +1242,49 @@ public class AdminGUI extends JFrame {
         }
     }
 
+    public void loadAdminReservationListModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) table_admin_reservation_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+        int adultGuestCount;
+        int childGuestCount;
+
+        for (Reservation obj : Reservation.getList()) {
+            i = 0;
+            row_admin_reservation_list[i++] = obj.getId();
+            row_admin_reservation_list[i++] = obj.getHotel_id();
+            row_admin_reservation_list[i++] = obj.getRoom_id();
+            row_admin_reservation_list[i++] = obj.getAccommodation_id();
+            int season = 1;
+            //Season.seasonDecider(obj.getCheck_in_date());
+            row_admin_reservation_list[i++] = season;
+            row_admin_reservation_list[i++] = obj.getContact_name();
+            row_admin_reservation_list[i++] = obj.getContact_tel();
+            row_admin_reservation_list[i++] = obj.getContact_email();
+            row_admin_reservation_list[i++] = obj.getNote();
+            adultGuestCount = Helper.calculateGuestCount(obj.getGuest_1_name(), obj.getGuest_2_name());
+            row_admin_reservation_list[i++] = adultGuestCount;
+            childGuestCount = Helper.calculateGuestCount(obj.getGuest_3_name());
+            row_admin_reservation_list[i++] = childGuestCount;
+            //   int duration = Helper.calculateDuration(obj.getCheck_in_date(), obj.getCheck_out_date());
+            row_admin_reservation_list[i++] = "will be calculated later";
+            //   row_admin_reservation_list[i++] = Calculation.calculateReservationPrice(obj.getRoom_id(),adultGuestCount,childGuestCount,season,duration);
+//            row_admin_reservation_list[i++] = obj.getGuest_1_type();
+//            row_admin_reservation_list[i++] = obj.getGuest_2_name();
+////            row_admin_reservation_list[i++] = obj.getGuest_2_country();
+//            row_admin_reservation_list[i++] = obj.getGuest_2_id_no();
+//            row_admin_reservation_list[i++] = obj.getGuest_2_type();
+//            row_admin_reservation_list[i++] = obj.getGuest_3_name();
+//            row_admin_reservation_list[i++] = obj.getGuest_3_country();
+//            row_admin_reservation_list[i++] = obj.getGuest_3_id_no();
+//            row_admin_reservation_list[i++] = obj.getGuest_3_type();
+
+            model_admin_reservation_list.addRow(row_admin_reservation_list);
+
+        }
+    }
+
 
 //    public void loadcompleteRoomInfoList(){
 //        DefaultTableModel clearModel = (DefaultTableModel) table_admin_search_list.getModel();
@@ -1142,7 +1341,7 @@ public class AdminGUI extends JFrame {
         combobox.removeAllItems();
         combobox.addItem(new Item(0, ""));
         for (Room obj : Room.getList()) {
-            combobox.addItem(new Item(obj.getId(), String.valueOf(obj.getId())));
+            combobox.addItem(new Item(obj.getId(), java.lang.String.valueOf(obj.getId())));
 
         }
     }

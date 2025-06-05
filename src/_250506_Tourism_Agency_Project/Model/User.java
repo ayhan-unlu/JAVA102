@@ -154,7 +154,6 @@ public class User {
             query += " AND type='{{type}}'";
             query = query.replace("{{type}}", type);
         }
-
         if (name.isEmpty() && surname.isEmpty() && username.isEmpty() && type.isEmpty()) {
             query = "SELECT * FROM user";
         }

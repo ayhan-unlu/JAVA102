@@ -19,11 +19,11 @@ public class Hotel {
     private String phone;
     private String star;
 //    private String facility_feature;
- //   private ArrayList<Boolean> facilityFeatureList;
- //   private boolean freeParking;
-   // private boolean freeWifi;
-   // private boolean pool;
-   // private boolean fitnessCenter;
+    //   private ArrayList<Boolean> facilityFeatureList;
+    //   private boolean freeParking;
+    // private boolean freeWifi;
+    // private boolean pool;
+    // private boolean fitnessCenter;
     //private boolean hotelConcierge;
     //private boolean spa;
     //private boolean roomService;
@@ -64,7 +64,7 @@ public class Hotel {
                 obj.setEmail(rs.getString("email"));
                 obj.setPhone(rs.getString("phone"));
                 obj.setStar(rs.getString("star"));
-           //     obj.setFacility_feature(rs.getString("facility_feature"));
+                //     obj.setFacility_feature(rs.getString("facility_feature"));
                 hotelList.add(obj);
             }
         } catch (SQLException e) {
@@ -101,11 +101,11 @@ public class Hotel {
     }
 
     public static Hotel getFetch(int id) {
+        Hotel obj = new Hotel();
 
         String query = "SELECT * FROM hotel WHERE id = ?";
 
 
-        Hotel obj = null;
         try {
 
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
@@ -113,24 +113,45 @@ public class Hotel {
             ResultSet rs = pr.executeQuery();
 
             if (rs.next()) {
-                int fetchId = rs.getInt("id");
-                String name = rs.getString("name");
-                String city = rs.getString("city");
-                String region = rs.getString("region");
-                String address = rs.getString("address");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String star = rs.getString("star");
-       //         String facility_feature = rs.getString("facility_feature");
-                obj = new Hotel(id, name, city, region, address, email, phone, star);
-
-
+                obj = new Hotel();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setCity(rs.getString("city"));
+                obj.setRegion(rs.getString("region"));
+                obj.setAddress(rs.getString("address"));
+                obj.setEmail(rs.getString("email"));
+                obj.setPhone(rs.getString("phone"));
+                obj.setStar(rs.getString("star"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return obj;
     }
+
+//    public static Hotel getFetch(int room_id) {
+//        Hotel obj = new Hotel();
+//        String query = "SELECT * FROM hotel WHERE room_id = ?";
+//        try {
+//            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+//            pr.setInt(1,room_id);
+//            ResultSet rs = pr.executeQuery();
+//            if(rs.next()){
+//                obj = new Hotel();
+//                obj.setId(rs.getInt("id"));
+//                obj.setName(rs.getString("name"));
+//                obj.setCity(rs.getString("city"));
+//                obj.setRegion(rs.getString("region"));
+//                obj.setAddress(rs.getString("address"));
+//                obj.setEmail(rs.getString("email"));
+//                obj.setPhone(rs.getString("phone"));
+//                obj.setStar(rs.getString("star"));
+//            }
+//        }catch(SQLException e){
+//            System.out.println(e.getMessage());
+//        }
+//        return obj;
+//    }
 
     public static boolean add(String name, String city, String region, String address, String email, String phone, String star/*, String facility_feature*/) {
 
@@ -151,7 +172,7 @@ public class Hotel {
             pr.setString(5, email);
             pr.setString(6, phone);
             pr.setString(7, star);
-        //    pr.setString(8, facility_feature);
+            //    pr.setString(8, facility_feature);
 
             int response = pr.executeUpdate();
             if (response == -1) {

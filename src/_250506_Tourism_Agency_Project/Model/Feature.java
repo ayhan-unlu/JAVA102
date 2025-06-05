@@ -126,12 +126,39 @@ public class Feature {
 
 
     public static String createStringHotelFeatureList(int hotel_id) {
-        String hotelFeatureList = null;
-        Feature currentFeature= Feature.getFetch(hotel_id);
+        String hotelFeatureList = "";
+        Feature currentFeature = Feature.getFetch(hotel_id);
 
-hotelFeatureList+=currentFeature.isFree_parking()+", ";
+        if (currentFeature.isFree_parking()) {
+            hotelFeatureList += " Free Parking ";
+        }
 
-return hotelFeatureList;
+        if (currentFeature.isFree_wifi()) {
+            hotelFeatureList += " Free Wifi";
+        }
+        if (currentFeature.isPool()) {
+            hotelFeatureList += " Pool ";
+        }
+
+        if (currentFeature.isFitness_center()) {
+            hotelFeatureList += " Fitness Center ";
+        }
+
+
+        if (currentFeature.isHotel_concierge()) {
+            hotelFeatureList += " Hotel Concierge ";
+        }
+
+        if (currentFeature.isSpa()) {
+            hotelFeatureList += " Spa ";
+        }
+
+        if (currentFeature.isRoom_service()) {
+            hotelFeatureList += " 24/7 Room Service ";
+        }
+
+
+        return hotelFeatureList;
     }
 
     public int getId() {

@@ -95,10 +95,10 @@ public class Season {
         return true;
     }
 
-    public static int seasonDecider(String selectedDate){
+    public static int seasonDecider(String selectedDate) {
         int season;
-        season= Helper.createIntFromStringDate(selectedDate);
-return season;
+        season = Helper.createIntFromStringDate(selectedDate);
+        return season;
     }
 
 //    public Season getFetch(int hotel_id){
