@@ -42,7 +42,7 @@ public class Reservation {
     }
 
 
-    public Reservation(int id, int room_id, int hotel_id, int accommodation_id, String check_in_date, String check_out_date,  String contact_name, String contact_tel, String contact_email, String contact_id_no,String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
+    public Reservation(int id, int room_id, int hotel_id, int accommodation_id, String check_in_date, String check_out_date, String contact_name, String contact_tel, String contact_email, String contact_id_no, String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
         this.id = id;
         this.room_id = room_id;
         this.hotel_id = hotel_id;
@@ -116,7 +116,48 @@ public class Reservation {
         return reservationList;
     }
 
-    public static Reservation getFetch(int room_id) {
+    public static Reservation getFetch(int id) {
+        Reservation obj = null;
+        String query = "SELECT * FROM reservation WHERE id=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, id);
+            ResultSet rs = pr.executeQuery();
+
+            if (rs.next()) {
+                obj = new Reservation();
+                obj.setId(rs.getInt("id"));
+                obj.setRoom_id(rs.getInt("room_id"));
+                obj.setHotel_id(rs.getInt("hotel_id"));
+                obj.setAccommodation_id(rs.getInt("accommodation_id"));
+                obj.setCheck_in_date(rs.getString("check_in_date"));
+                obj.setCheck_out_date(rs.getString("check_out_date"));
+                obj.setContact_name(rs.getString("contact_name"));
+                obj.setContact_tel(rs.getString("contact_tel"));
+                obj.setContact_email(rs.getString("contact_email"));
+                obj.setContact_id_no(rs.getString("contact_id_no"));
+                obj.setNote(rs.getString("note"));
+                obj.setGuest_1_name(rs.getString("guest_1_name"));
+                obj.setGuest_1_country(rs.getString("guest_1_country"));
+                obj.setGuest_1_id_no(rs.getString("guest_1_id_no"));
+                obj.setGuest_1_type(rs.getString("guest_1_type"));
+                obj.setGuest_2_name(rs.getString("guest_2_name"));
+                obj.setGuest_2_country(rs.getString("guest_2_country"));
+                obj.setGuest_2_id_no(rs.getString("guest_2_id_no"));
+                obj.setGuest_2_type(rs.getString("guest_2_type"));
+                obj.setGuest_3_name(rs.getString("guest_3_name"));
+                obj.setGuest_3_country(rs.getString("guest_3_country"));
+                obj.setGuest_3_id_no(rs.getString("guest_3_id_no"));
+                obj.setGuest_3_type(rs.getString("guest_3_type"));
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return obj;
+    }
+
+    public static Reservation getFetchByRoomId(int room_id) {
         Reservation obj = null;
 
         String query = "SELECT * FROM reservation WHERE room_id=?";
@@ -180,9 +221,9 @@ public class Reservation {
                               String guest_3_id_no,
                               String guest_3_type) {
         String query = "INSERT INTO reservation (room_id, hotel_id, accommodation_id, check_in_date, check_out_date, contact_name, contact_tel, contact_email, contact_id_no,note, guest_1_name,guest_1_country,guest_1_id_no,guest_1_type,guest_2_name,guest_2_country,guest_2_id_no,guest_2_type,guest_3_name,guest_3_country,guest_3_id_no,guest_3_type)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        Reservation foundReservation = Reservation.getFetch(room_id);
+        Reservation foundReservation = Reservation.getFetchByRoomId(room_id);
         if (foundReservation != null) {
-            System.out.println("Found Reservation"+foundReservation.getId()+"Room Id"+foundReservation.getRoom_id());
+            System.out.println("Found Reservation" + foundReservation.getId() + "Room Id" + foundReservation.getRoom_id());
             Helper.showMessage("exist");
             return false;
         }
@@ -215,6 +256,18 @@ public class Reservation {
                 Helper.showMessage("error");
             }
             return response != -1;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+    public static boolean delete(int id) {
+        String query = "DELETE FROM reservation WHERE id = ? ";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1,id);
+            return pr.executeUpdate()!=-1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

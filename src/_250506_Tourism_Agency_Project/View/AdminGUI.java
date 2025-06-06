@@ -213,7 +213,7 @@ public class AdminGUI extends JFrame {
     private JLabel label_admin_reservation_room_hotel_info;
     private JLabel label_admin_reservation_contact_info;
     private JLabel label_admin_reservation_guest_info;
-    private JLabel label_admin_reservation_info;
+    private JLabel label_admin_reservation_delete_title;
     private JButton button_admin_reservation_add;
     private JTextField field_admin_reservation_hotel_feature;
     private JLabel label_admin_reservation_room_feature;
@@ -251,6 +251,9 @@ public class AdminGUI extends JFrame {
     private JLabel label_admin_reservation_contact_note;
     private JLabel label_admin_reservation_contact_id_no;
     private JTextField field_admin_reservation_contact_id_no;
+    private JLabel label_admin_reservation_add_title;
+    private JComboBox combobox_admin_reservation_delete_reservation_id;
+    private JButton button_admin_reservation_delete;
     private DefaultTableModel model_admin_user_list;
     private Object[] row_admin_user_list;
     private DefaultTableModel model_admin_hotel_list;
@@ -278,7 +281,7 @@ public class AdminGUI extends JFrame {
         this.admin = admin;
 
         add(wrapper);
-        setSize(1500, 750);
+        setSize(1500, 1000);
         int x = Helper.screenCenterPoint("x", getSize());
         int y = Helper.screenCenterPoint("y", getSize());
         setLocation(x, y);
@@ -578,6 +581,7 @@ public class AdminGUI extends JFrame {
         row_admin_reservation_list = new Object[column_admin_reservation_list.length];
         loadAdminReservationListModel();
         loadAdminRoomIdCombobox(combobox_admin_reservation_room_id);
+        loadAdminReservationIdCombobox(combobox_admin_reservation_delete_reservation_id);
         table_admin_reservation_list.setModel(model_admin_reservation_list);
 
         //##Admin Reservation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1034,6 +1038,24 @@ public class AdminGUI extends JFrame {
 
 
         });
+        button_admin_reservation_delete.addActionListener(e -> {
+            if (combobox_admin_reservation_delete_reservation_id.getSelectedItem().toString().isEmpty()) {
+                Helper.showMessage("fill");
+            } else {
+                if (Helper.confirm("sure")) {
+                    int selected_reservation_id = (Integer) Integer.parseInt(combobox_admin_reservation_delete_reservation_id.getSelectedItem().toString());
+                    if (Reservation.delete(selected_reservation_id)) {
+                        int room_id = 0;
+                        room_id=Reservation.getFetch(selected_reservation_id).getRoom_id();
+                        Helper.showMessage("success");
+                        Helper.increaseRoomStockOne(room_id);
+                        loadAdminReservationListModel();
+                        loadAdminRoomListModel();
+                    }
+                }
+            }
+
+        });
     }
 
     public void loadAdminUserListModel() {
@@ -1352,6 +1374,14 @@ public class AdminGUI extends JFrame {
         combobox.addItem(new Item(0, ""));
         for (Hotel obj : Hotel.getList()) {
             combobox.addItem(new Item(obj.getId(), obj.getCity()));
+        }
+    }
+
+    public void loadAdminReservationIdCombobox(JComboBox combobox) {
+        combobox.removeAllItems();
+        combobox.addItem(new Item(0, ""));
+        for (Reservation obj : Reservation.getList()) {
+            combobox.addItem(new Item(obj.getId(), String.valueOf(obj.getId())));
         }
     }
 

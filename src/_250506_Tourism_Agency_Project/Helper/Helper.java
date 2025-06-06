@@ -7,6 +7,8 @@ import _250506_Tourism_Agency_Project.Model.Roomfeature;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Helper {
@@ -205,20 +207,34 @@ public class Helper {
     }
 
     public static void decreaseRoomStockOne(int room_id) {
-        Room currentRoom = Room.getFetch(room_id);
-        System.out.println("room_id "+room_id);
-        int stock = currentRoom.getStock();
-        System.out.println(stock);
-        currentRoom.setStock(stock-1);
-        stock = currentRoom.getStock();
-        System.out.println(stock);
 
+        String query = "UPDATE room SET stock=? WHERE id=?";
+        Room foundRoom = Room.getFetch(room_id);
+
+        int stock = foundRoom.getStock();
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, stock - 1);
+            pr.setInt(2, room_id);
+            pr.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public static void increaseRoomStockOne(int room_id){
-        Room currentRoom=Room.getFetch(room_id);
-        int stock = currentRoom.getStock();
-        currentRoom.setStock(stock+1);
+    public static void increaseRoomStockOne(int room_id) {
+        String query = "UPDATE room SET stock=? WHERE id=?";
+        Room foundRoom = Room.getFetch(room_id);
+        int stock = foundRoom.getStock();
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1,stock+1);
+            pr.setInt(2,room_id);
+
+        }catch(SQLException e){
+            e.getMessage();
+        }
+
     }
 
     public static void main(String[] args) {
