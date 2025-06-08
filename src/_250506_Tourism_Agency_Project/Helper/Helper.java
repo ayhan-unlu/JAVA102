@@ -228,13 +228,23 @@ public class Helper {
         int stock = foundRoom.getStock();
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1,stock+1);
-            pr.setInt(2,room_id);
+            pr.setInt(1, stock + 1);
+            pr.setInt(2, room_id);
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.getMessage();
         }
+    }
 
+    public static boolean guestTypeController(String guest_1_type, String guest_2_type, String guest_3_type) {
+        boolean condition = false;
+        String type1 = "adult";
+        String type2 = "child";
+
+        if ((guest_1_type.equals(type1) || guest_1_type.equals(type2) || guest_1_type.isEmpty()) && (guest_2_type.equals(type1) || guest_2_type.equals(type2) || guest_2_type.isEmpty()) && (guest_3_type.equals(type1) || guest_3_type.equals(type2) || guest_3_type.isEmpty())) {
+            condition = true;
+        }
+        return condition;
     }
 
     public static void main(String[] args) {

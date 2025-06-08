@@ -112,7 +112,7 @@ public class Price {
     }
 
     public static Price getFetch(int room_id) {
-        Price obj = null;
+        Price obj = new Price();
         String query = "SELECT * FROM price WHERE room_id=?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);

@@ -583,6 +583,33 @@ public class AdminGUI extends JFrame {
         loadAdminRoomIdCombobox(combobox_admin_reservation_room_id);
         loadAdminReservationIdCombobox(combobox_admin_reservation_delete_reservation_id);
         table_admin_reservation_list.setModel(model_admin_reservation_list);
+        table_admin_reservation_list.getTableHeader().setReorderingAllowed(false);
+
+
+        table_admin_reservation_list.getModel().addTableModelListener(e -> {
+            int selectedRow = table_admin_reservation_list.getSelectedRow();
+            if (e.getType() == TableModelEvent.UPDATE) {
+                int id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 0).toString());
+                int hotel_id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,1).toString());
+                int room_id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,2).toString());
+                int accommodation_id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,3).toString());
+                int season = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,4).toString());
+                String contact_name = table_admin_reservation_list.getValueAt(selectedRow,5).toString();
+                String contact_tel = table_admin_reservation_list.getValueAt(selectedRow,6).toString();
+                String contact_email = table_admin_reservation_list.getValueAt(selectedRow,7).toString();
+                String note = table_admin_reservation_list.getValueAt(selectedRow,8).toString();
+                int adult_guest_count = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,9).toString());
+                int child_guest_count = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,10).toString());
+             //   int price = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,11).toString());
+
+                if(Reservation.update(id,"12.06.2025","14.06.2025",contact_name,contact_tel,contact_email,"111111111111",note,"1","1","1","adult","","","","adult","3","3","3","child")){
+                    Helper.showMessage("success");
+                }
+                loadAdminReservationListModel();
+
+            }
+
+        });
 
         //##Admin Reservation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1032,6 +1059,8 @@ public class AdminGUI extends JFrame {
                         Helper.decreaseRoomStockOne(room_id);
                         loadAdminReservationListModel();
                         loadAdminRoomListModel();
+                        loadAdminReservationIdCombobox(combobox_admin_reservation_delete_reservation_id);
+                        Helper.emptyFields(textFieldList);
                     }
                 }
             }
@@ -1045,8 +1074,8 @@ public class AdminGUI extends JFrame {
                 if (Helper.confirm("sure")) {
                     int selected_reservation_id = (Integer) Integer.parseInt(combobox_admin_reservation_delete_reservation_id.getSelectedItem().toString());
                     if (Reservation.delete(selected_reservation_id)) {
-                        int room_id = 0;
-                        room_id=Reservation.getFetch(selected_reservation_id).getRoom_id();
+                        int room_id;
+                        room_id = Reservation.getFetch(selected_reservation_id).getRoom_id();
                         Helper.showMessage("success");
                         Helper.increaseRoomStockOne(room_id);
                         loadAdminReservationListModel();
@@ -1241,7 +1270,11 @@ public class AdminGUI extends JFrame {
             row_admin_search_list[i++] = Hotel.getFetch(obj.getHotel_id()).getName();
             row_admin_search_list[i++] = obj.getRoom_type();
             row_admin_search_list[i++] = obj.getStock();
-            model_admin_search_list.addRow(row_admin_search_list);
+            int price = Price.getFetch(obj.getId()).getAdult_price_1();
+            int stock = obj.getStock();
+            if((price==0||price>0)&&stock>0) {
+                model_admin_search_list.addRow(row_admin_search_list);
+            }
         }
     }
 

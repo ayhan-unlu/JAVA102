@@ -117,7 +117,7 @@ public class Reservation {
     }
 
     public static Reservation getFetch(int id) {
-        Reservation obj = null;
+        Reservation obj = new Reservation();
         String query = "SELECT * FROM reservation WHERE id=?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
@@ -227,37 +227,42 @@ public class Reservation {
             Helper.showMessage("exist");
             return false;
         }
-        try {
-            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1, room_id);
-            pr.setInt(2, hotel_id);
-            pr.setInt(3, accommodation_id);
-            pr.setString(4, check_in_date);
-            pr.setString(5, check_out_date);
-            pr.setString(6, contact_name);
-            pr.setString(7, contact_tel);
-            pr.setString(8, contact_email);
-            pr.setString(9, contact_id_no);
-            pr.setString(10, note);
-            pr.setString(11, guest_1_name);
-            pr.setString(12, guest_1_country);
-            pr.setString(13, guest_1_id_no);
-            pr.setString(14, guest_1_type);
-            pr.setString(15, guest_2_name);
-            pr.setString(16, guest_2_country);
-            pr.setString(17, guest_2_id_no);
-            pr.setString(18, guest_2_type);
-            pr.setString(19, guest_3_name);
-            pr.setString(20, guest_3_country);
-            pr.setString(21, guest_3_id_no);
-            pr.setString(22, guest_3_type);
-            int response = pr.executeUpdate();
-            if (response == -1) {
-                Helper.showMessage("error");
+        if (Roomfeature.getFetch(room_id).getBed_count() >= Helper.calculateGuestCount(guest_1_name, guest_2_name) + Helper.calculateGuestCount(guest_3_name)) {
+            try {
+                PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+                pr.setInt(1, room_id);
+                pr.setInt(2, hotel_id);
+                pr.setInt(3, accommodation_id);
+                pr.setString(4, check_in_date);
+                pr.setString(5, check_out_date);
+                pr.setString(6, contact_name);
+                pr.setString(7, contact_tel);
+                pr.setString(8, contact_email);
+                pr.setString(9, contact_id_no);
+                pr.setString(10, note);
+                pr.setString(11, guest_1_name);
+                pr.setString(12, guest_1_country);
+                pr.setString(13, guest_1_id_no);
+                pr.setString(14, guest_1_type);
+                pr.setString(15, guest_2_name);
+                pr.setString(16, guest_2_country);
+                pr.setString(17, guest_2_id_no);
+                pr.setString(18, guest_2_type);
+                pr.setString(19, guest_3_name);
+                pr.setString(20, guest_3_country);
+                pr.setString(21, guest_3_id_no);
+                pr.setString(22, guest_3_type);
+                int response = pr.executeUpdate();
+                if (response == -1) {
+                    Helper.showMessage("error");
+                }
+                return response != -1;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
             }
-            return response != -1;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } else {
+            Helper.showMessage("Room capacity is lower than the guest number");
+            return false;
         }
         return true;
     }
@@ -266,10 +271,57 @@ public class Reservation {
         String query = "DELETE FROM reservation WHERE id = ? ";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1,id);
-            return pr.executeUpdate()!=-1;
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+    public static boolean update(int id, String check_in_date, String check_out_date, String contact_name, String contact_tel, String contact_email, String contact_id_no, String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
+        String query = "UPDATE reservation SET check_in_date=?, check_out_date=?,  contact_name=?, contact_tel=?,contact_email=?,contact_id_no=?,note=?,guest_1_name =?, guest_1_country=?,guest_1_id_no=?,guest_1_type=?, guest_2_name =?, guest_2_country=?,guest_2_id_no=?,guest_2_type=?, guest_3_name =?, guest_3_country=?,guest_3_id_no=?,guest_3_type=? WHERE id=?";
+        Reservation foundReservation = Reservation.getFetch(id);
+        if (foundReservation != null && foundReservation.getId() != id) {
+            Helper.showMessage("exist");
+            return false;
+        }
+        if (Helper.guestTypeController(guest_1_type, guest_2_type, guest_3_type)) {
+        } else {
+            Helper.showMessage("Please choose a valid Guest Type. (adult or child)");
+            return false;
+        }
+        if (Roomfeature.getFetch(Reservation.getFetch(id).getRoom_id()).getBed_count() >= Helper.calculateGuestCount(guest_1_name, guest_2_name) + Helper.calculateGuestCount(guest_3_name)) {
+            try {
+                PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+                pr.setString(1, check_in_date);
+                pr.setString(2, check_out_date);
+                pr.setString(3, contact_name);
+                pr.setString(4, contact_tel);
+                pr.setString(5, contact_email);
+                pr.setString(6, contact_id_no);
+                pr.setString(7, note);
+                pr.setString(8, guest_1_name);
+                pr.setString(9, guest_1_country);
+                pr.setString(10, guest_1_id_no);
+                pr.setString(11, guest_1_type);
+                pr.setString(12, guest_2_name);
+                pr.setString(13, guest_2_country);
+                pr.setString(14, guest_2_id_no);
+                pr.setString(15, guest_2_type);
+                pr.setString(16, guest_3_name);
+                pr.setString(17, guest_3_country);
+                pr.setString(18, guest_3_id_no);
+                pr.setString(19, guest_3_type);
+                pr.setInt(20, id);
+
+                return pr.executeUpdate() != -1;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            Helper.showMessage("Room capacity is lower than total guest number");
+            return false;
         }
         return true;
     }
