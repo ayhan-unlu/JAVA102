@@ -72,7 +72,7 @@ public class Roomfeature {
     }
 
     public static Roomfeature getFetch(int room_id) {
-        Roomfeature obj = null;
+        Roomfeature obj = new Roomfeature();
 
         String query = "SELECT * FROM roomfeature WHERE room_id = ?";
         try {
@@ -134,7 +134,8 @@ public class Roomfeature {
 
     public static String createStringRoomFeatureList(int room_id) {
         String roomFeatureList = "";
-        Roomfeature currentRoomfeature = Roomfeature.getFetch(room_id);
+        Roomfeature currentRoomfeature = new Roomfeature();
+         currentRoomfeature = Roomfeature.getFetch(room_id);
 
         if (currentRoomfeature.getBed_count() > 0) {
             roomFeatureList += " Bed Count: " + currentRoomfeature.getBed_count();

@@ -2,7 +2,9 @@ package _250506_Tourism_Agency_Project.Model;
 
 import _250506_Tourism_Agency_Project.Helper.DBConnector;
 import _250506_Tourism_Agency_Project.Helper.Helper;
+import _250506_Tourism_Agency_Project.Helper.Item;
 
+import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,7 +71,7 @@ public class Accommodation {
     }
 
     public static Accommodation getFetch(int hotel_id) {
-        Accommodation obj = null;
+        Accommodation obj = new Accommodation();
 
         for (Accommodation a : Accommodation.getList()) {
             if (a.getHotel_id() == hotel_id) {
@@ -90,10 +92,10 @@ public class Accommodation {
 
     public static String createStringHotelAccommodationTypeList(int hotel_id){
         String accommodationList = "";
+        Accommodation currentAccommodation = new Accommodation();
+         currentAccommodation = Accommodation.getFetch(hotel_id);
 
-        Accommodation currentAccommodation = Accommodation.getFetch(hotel_id);
-
-        if(currentAccommodation.isUltra_all_inclusive()){
+        if(    currentAccommodation.isUltra_all_inclusive()){
             accommodationList += " Ultra All Inclusive ";
         }
         if(currentAccommodation.isAll_in()){
@@ -152,6 +154,37 @@ public class Accommodation {
 
 
         return true;
+    }
+
+    public static void loadHotelAccommodationTypeListCombobox(JComboBox combobox,int hotel_id){
+        combobox.removeAllItems();
+        Accommodation a=Accommodation.getFetch(hotel_id);
+
+        int i;
+        i=0;
+        combobox.addItem(new Item(i++,""));
+        if(a.isUltra_all_inclusive()){
+            combobox.addItem(new Item(i++,"Ultra All Inclusive"));
+        }
+        if(a.isAll_in()){
+            combobox.addItem(new Item(i++,"All In"));
+        }
+        if(a.isBed_and_breakfast()){
+            combobox.addItem(new Item(i++,"Bed And Breakfast"));
+        }
+        if(a.isFull_board()){
+            combobox.addItem(new Item(i++,"Full Board"));
+        }
+        if(a.isHalf_board()){
+            combobox.addItem(new Item(i++,"Half Board"));
+        }
+        if(a.isBed_only()){
+            combobox.addItem(new Item(i++,"Bed Only"));
+        }
+        if(a.isExcluding_alcohol_full_credit()){
+            combobox.addItem(new Item(i++,"Excluding Alcohol Full Credit"));
+        }
+
     }
 
 

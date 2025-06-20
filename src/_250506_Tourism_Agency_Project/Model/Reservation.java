@@ -70,7 +70,7 @@ public class Reservation {
         this.room = Room.getFetch(room_id);
         this.hotel = Hotel.getFetch(hotel_id);
         this.accommodation = Accommodation.getFetch(hotel_id);
-        this.season = Season.getFetch(hotel_id);
+        this.season = Season.getFetchByHotelId(hotel_id);
 
     }
 

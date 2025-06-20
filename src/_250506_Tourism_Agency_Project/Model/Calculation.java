@@ -87,6 +87,7 @@ public class Calculation {
 
 
         //Accommodation Types----------------------------------------------------------
+ /*
         Accommodation selectedAccommodation = Accommodation.getFetch(selectedHotel_id);
         if (selectedAccommodation.isBed_only()) currentCoefficient *= 1.1;
         if (selectedAccommodation.isBed_and_breakfast()) currentCoefficient *= 1.2;
@@ -95,11 +96,11 @@ public class Calculation {
         if (selectedAccommodation.isExcluding_alcohol_full_credit()) currentCoefficient *= 1.5;
         if (selectedAccommodation.isAll_in()) currentCoefficient *= 1.6;
         if (selectedAccommodation.isUltra_all_inclusive()) currentCoefficient *= 1.7;
-
+*/
         //##Accommodation Types----------------------------------------------------------
 
         //Season----------------------------------------------------------
-        Season selectedSeason = Season.getFetch(selectedHotel_id);
+        Season selectedSeason = Season.getFetchByHotelId(selectedHotel_id);
         if (selectedSeason.isSeason_1()) currentCoefficient *= 1.1;
         else if (selectedSeason.isSeason_2()) currentCoefficient *= 1.5;
         else currentCoefficient *= 1;

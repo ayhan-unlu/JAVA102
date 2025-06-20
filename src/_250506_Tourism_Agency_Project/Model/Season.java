@@ -25,7 +25,6 @@ public class Season {
         this.hotel_id = hotel_id;
         this.season_1 = season_1;
         this.season_2 = season_2;
-        //       this.hotel = Hotel.getFetch(hotel_id);
     }
 
     public static ArrayList<Season> getList() {
@@ -50,7 +49,28 @@ public class Season {
         return seasonList;
     }
 
-    public static Season getFetch(int hotel_id) {
+    public static Season getFetch(int id) {
+        String query = "SELECT * FROM season WHERE id=?";
+        Season obj = new Season();
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, id);
+            ResultSet rs = pr.executeQuery();
+
+            if (rs.next()) {
+                obj = new Season();
+                obj.setId(rs.getInt("id"));
+                obj.setHotel_id(rs.getInt("hotel_id"));
+                obj.setSeason_1(rs.getBoolean("Season_1"));
+                obj.setSeason_2(rs.getBoolean("Season_2"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return obj;
+    }
+
+    public static Season getFetchByHotelId(int hotel_id) {
         String query = "SELECT * FROM season WHERE hotel_id = ?";
 
         Season obj = null;
@@ -63,7 +83,6 @@ public class Season {
                 obj.setHotel_id(rs.getInt("hotel_id"));
                 obj.setSeason_1(rs.getBoolean("season_1"));
                 obj.setSeason_2(rs.getBoolean("season_2"));
-
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -71,9 +90,16 @@ public class Season {
         return obj;
     }
 
+    public static String createStringSeasonList(Season season){
+        String seasonList = "";
+        if (season.season_1) seasonList += " Season 1 ";
+        if (season.season_2) seasonList += " Season 2 ";
+        return seasonList;
+    }
+
     public static boolean add(int hotel_id, boolean season_1, boolean season_2) {
         String query = "INSERT INTO season (hotel_id,season_1,season_2) VALUES (?, ?,? )";
-        Season foundHotelSeason = Season.getFetch(hotel_id);
+        Season foundHotelSeason = Season.getFetchByHotelId(hotel_id);
 
         if (foundHotelSeason != null) {
             Helper.showMessage("exist");
@@ -95,15 +121,87 @@ public class Season {
         return true;
     }
 
+    public static boolean delete(int id) {
+        String query = "DELETE FROM season WHERE id=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+    public static boolean update(int id, String season_1, String season_2) {
+
+        String query = "UPDATE season SET season_1=?,season_2=? WHERE id=?";
+        Season foundSeason = Season.getFetch(id);
+
+        if ((foundSeason != null) && (foundSeason.getId() != id)) {
+            Helper.showMessage("exist");
+            return false;
+        }
+        System.out.println("Season 1" + season_1);
+        System.out.println("Season 2" + season_2);
+        boolean boolean_season_1;
+        if (season_1.equals("true")) {
+            boolean_season_1 = true;
+        } else if (season_1.equals("false")) {
+            boolean_season_1 = false;
+        } else {
+            Helper.showMessage("Please choose true or false for 1eason 1");
+            return false;
+        }
+
+        boolean boolean_season_2;
+        if(season_2.equals("true")){
+            boolean_season_2=true;
+        }else if(season_2.equals("false")){
+            boolean_season_2=false;
+        }else{
+            Helper.showMessage("Please choose true or false for 2eason 2 ");
+            return false;
+        }
+
+
+//        if (season_1.equals("true") || season_1.equals("false")) {
+//            boolean boolean_season_1 = Boolean.getBoolean(season_1);
+//            if (season_2.equals("true") || season_2.equals("false")) {
+//                boolean boolean_season_2 =Boolean.getBoolean(season_2);
+//            } else {
+//                Helper.showMessage("Please choose true or false for Season 2");
+//                return false;
+//            }
+//        } else {
+//            Helper.showMessage("Please choose true or false for Season 1");
+//            return false;
+//        }
+
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setBoolean(1,boolean_season_1);
+            pr.setBoolean(2,boolean_season_2);
+            pr.setInt(3,id);
+
+//s            pr.setBoolean(1,boolean_season_1)
+//
+//            pr.setInt(3, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return true;
+    }
+
     public static int seasonDecider(String selectedDate) {
         int season;
         season = Helper.createIntFromStringDate(selectedDate);
+        if(season>=20250601){}season=2;
         return season;
     }
 
-//    public Season getFetch(int hotel_id){
-//        String query = "SELECT * FROM season WHERE"
-//    }
 
     public int getId() {
         return id;

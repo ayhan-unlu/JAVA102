@@ -10,8 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Price {
-    //    Hotel hotel;
-//    Room room;
+
     private int id;
     private int hotel_id;
     private int room_id;
@@ -19,6 +18,8 @@ public class Price {
     private int adult_price_2;
     private int child_price_1;
     private int child_price_2;
+    private Hotel hotel;
+    private Room room;
 
     public Price() {
 
@@ -51,7 +52,8 @@ public class Price {
                 int child_price_1 = rs.getInt("child_price_1");
                 int child_price_2 = rs.getInt("child_price_2");
                 obj = new Price(id, hotel_id, room_id, adult_price_1, adult_price_2, child_price_1, child_price_2);
-                if (Room.getFetch(room_id).getStock() > 0) priceList.add(obj);
+                // if (Room.getFetch(room_id).getStock() > 0)
+                priceList.add(obj);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -111,9 +113,11 @@ public class Price {
         return searchList;
     }
 
-    public static Price getFetch(int room_id) {
-        Price obj = new Price();
+    public static Price getFetchByRoomId(int room_id) {
+
         String query = "SELECT * FROM price WHERE room_id=?";
+
+        Price obj = new Price();
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1, room_id);
@@ -131,29 +135,36 @@ public class Price {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return obj;
     }
 
     public static boolean add(int hotel_id, int room_id, int adult_price_1, int adult_price_2, int child_price_1, int child_price_2) {
 
         String query = "INSERT INTO price (hotel_id, room_id, adult_price_1,adult_price_2,child_price_1,child_price_2) VALUES (?, ?, ?, ?, ?, ?)";
-        Price foundPrice = Price.getFetch(room_id);
+        Price foundPrice = Price.getFetchByRoomId(room_id);
+
+//        System.out.println("id" + foundPrice.getId());
+//        System.out.println("id" + foundPrice.getHotel_id());
+//        System.out.println("id" + foundPrice.getRoom_id());
+
+
         if (foundPrice != null) {
+//            System.out.println("foundPrice id:" + foundPrice.getId());
             Helper.showMessage("exist");
+            return false;
         } else {
             try {
                 PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
                 pr.setInt(1, hotel_id);
                 pr.setInt(2, room_id);
-                if (Season.getFetch(hotel_id).isSeason_1()) {
+                if (Season.getFetchByHotelId(hotel_id).isSeason_1()) {
                     pr.setInt(3, adult_price_1);
                     pr.setInt(5, child_price_1);
                 } else {
                     pr.setInt(3, 0);
                     pr.setInt(5, 0);
                 }
-                if (Season.getFetch(hotel_id).isSeason_2()) {
+                if (Season.getFetchByHotelId(hotel_id).isSeason_2()) {
                     pr.setInt(4, adult_price_2);
                     pr.setInt(6, child_price_2);
                 } else {
@@ -165,6 +176,49 @@ public class Price {
                     Helper.showMessage("error");
                 }
                 return response != -1;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return true;
+    }
+
+    public static boolean delete(int room_id) {
+        String query = "DELETE FROM price WHERE room_id=?";
+
+        Price foundPrice = Price.getFetchByRoomId(room_id);
+        if (foundPrice != null) {
+
+            try {
+                PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+                pr.setInt(1, room_id);
+                return pr.executeUpdate() != -1;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            Helper.showMessage("No assigned Price for the room");
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean update(int room_id, int adult_price_1, int adult_price_2, int child_price_1, int child_price_2) {
+        String query = "UPDATE price SET adult_price_1=?, adult_price_2=?, child_price_1=?, child_price_2=? WHERE room_id=?";
+
+        Price foundPrice = Price.getFetchByRoomId(room_id);
+        if (foundPrice == null) {
+            Helper.showMessage("error");
+            return false;
+        } else {
+            try {
+                PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+                pr.setInt(1, adult_price_1);
+                pr.setInt(2, adult_price_2);
+                pr.setInt(3, child_price_1);
+                pr.setInt(4, child_price_2);
+                pr.setInt(5, room_id);
+                return pr.executeUpdate() != -1;
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -227,6 +281,5 @@ public class Price {
     public void setChild_price_2(int child_price_2) {
         this.child_price_2 = child_price_2;
     }
-
 
 }

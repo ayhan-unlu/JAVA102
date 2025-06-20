@@ -18,16 +18,6 @@ public class Hotel {
     private String email;
     private String phone;
     private String star;
-//    private String facility_feature;
-    //   private ArrayList<Boolean> facilityFeatureList;
-    //   private boolean freeParking;
-    // private boolean freeWifi;
-    // private boolean pool;
-    // private boolean fitnessCenter;
-    //private boolean hotelConcierge;
-    //private boolean spa;
-    //private boolean roomService;
-
 
     public Hotel() {
     }
@@ -129,29 +119,6 @@ public class Hotel {
         return obj;
     }
 
-//    public static Hotel getFetch(int room_id) {
-//        Hotel obj = new Hotel();
-//        String query = "SELECT * FROM hotel WHERE room_id = ?";
-//        try {
-//            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-//            pr.setInt(1,room_id);
-//            ResultSet rs = pr.executeQuery();
-//            if(rs.next()){
-//                obj = new Hotel();
-//                obj.setId(rs.getInt("id"));
-//                obj.setName(rs.getString("name"));
-//                obj.setCity(rs.getString("city"));
-//                obj.setRegion(rs.getString("region"));
-//                obj.setAddress(rs.getString("address"));
-//                obj.setEmail(rs.getString("email"));
-//                obj.setPhone(rs.getString("phone"));
-//                obj.setStar(rs.getString("star"));
-//            }
-//        }catch(SQLException e){
-//            System.out.println(e.getMessage());
-//        }
-//        return obj;
-//    }
 
     public static boolean add(String name, String city, String region, String address, String email, String phone, String star/*, String facility_feature*/) {
 
@@ -198,7 +165,6 @@ public class Hotel {
     }
 
     public static boolean update(int id, String name, String city, String region, String address, String email, String phone, String star/*, String facility_feature*/) {
-        //    String query = "UPDATE hotel SET name = ?, city = ?, region = ?, address = ?, email = ?, phone = ?, star = ?, facility_feature = ? WHERE id =?";
         String query = "UPDATE hotel SET name = ?, city = ?, region = ?, address = ?, email = ?, phone = ?, star = ? WHERE id =?";
 
         Hotel foundHotel = Hotel.getFetch(name);
@@ -210,13 +176,12 @@ public class Hotel {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setString(1, name);
             pr.setString(2, city);
-            ;
+
             pr.setString(3, region);
             pr.setString(4, address);
             pr.setString(5, email);
             pr.setString(6, phone);
             pr.setString(7, star);
-            //     pr.setString(8, facility_feature);
             pr.setInt(8, id);
             return pr.executeUpdate() != -1;
 
@@ -237,6 +202,15 @@ public class Hotel {
         facilityFeatureList.add(roomService);
 
         return facilityFeatureList;
+    }
+
+    public static String createHotelInfoString(int hotel_id){
+        String hotelInfoString = "";
+        Hotel hotel = Hotel.getFetch(hotel_id);
+        if(hotel!=null){
+            hotelInfoString = "City: "+hotel.getCity()+" Region: "+hotel.getRegion()+" Address: "+hotel.getAddress()+" Email: "+hotel.getEmail()+" Phone: "+hotel.getPhone();
+        }
+        return hotelInfoString;
     }
 
     public int getId() {

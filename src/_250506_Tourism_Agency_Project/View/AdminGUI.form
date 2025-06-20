@@ -1330,15 +1330,15 @@
                       <text value="Search Room Here"/>
                     </properties>
                   </component>
-                  <component id="c2d72" class="javax.swing.JLabel" binding="label_admin_search_start_date">
+                  <component id="c2d72" class="javax.swing.JLabel" binding="label_admin_search_check_in_date">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Start Date"/>
+                      <text value="Check In Date"/>
                     </properties>
                   </component>
-                  <component id="58a48" class="javax.swing.JTextField" binding="field_admin_search_start_date">
+                  <component id="58a48" class="javax.swing.JTextField" binding="field_admin_search_check_in_date">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -1346,15 +1346,15 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="d2eb5" class="javax.swing.JLabel" binding="label_admin_search_end_date">
+                  <component id="d2eb5" class="javax.swing.JLabel" binding="label_admin_search_check_out_date">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="End Date"/>
+                      <text value="Check Out Date"/>
                     </properties>
                   </component>
-                  <component id="1ea14" class="javax.swing.JTextField" binding="field_admin_search_end_date">
+                  <component id="1ea14" class="javax.swing.JTextField" binding="field_admin_search_check_out_date">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>

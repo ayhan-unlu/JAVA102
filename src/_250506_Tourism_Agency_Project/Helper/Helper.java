@@ -127,7 +127,22 @@ public class Helper {
 //        System.out.println(preparedString);
         dateInt = (Integer) Integer.parseInt(preparedString);
 //        System.out.println(dateInt+"int");
-        if (dateInt < 20250631) {
+
+        return dateInt;
+    }public static int decideSeasonFromStringDate(String selectedDate) {
+        int dateInt = 0;
+        int season;
+        String preparedString = "";
+
+        preparedString += selectedDate.substring(6, 10);
+//        System.out.println(preparedString);
+        preparedString += selectedDate.substring(3, 5);
+//        System.out.println(preparedString);
+        preparedString += selectedDate.substring(0, 2);
+//        System.out.println(preparedString);
+        dateInt = (Integer) Integer.parseInt(preparedString);
+//        System.out.println(dateInt+"int");
+        if (dateInt < 20250531) {
 //            System.out.println("Season 1");
             season = 1;
         } else {
@@ -139,7 +154,11 @@ public class Helper {
 
     public static int calculateDuration(String check_in_date, String check_out_date) {
         int duration = 0;
-        duration = Helper.createIntFromStringDate(check_out_date) - Helper.createIntFromStringDate(check_in_date);
+        if(!check_in_date.isEmpty()) {
+            duration = Helper.createIntFromStringDate(check_out_date) - Helper.createIntFromStringDate(check_in_date);
+            System.out.println("int checkout date" + Helper.createIntFromStringDate(check_out_date));
+            System.out.println("int checkin date" + Helper.createIntFromStringDate(check_in_date));
+        }
         return duration;
     }
 
