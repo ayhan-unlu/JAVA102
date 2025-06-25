@@ -224,8 +224,8 @@ public class AdminGUI extends JFrame {
     private JLabel label_admin_reservation_contact_name;
     private JTextField field_admin_reservation_contact_name;
     private JTextField field_admin_reservation_contact_note;
-    private JLabel label_admin_reservation_contact_tel;
-    private JTextField field_admin_reservation_contact_tel;
+    private JLabel label_admin_reservation_contact_phone;
+    private JTextField field_admin_reservation_contact_phone;
     private JTextField field_admin_reservation_contact_email;
     private JLabel label_admin_reservation_contact_email;
     private JLabel label_admin_reservation_guest_1;
@@ -253,6 +253,8 @@ public class AdminGUI extends JFrame {
     private JLabel label_admin_reservation_add_title;
     private JComboBox combobox_admin_reservation_delete_reservation_id;
     private JButton button_admin_reservation_delete;
+    private JComboBox combobox_admin_calculation_accommodation_type;
+    private JLabel label_admin_calculation_room_price_accommodation_type;
     private DefaultTableModel model_admin_user_list;
     private Object[] row_admin_user_list;
     private DefaultTableModel model_admin_hotel_list;
@@ -510,6 +512,9 @@ public class AdminGUI extends JFrame {
         //Admin Calculation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
         loadAdminRoomIdCombobox(combobox_admin_calculation_coefficient_room_id);
         loadAdminRoomIdCombobox(combobox_admin_calculation_room_price_room_id);
+        hotel = new Hotel();
+        hotel = Hotel.getFetch(combobox_admin_calculation_room_price_room_id.getSelectedItem().toString());
+        //loadAdminCalculationAccommodationTypeCombobox(hotel);
 
         //##Admin Calculation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -553,7 +558,6 @@ public class AdminGUI extends JFrame {
         table_admin_price_list.getTableHeader().setReorderingAllowed(false);
 
 
-
         //##Admin Price Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //Admin Reservation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -581,20 +585,20 @@ public class AdminGUI extends JFrame {
                 int id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 0).toString());
                 int hotel_id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 1).toString());
                 int room_id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 2).toString());
-                int accommodation_id = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 3).toString());
+                String accommodation_type = table_admin_reservation_list.getValueAt(selectedRow, 3).toString();
                 int season = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 4).toString());
                 String contact_name = table_admin_reservation_list.getValueAt(selectedRow, 5).toString();
-                String contact_tel = table_admin_reservation_list.getValueAt(selectedRow, 6).toString();
+                String contact_phone = table_admin_reservation_list.getValueAt(selectedRow, 6).toString();
                 String contact_email = table_admin_reservation_list.getValueAt(selectedRow, 7).toString();
                 String note = table_admin_reservation_list.getValueAt(selectedRow, 8).toString();
                 int adult_guest_count = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 9).toString());
                 int child_guest_count = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 10).toString());
                 //   int price = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,11).toString());
 
-                if (Reservation.update(id, "12.06.2025", "14.06.2025", contact_name, contact_tel, contact_email, "111111111111", note, "1", "1", "1", "adult", "", "", "", "adult", "3", "3", "3", "child")) {
-                    Helper.showMessage("success");
-                }
-                loadAdminReservationListModel();
+//                if (Reservation.update(id, "All In", "14.06.2025", contact_name, contact_phone, contact_email, "111111111111", note, "1", "1", "1", "adult", "", "", "", "adult", "3", "3", "3", "child")) {
+//                    Helper.showMessage("success");
+//                }
+//                loadAdminReservationListModel();
 
             }
 
@@ -914,11 +918,12 @@ public class AdminGUI extends JFrame {
                 Helper.showMessage("fill");
             } else {
                 int selected_room_id = (Integer) Integer.parseInt(combobox_admin_calculation_room_price_room_id.getSelectedItem().toString());
-                int adultGuestNumber = Helper.convertComboboxItemToInt(combobox_admin_calculation_adult_guest_number);
-                int childGuestNumber = Helper.convertComboboxItemToInt(combobox_admin_calculation_child_guest_number);
+                int adultGuestCount = Helper.convertComboboxItemToInt(combobox_admin_calculation_adult_guest_number);
+                int childGuestCount = Helper.convertComboboxItemToInt(combobox_admin_calculation_child_guest_number);
                 int selectedSeason = Season.seasonDecider(field_admin_calculation_start_date.getText());
                 int duration = (Integer) Integer.parseInt(field_admin_calculation_duration.getText());
-                double calculatedRoomPrice = Calculation.calculateReservationPrice(selected_room_id, adultGuestNumber, childGuestNumber, selectedSeason, duration);
+                String selectedAccommodationType = combobox_admin_calculation_accommodation_type.getSelectedItem().toString();
+                double calculatedRoomPrice = Calculation.calculateReservationPrice(selected_room_id, selectedSeason, selectedAccommodationType, adultGuestCount, childGuestCount, duration);
 
                 field_admin_calculation_calculated_room_price.setText(String.valueOf(calculatedRoomPrice));
 
@@ -984,7 +989,7 @@ public class AdminGUI extends JFrame {
 
             textFieldList.add(field_admin_reservation_contact_name);
             textFieldList.add(field_admin_reservation_contact_id_no);
-            textFieldList.add(field_admin_reservation_contact_tel);
+            textFieldList.add(field_admin_reservation_contact_phone);
             textFieldList.add(field_admin_reservation_contact_email);
             textFieldList.add(field_admin_reservation_contact_note);
             textFieldList.add(field_admin_reservation_guest_1_name);
@@ -1001,13 +1006,13 @@ public class AdminGUI extends JFrame {
                     field_admin_reservation_hotel_feature.setText(Feature.createStringHotelFeatureList(hotel_id));
                     field_admin_reservation_room_feature.setText(Roomfeature.createStringRoomFeatureList(room_id));
                     field_admin_reservation_accommodation.setText(Accommodation.createStringHotelAccommodationTypeList(hotel_id));
-                    int selectedAccommodation_id = 1;
-                    int accommodation_id = selectedAccommodation_id;
+                    String selectedAccommodation_type = "bed_and_breakfast";
+                    String accommodation_type = selectedAccommodation_type;
                     field_admin_reservation_season.setText("1");
                     String check_in_date = "12.06.2025";
                     String check_out_date = "15_06_2025";
                     String contact_name = field_admin_reservation_contact_name.getText();
-                    String contact_tel = field_admin_reservation_contact_tel.getText();
+                    String contact_phone = field_admin_reservation_contact_phone.getText();
                     String contact_email = field_admin_reservation_contact_email.getText();
                     String contact_id_no = field_admin_reservation_contact_id_no.getText();
                     String contact_note = field_admin_reservation_contact_note.getText();
@@ -1025,11 +1030,11 @@ public class AdminGUI extends JFrame {
                     if (Reservation.add(
                             room_id,
                             hotel_id,
-                            selectedAccommodation_id,
+                            accommodation_type,
                             check_in_date,
                             check_out_date,
                             contact_name,
-                            contact_tel,
+                            contact_phone,
                             contact_email,
                             contact_id_no,
                             contact_note,
@@ -1287,12 +1292,12 @@ public class AdminGUI extends JFrame {
             row_admin_reservation_list[i++] = obj.getId();
             row_admin_reservation_list[i++] = obj.getHotel_id();
             row_admin_reservation_list[i++] = obj.getRoom_id();
-            row_admin_reservation_list[i++] = obj.getAccommodation_id();
+            row_admin_reservation_list[i++] = obj.getAccommodation_type();
             int season = 1;
             //Season.seasonDecider(obj.getCheck_in_date());
             row_admin_reservation_list[i++] = season;
             row_admin_reservation_list[i++] = obj.getContact_name();
-            row_admin_reservation_list[i++] = obj.getContact_tel();
+            row_admin_reservation_list[i++] = obj.getContact_phone();
             row_admin_reservation_list[i++] = obj.getContact_email();
             row_admin_reservation_list[i++] = obj.getNote();
             adultGuestCount = Helper.calculateGuestCount(obj.getGuest_1_name(), obj.getGuest_2_name());
@@ -1375,6 +1380,42 @@ public class AdminGUI extends JFrame {
         }
     }
 
+    public void loadAdminCalculationAccommodationTypeCombobox(Hotel hotel) {
+        combobox_admin_calculation_accommodation_type.removeAllItems();
+        int i;
+        i = 0;
+        combobox_admin_calculation_accommodation_type.addItem(new Item(i++, ""));
+
+        Accommodation a = Accommodation.getFetch(hotel.getId());
+        if (a.isUltra_all_inclusive()) {
+            combobox_admin_calculation_accommodation_type.addItem(new Item(i++, "Ultra All Inclusive"));
+        }
+
+        if (a.isAll_in()) {
+            combobox_admin_calculation_accommodation_type.addItem(new Item(i++, "All In"));
+        }
+
+        if (a.isBed_and_breakfast()) {
+            combobox_admin_calculation_accommodation_type.addItem(new Item(i++, "Bed And Breakfast"));
+        }
+
+        if (a.isFull_board()) {
+            combobox_admin_calculation_accommodation_type.addItem(new Item(i++, "Full Board"));
+        }
+
+        if (a.isHalf_board()) {
+            combobox_admin_calculation_accommodation_type.addItem(new Item(i++, "Half Board"));
+        }
+
+        if (a.isBed_only()) {
+            combobox_admin_calculation_accommodation_type.addItem(new Item(i++, "Bed Only"));
+        }
+
+        if (a.isExcluding_alcohol_full_credit()) {
+            combobox_admin_calculation_accommodation_type.addItem(new Item(i++, "Excluding Alcohol Full Credit"));
+
+        }
+    }
 
     public void loadAdminSearchCityCombobox(JComboBox combobox) {
         combobox.removeAllItems();
@@ -1383,6 +1424,7 @@ public class AdminGUI extends JFrame {
             combobox.addItem(new Item(obj.getId(), obj.getCity()));
         }
     }
+
 
     public void loadAdminReservationIdCombobox(JComboBox combobox) {
         combobox.removeAllItems();

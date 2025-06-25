@@ -117,7 +117,7 @@ public class Price {
 
         String query = "SELECT * FROM price WHERE room_id=?";
 
-        Price obj = new Price();
+        Price obj = null;
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1, room_id);
@@ -163,6 +163,7 @@ public class Price {
                 } else {
                     pr.setInt(3, 0);
                     pr.setInt(5, 0);
+                    Helper.showMessage("Because the hotel is closed in season 1 price is added as zero");
                 }
                 if (Season.getFetchByHotelId(hotel_id).isSeason_2()) {
                     pr.setInt(4, adult_price_2);
@@ -170,6 +171,7 @@ public class Price {
                 } else {
                     pr.setInt(4, 0);
                     pr.setInt(6, 0);
+                    Helper.showMessage("Because the hotel is closed in season 2 price is added as zero");
                 }
                 int response = pr.executeUpdate();
                 if (response == -1) {
@@ -204,6 +206,57 @@ public class Price {
     }
 
     public static boolean update(int room_id, int adult_price_1, int adult_price_2, int child_price_1, int child_price_2) {
+        System.out.println(adult_price_1);
+        System.out.println(adult_price_2);
+        System.out.println(child_price_1);
+        System.out.println(child_price_2);
+        System.out.println("20");
+
+        String query = "UPDATE price SET adult_price_1=?, adult_price_2=?, child_price_1=?, child_price_2=? WHERE room_id=?";
+        System.out.println("21");
+
+        Price foundPrice = Price.getFetchByRoomId(room_id);
+        System.out.println("22");
+        int hotel_id = Room.getFetch(room_id).getHotel_id();
+        System.out.println("23");
+        if (foundPrice == null) {
+            System.out.println("24");
+            Helper.showMessage("error");
+            return false;
+        } else {
+            try {
+                PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+                System.out.println("25");
+                System.out.println(!Season.getFetchByHotelId(hotel_id).isSeason_1());
+                System.out.println(Season.getFetchByHotelId(hotel_id).isSeason_1());
+                if (Season.getFetchByHotelId(hotel_id).isSeason_1()) {
+                    System.out.println("26");
+                    adult_price_1 = 0;
+                    child_price_1 = 0;
+                    System.out.println("27");
+                }
+                if (!Season.getFetchByHotelId(hotel_id).isSeason_2()) {
+                    System.out.println("28");
+                    adult_price_2 = 0;
+                    child_price_2 = 0;
+                    System.out.println("29");
+                }
+                System.out.println("30");
+                pr.setInt(1, adult_price_1);
+                pr.setInt(2, adult_price_2);
+                pr.setInt(3, child_price_1);
+                pr.setInt(4, child_price_2);
+                pr.setInt(5, room_id);
+                System.out.println("31");
+                System.out.println(query);
+                return pr.executeUpdate() != -1;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return true;
+    }
+    public static boolean update1(int room_id, int adult_price_1, int adult_price_2, int child_price_1, int child_price_2) {
         String query = "UPDATE price SET adult_price_1=?, adult_price_2=?, child_price_1=?, child_price_2=? WHERE room_id=?";
 
         Price foundPrice = Price.getFetchByRoomId(room_id);
@@ -213,6 +266,7 @@ public class Price {
         } else {
             try {
                 PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+
                 pr.setInt(1, adult_price_1);
                 pr.setInt(2, adult_price_2);
                 pr.setInt(3, child_price_1);
@@ -224,6 +278,28 @@ public class Price {
             }
         }
         return true;
+    }
+
+    public static void updateSeason1Prices(int hotel_id) {
+        System.out.println("11");
+        Hotel hotel = Hotel.getFetch(hotel_id);
+        System.out.println("12");
+        ArrayList<Room> roomList = new ArrayList<>();
+        System.out.println("13");
+        roomList = Room.getListByHotelName(hotel.getName());
+        System.out.println("14");
+
+        for (Room obj : roomList) {
+            System.out.println("15");
+            System.out.println(obj.getId());
+            int room_id = obj.getId();
+            System.out.println("16");
+            Price currentPrice = Price.getFetchByRoomId(room_id);
+            System.out.println("current price " + currentPrice);
+            System.out.println("17");
+            currentPrice.update(room_id, currentPrice.adult_price_1, currentPrice.adult_price_2, currentPrice.child_price_1, currentPrice.child_price_2);
+            System.out.println("18");
+        }
     }
 
     public int getId() {

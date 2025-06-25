@@ -240,6 +240,7 @@ public class Room {
         Room foundRoom = Room.getFetch(hotel_id, room_type);
         if (foundRoom != null) {
             Helper.showMessage("exist");
+            return false;
         } else {
             try {
                 PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
@@ -274,24 +275,34 @@ public class Room {
         String query = "UPDATE room SET hotel_id=?, room_type=?, stock=? WHERE id=?";
         Room foundRoom = Room.getFetch(id);
 
-        if (foundRoom != null && foundRoom.getId() != id) {
-            Helper.showMessage("exist");
-            return false;
-        }
-        int i = 0;
-        for (Hotel obj : Hotel.getList()) {
-            if (hotel_id == obj.getId()) {
-                i++;
-            }
-        }
-        try {
-            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            if (i > 0) {
-                pr.setInt(1, hotel_id);
-            } else {
-                Helper.showMessage("Choose an existing Hotel Id");
+//        if (foundRoom != null && foundRoom.getId() != id) {
+//            Helper.showMessage("exist");
+//            return false;
+//        }
+        ArrayList <Room> roomList = new ArrayList<>();
+        roomList = Room.getListByHotelName(Hotel.getFetch(hotel_id).getName());
+
+        for(Room obj:roomList){
+            if(obj.room_type.equals(room_type)&&obj.stock==stock){
+                Helper.showMessage("This room type already exists");
                 return false;
             }
+        }
+
+//        int i = 0;
+//        for (Hotel obj : Hotel.getList()) {
+//            if (hotel_id == obj.getId()) {
+//                i++;
+//            }
+//        }
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+//            if (i > 0) {
+                pr.setInt(1, hotel_id);
+//            } else {
+//                Helper.showMessage("Choose an existing Hotel Id");
+//                return false;
+          //  }
             if (room_type.equals("single_room") || room_type.equals("double_room") || room_type.equals("junior_suite") || room_type.equals("suite")) {
                 pr.setString(2, room_type);
             } else {

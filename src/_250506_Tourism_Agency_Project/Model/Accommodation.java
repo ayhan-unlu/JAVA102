@@ -71,7 +71,7 @@ public class Accommodation {
     }
 
     public static Accommodation getFetch(int hotel_id) {
-        Accommodation obj = new Accommodation();
+        Accommodation obj = null;
 
         for (Accommodation a : Accommodation.getList()) {
             if (a.getHotel_id() == hotel_id) {

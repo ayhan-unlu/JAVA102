@@ -90,7 +90,7 @@ public class Season {
         return obj;
     }
 
-    public static String createStringSeasonList(Season season){
+    public static String createStringSeasonList(Season season) {
         String seasonList = "";
         if (season.season_1) seasonList += " Season 1 ";
         if (season.season_2) seasonList += " Season 2 ";
@@ -137,6 +137,9 @@ public class Season {
 
         String query = "UPDATE season SET season_1=?,season_2=? WHERE id=?";
         Season foundSeason = Season.getFetch(id);
+        Hotel foundHotel = Hotel.getFetch(foundSeason.getHotel_id());
+
+        int foundHotelId = foundSeason.getHotel_id();
 
         if ((foundSeason != null) && (foundSeason.getId() != id)) {
             Helper.showMessage("exist");
@@ -149,17 +152,33 @@ public class Season {
             boolean_season_1 = true;
         } else if (season_1.equals("false")) {
             boolean_season_1 = false;
+            System.out.println("1");
+            Price.updateSeason1Prices(foundHotelId);
+            //Price.update(1);
+
+//            if (Price.deleteRelatedPrices(foundHotelId)) {
+//                System.out.println("2");
+//                Helper.showMessage("Seasonal prices also deleted and will be displayed as zero");
+//                System.out.println("3");
+//            }
+//            ;
+//            if (!Price.deleteRelatedPrices(foundHotelId)) {
+//                System.out.println("4");
+//                return false;
+//            }
         } else {
             Helper.showMessage("Please choose true or false for 1eason 1");
             return false;
         }
-
         boolean boolean_season_2;
-        if(season_2.equals("true")){
-            boolean_season_2=true;
-        }else if(season_2.equals("false")){
-            boolean_season_2=false;
-        }else{
+
+        if (season_2.equals("true")) {
+            boolean_season_2 = true;
+        } else if (season_2.equals("false")) {
+            boolean_season_2 = false;
+            System.out.println("5");
+            //Price.update(1);
+        } else {
             Helper.showMessage("Please choose true or false for 2eason 2 ");
             return false;
         }
@@ -180,9 +199,9 @@ public class Season {
 
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setBoolean(1,boolean_season_1);
-            pr.setBoolean(2,boolean_season_2);
-            pr.setInt(3,id);
+            pr.setBoolean(1, boolean_season_1);
+            pr.setBoolean(2, boolean_season_2);
+            pr.setInt(3, id);
 
 //s            pr.setBoolean(1,boolean_season_1)
 //
@@ -198,7 +217,9 @@ public class Season {
     public static int seasonDecider(String selectedDate) {
         int season;
         season = Helper.createIntFromStringDate(selectedDate);
-        if(season>=20250601){}season=2;
+        if (season >= 20250601) {
+            season = 2;
+        } else season = 1;
         return season;
     }
 

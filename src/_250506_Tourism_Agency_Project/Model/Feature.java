@@ -67,7 +67,7 @@ public class Feature {
     }
 
     public static Feature getFetch(int hotel_id) {
-        Feature obj = new Feature();
+        Feature obj = null;
 
         String query = "SELECT * FROM feature WHERE hotel_id = ?";
         try {

@@ -13,12 +13,12 @@ public class Reservation {
     private int id;
     private int room_id;
     private int hotel_id;
-    private int accommodation_id;
+    private String accommodation_type;
     private String check_in_date;
     private String check_out_date;
     private String contact_id_no;
     private String contact_name;
-    private String contact_tel;
+    private String contact_phone;
     private String contact_email;
     private String note;
     private String guest_1_name;
@@ -42,16 +42,16 @@ public class Reservation {
     }
 
 
-    public Reservation(int id, int room_id, int hotel_id, int accommodation_id, String check_in_date, String check_out_date, String contact_name, String contact_tel, String contact_email, String contact_id_no, String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
+    public Reservation(int id, int room_id, int hotel_id, String accommodation_type, String check_in_date, String check_out_date, String contact_name, String contact_phone, String contact_email, String contact_id_no, String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
         this.id = id;
         this.room_id = room_id;
         this.hotel_id = hotel_id;
-        this.accommodation_id = accommodation_id;
+        this.accommodation_type = accommodation_type;
         this.check_in_date = check_in_date;
         this.check_out_date = check_out_date;
         this.contact_id_no = contact_id_no;
         this.contact_name = contact_name;
-        this.contact_tel = contact_tel;
+        this.contact_phone = contact_phone;
         this.contact_email = contact_email;
         this.note = note;
         this.guest_1_name = guest_1_name;
@@ -86,11 +86,11 @@ public class Reservation {
                 int id = rs.getInt("id");
                 int room_id = rs.getInt("room_id");
                 int hotel_id = rs.getInt("hotel_id");
-                int accommodation_id = rs.getInt("accommodation_id");
+                String accommodation_type = rs.getString("accommodation_type");
                 String check_in_date = rs.getString("check_in_date");
                 String check_out_date = rs.getString("check_out_date");
                 String contact_name = rs.getString("contact_name");
-                String contact_tel = rs.getString("contact_tel");
+                String contact_phone = rs.getString("contact_phone");
                 String contact_email = rs.getString("contact_email");
                 String contact_id_no = rs.getString("contact_id_no");
                 String note = rs.getString("note");
@@ -107,7 +107,7 @@ public class Reservation {
                 String guest_3_id_no = rs.getString("guest_3_id_no");
                 String guest_3_type = rs.getString("guest_3_type");
 
-                obj = new Reservation(id, room_id, hotel_id, accommodation_id, check_in_date, check_out_date, contact_name, contact_tel, contact_email, contact_id_no, note, guest_1_name, guest_1_country, guest_1_id_no, guest_1_type, guest_2_name, guest_2_country, guest_2_id_no, guest_2_type, guest_3_name, guest_3_country, guest_3_id_no, guest_3_type);
+                obj = new Reservation(id, room_id, hotel_id, accommodation_type, check_in_date, check_out_date, contact_name, contact_phone, contact_email, contact_id_no, note, guest_1_name, guest_1_country, guest_1_id_no, guest_1_type, guest_2_name, guest_2_country, guest_2_id_no, guest_2_type, guest_3_name, guest_3_country, guest_3_id_no, guest_3_type);
                 reservationList.add(obj);
             }
         } catch (SQLException e) {
@@ -129,11 +129,11 @@ public class Reservation {
                 obj.setId(rs.getInt("id"));
                 obj.setRoom_id(rs.getInt("room_id"));
                 obj.setHotel_id(rs.getInt("hotel_id"));
-                obj.setAccommodation_id(rs.getInt("accommodation_id"));
+                obj.setAccommodation_type(rs.getString("accommodation_type"));
                 obj.setCheck_in_date(rs.getString("check_in_date"));
                 obj.setCheck_out_date(rs.getString("check_out_date"));
                 obj.setContact_name(rs.getString("contact_name"));
-                obj.setContact_tel(rs.getString("contact_tel"));
+                obj.setContact_phone(rs.getString("contact_phone"));
                 obj.setContact_email(rs.getString("contact_email"));
                 obj.setContact_id_no(rs.getString("contact_id_no"));
                 obj.setNote(rs.getString("note"));
@@ -171,11 +171,11 @@ public class Reservation {
                 obj.setId(rs.getInt("id"));
                 obj.setRoom_id(rs.getInt("room_id"));
                 obj.setHotel_id(rs.getInt("hotel_id"));
-                obj.setAccommodation_id(rs.getInt("accommodation_id"));
+                obj.setAccommodation_type(rs.getString("accommodation_type"));
                 obj.setCheck_in_date(rs.getString("check_in_date"));
                 obj.setCheck_out_date(rs.getString("check_out_date"));
                 obj.setContact_name(rs.getString("contact_name"));
-                obj.setContact_tel(rs.getString("contact_tel"));
+                obj.setContact_phone(rs.getString("contact_phone"));
                 obj.setContact_email(rs.getString("contact_email"));
                 obj.setContact_id_no(rs.getString("contact_id_no"));
                 obj.setNote(rs.getString("note"));
@@ -200,11 +200,11 @@ public class Reservation {
 
     public static boolean add(int room_id,
                               int hotel_id,
-                              int accommodation_id,
+                              String accommodation_type,
                               String check_in_date,
                               String check_out_date,
                               String contact_name,
-                              String contact_tel,
+                              String contact_phone,
                               String contact_email,
                               String contact_id_no,
                               String note,
@@ -220,7 +220,9 @@ public class Reservation {
                               String guest_3_country,
                               String guest_3_id_no,
                               String guest_3_type) {
-        String query = "INSERT INTO reservation (room_id, hotel_id, accommodation_id, check_in_date, check_out_date, contact_name, contact_tel, contact_email, contact_id_no,note, guest_1_name,guest_1_country,guest_1_id_no,guest_1_type,guest_2_name,guest_2_country,guest_2_id_no,guest_2_type,guest_3_name,guest_3_country,guest_3_id_no,guest_3_type)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        System.out.println("reservation is added-1");
+        String query = "INSERT INTO reservation (room_id, hotel_id, accommodation_type, check_in_date, check_out_date, contact_name, contact_phone, contact_email, contact_id_no,note, guest_1_name,guest_1_country,guest_1_id_no,guest_1_type,guest_2_name,guest_2_country,guest_2_id_no,guest_2_type,guest_3_name,guest_3_country,guest_3_id_no,guest_3_type)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        System.out.println("reservation is added-2");
         Reservation foundReservation = Reservation.getFetchByRoomId(room_id);
         if (foundReservation != null) {
             System.out.println("Found Reservation" + foundReservation.getId() + "Room Id" + foundReservation.getRoom_id());
@@ -232,11 +234,11 @@ public class Reservation {
                 PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
                 pr.setInt(1, room_id);
                 pr.setInt(2, hotel_id);
-                pr.setInt(3, accommodation_id);
+                pr.setString(3, accommodation_type);
                 pr.setString(4, check_in_date);
                 pr.setString(5, check_out_date);
                 pr.setString(6, contact_name);
-                pr.setString(7, contact_tel);
+                pr.setString(7, contact_phone);
                 pr.setString(8, contact_email);
                 pr.setString(9, contact_id_no);
                 pr.setString(10, note);
@@ -253,6 +255,7 @@ public class Reservation {
                 pr.setString(21, guest_3_id_no);
                 pr.setString(22, guest_3_type);
                 int response = pr.executeUpdate();
+                Helper.decreaseRoomStockOne(room_id);
                 if (response == -1) {
                     Helper.showMessage("error");
                 }
@@ -269,9 +272,14 @@ public class Reservation {
 
     public static boolean delete(int id) {
         String query = "DELETE FROM reservation WHERE id = ? ";
+        System.out.println("reservation id"+id);
+        int room_id = Reservation.getFetch(id).getRoom_id();
+        System.out.println("room id"+room_id);
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1, id);
+            Helper.increaseRoomStockOne(room_id);
+
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -279,8 +287,8 @@ public class Reservation {
         return true;
     }
 
-    public static boolean update(int id, String check_in_date, String check_out_date, String contact_name, String contact_tel, String contact_email, String contact_id_no, String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
-        String query = "UPDATE reservation SET check_in_date=?, check_out_date=?,  contact_name=?, contact_tel=?,contact_email=?,contact_id_no=?,note=?,guest_1_name =?, guest_1_country=?,guest_1_id_no=?,guest_1_type=?, guest_2_name =?, guest_2_country=?,guest_2_id_no=?,guest_2_type=?, guest_3_name =?, guest_3_country=?,guest_3_id_no=?,guest_3_type=? WHERE id=?";
+    public static boolean update(int id, String accommodation_type, String check_in_date, String check_out_date, String contact_name, String contact_phone, String contact_email, String contact_id_no, String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
+        String query = "UPDATE reservation SET accommodation_type =?, check_in_date=?, check_out_date=?,  contact_name=?, contact_phone=?,contact_email=?,contact_id_no=?,note=?,guest_1_name =?, guest_1_country=?,guest_1_id_no=?,guest_1_type=?, guest_2_name =?, guest_2_country=?,guest_2_id_no=?,guest_2_type=?, guest_3_name =?, guest_3_country=?,guest_3_id_no=?,guest_3_type=? WHERE id=?";
         Reservation foundReservation = Reservation.getFetch(id);
         if (foundReservation != null && foundReservation.getId() != id) {
             Helper.showMessage("exist");
@@ -291,29 +299,41 @@ public class Reservation {
             Helper.showMessage("Please choose a valid Guest Type. (adult or child)");
             return false;
         }
+
+        if (Helper.accommodationTypeController(accommodation_type)) {
+        } else {
+            Helper.showMessage("Please choose a valid Accommodation Type (Ultra All Inclusive, All In, Bed And Breakfast, Full Board, Half Board, Bed Only, Excluding Alcohol Full Credit)");
+            return false;
+        }
+
+        if(Helper.createIntFromStringDate(check_in_date)>Helper.createIntFromStringDate(check_out_date)){
+            Helper.showMessage("Check In Date is after Check Out Date. Please set it properly, if required choose update Check Out Date first.");
+            return false;
+        }
         if (Roomfeature.getFetch(Reservation.getFetch(id).getRoom_id()).getBed_count() >= Helper.calculateGuestCount(guest_1_name, guest_2_name) + Helper.calculateGuestCount(guest_3_name)) {
             try {
                 PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-                pr.setString(1, check_in_date);
-                pr.setString(2, check_out_date);
-                pr.setString(3, contact_name);
-                pr.setString(4, contact_tel);
-                pr.setString(5, contact_email);
-                pr.setString(6, contact_id_no);
-                pr.setString(7, note);
-                pr.setString(8, guest_1_name);
-                pr.setString(9, guest_1_country);
-                pr.setString(10, guest_1_id_no);
-                pr.setString(11, guest_1_type);
-                pr.setString(12, guest_2_name);
-                pr.setString(13, guest_2_country);
-                pr.setString(14, guest_2_id_no);
-                pr.setString(15, guest_2_type);
-                pr.setString(16, guest_3_name);
-                pr.setString(17, guest_3_country);
-                pr.setString(18, guest_3_id_no);
-                pr.setString(19, guest_3_type);
-                pr.setInt(20, id);
+                pr.setString(1, accommodation_type);
+                pr.setString(2, check_in_date);
+                pr.setString(3, check_out_date);
+                pr.setString(4, contact_name);
+                pr.setString(5, contact_phone);
+                pr.setString(6, contact_email);
+                pr.setString(7, contact_id_no);
+                pr.setString(8, note);
+                pr.setString(9, guest_1_name);
+                pr.setString(10, guest_1_country);
+                pr.setString(11, guest_1_id_no);
+                pr.setString(12, guest_1_type);
+                pr.setString(13, guest_2_name);
+                pr.setString(14, guest_2_country);
+                pr.setString(15, guest_2_id_no);
+                pr.setString(16, guest_2_type);
+                pr.setString(17, guest_3_name);
+                pr.setString(18, guest_3_country);
+                pr.setString(19, guest_3_id_no);
+                pr.setString(20, guest_3_type);
+                pr.setInt(21, id);
 
                 return pr.executeUpdate() != -1;
             } catch (SQLException e) {
@@ -350,12 +370,12 @@ public class Reservation {
         this.hotel_id = hotel_id;
     }
 
-    public int getAccommodation_id() {
-        return accommodation_id;
+    public String getAccommodation_type() {
+        return accommodation_type;
     }
 
-    public void setAccommodation_id(int accommodation_id) {
-        this.accommodation_id = accommodation_id;
+    public void setAccommodation_type(String accommodation_type) {
+        this.accommodation_type = accommodation_type;
     }
 
     public String getCheck_in_date() {
@@ -390,12 +410,12 @@ public class Reservation {
         this.contact_name = contact_name;
     }
 
-    public String getContact_tel() {
-        return contact_tel;
+    public String getContact_phone() {
+        return contact_phone;
     }
 
-    public void setContact_tel(String contact_tel) {
-        this.contact_tel = contact_tel;
+    public void setContact_phone(String contact_phone) {
+        this.contact_phone = contact_phone;
     }
 
     public String getContact_email() {

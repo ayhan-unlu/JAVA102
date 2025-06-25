@@ -61,7 +61,7 @@ public class ReservationGUI extends JFrame {
 //        System.out.println(check_in_date + "check in date" + check_out_date + "checkoutdate");
         hotel = Hotel.getFetch(room.getHotel_id());
         label_staff_reservation_hotel_name.setText(hotel.getName());
-        label_staff_reservation_hotel_star.setText(hotel.getStar());
+        label_staff_reservation_hotel_star.setText(hotel.getStar()+ " Star");
         label_staff_reservation_hotel_info.setText("City: " + hotel.getCity() + " Region: " + hotel.getRegion() + " Address: " + hotel.getAddress() + " Email: " + hotel.getEmail() + " Phone: " + hotel.getPhone());
         label_staff_reservation_hotel_feature.setText(Feature.createStringHotelFeatureList(hotel.getId()));
         label_staff_reservation_room_feature.setText(Roomfeature.createStringRoomFeatureList(room.getId()));
@@ -102,19 +102,29 @@ public class ReservationGUI extends JFrame {
         row_reservation_accommodation_type_list = new Object[column_reservation_accommodation_type_list.length];
         loadReservationAccommodationTypeListModel(hotel, adult_price, child_price);
         table_staff_reservation_accommodation_type_list.setModel(model_reservation_accommodation_type_list);
-       // Accommodation.loadHotelAccommodationTypeListCombobox(combobox_staff_reservation_accommodation_type_list, hotel.getId());
-          loadStaffReservationAccommodationTypeListComboBox(hotel);
+        // Accommodation.loadHotelAccommodationTypeListCombobox(combobox_staff_reservation_accommodation_type_list, hotel.getId());
+        loadStaffReservationAccommodationTypeListComboBox(hotel);
 
 
+        if (!check_in_date.isEmpty()) {
+        } else {
+            check_in_date = "01.01.2025";
+        }
+        if (!check_out_date.isEmpty()) {
+
+        } else {
+            check_out_date = "02.01.2025";
+        }
         // ##Model Room Accommodation Type List---------------------------------------------------------------------------
 
-
+        String finalCheck_in_date = check_in_date;
+        String finalCheck_out_date = check_out_date;
         button_staff_reservation.addActionListener(e -> {
             selectedAccommodation_type = combobox_staff_reservation_accommodation_type_list.getSelectedItem().toString();
             if (selectedAccommodation_type.isEmpty()) {
                 Helper.showMessage("Please Choose an Accommodation Type ");
             } else {
-                ConfirmationGUI confirmationGUI = new ConfirmationGUI(hotel, room, adultGuestCount, childGuestCount, check_in_date, check_out_date, selectedAccommodation_type);
+                ConfirmationGUI confirmationGUI = new ConfirmationGUI(hotel, room, adultGuestCount, childGuestCount, finalCheck_in_date, finalCheck_out_date, selectedAccommodation_type);
             }
 
         });
@@ -219,5 +229,9 @@ public class ReservationGUI extends JFrame {
             combobox_staff_reservation_accommodation_type_list.addItem(new Item(i++, "Excluding Alcohol Full Credit"));
         }
 
+    }
+
+    public static void main(String[] args) {
+        ReservationGUI reservationGUI = new ReservationGUI(new Room(1,1,"single_room",2),"01.01.2025","02.02.2025",1,0);
     }
 }

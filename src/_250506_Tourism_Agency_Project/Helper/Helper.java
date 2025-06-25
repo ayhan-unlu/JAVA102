@@ -1,9 +1,6 @@
 package _250506_Tourism_Agency_Project.Helper;
 
-import _250506_Tourism_Agency_Project.Model.Feature;
-import _250506_Tourism_Agency_Project.Model.Hotel;
-import _250506_Tourism_Agency_Project.Model.Room;
-import _250506_Tourism_Agency_Project.Model.Roomfeature;
+import _250506_Tourism_Agency_Project.Model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +78,7 @@ public class Helper {
                 title = "error";
                 break;
             case "exist":
-                message = "User already Exists Please use a unique username";
+                message = "This component already exists. Please add unique component";
                 title = "error";
                 break;
             case "success":
@@ -129,7 +126,9 @@ public class Helper {
 //        System.out.println(dateInt+"int");
 
         return dateInt;
-    }public static int decideSeasonFromStringDate(String selectedDate) {
+    }
+
+    public static int decideSeasonFromStringDate(String selectedDate) {
         int dateInt = 0;
         int season;
         String preparedString = "";
@@ -154,7 +153,7 @@ public class Helper {
 
     public static int calculateDuration(String check_in_date, String check_out_date) {
         int duration = 0;
-        if(!check_in_date.isEmpty()) {
+        if (!check_in_date.isEmpty()) {
             duration = Helper.createIntFromStringDate(check_out_date) - Helper.createIntFromStringDate(check_in_date);
             System.out.println("int checkout date" + Helper.createIntFromStringDate(check_out_date));
             System.out.println("int checkin date" + Helper.createIntFromStringDate(check_in_date));
@@ -244,12 +243,13 @@ public class Helper {
     public static void increaseRoomStockOne(int room_id) {
         String query = "UPDATE room SET stock=? WHERE id=?";
         Room foundRoom = Room.getFetch(room_id);
+
         int stock = foundRoom.getStock();
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1, stock + 1);
             pr.setInt(2, room_id);
-
+            pr.executeUpdate();
         } catch (SQLException e) {
             e.getMessage();
         }
@@ -262,6 +262,42 @@ public class Helper {
 
         if ((guest_1_type.equals(type1) || guest_1_type.equals(type2) || guest_1_type.isEmpty()) && (guest_2_type.equals(type1) || guest_2_type.equals(type2) || guest_2_type.isEmpty()) && (guest_3_type.equals(type1) || guest_3_type.equals(type2) || guest_3_type.isEmpty())) {
             condition = true;
+        }
+        return condition;
+    }
+
+    public static boolean accommodationTypeController(String accommodation_type) {
+        boolean condition = false;
+
+        switch (accommodation_type) {
+            case "Ultra All Inclusive":
+                condition = true;
+                break;
+            case "All In":
+                condition = true;
+                break;
+
+            case "Bed And Breakfast":
+                condition = true;
+                break;
+
+            case "Full Board":
+                condition = true;
+                break;
+
+            case "Half Board":
+                condition = true;
+                break;
+
+            case "Bed Only":
+                condition = true;
+                break;
+
+            case "Excluding Alcohol Full Credit":
+                condition = true;
+                break;
+            default:
+                break;
         }
         return condition;
     }
