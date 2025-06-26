@@ -16,17 +16,7 @@ Java 102 Project Tourism Agency
 4-8 Search Room Panel
 ![img_4.png](img_4.png)
 
-4-9 Reservation Panel (Added Reservations)
-![img_9.png](img_9.png)
-
 5-Reservation Panel
 ![img_5.png](img_5.png)
 
 6-Reservation Confirmation Panel
-![img_6.png](img_6.png)
-
-6-3 Room Capacity Low
-![img_7.png](img_7.png)
-
-6-4 Reservation Confirmed
-![img_8.png](img_8.png)

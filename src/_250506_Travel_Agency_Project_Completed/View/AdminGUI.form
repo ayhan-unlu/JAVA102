@@ -310,9 +310,11 @@
           <grid id="91ab0" binding="panel_admin_hotel_list" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
-              <tabbedpane title="Hotels"/>
+              <tabbedpane title="Hotels" enabled="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <enabled value="true"/>
+            </properties>
             <border type="none"/>
             <children>
               <scrollpane id="c0c5c" binding="scroll_panel_admin_hotel_list">
@@ -533,7 +535,7 @@
           <grid id="7d6c4" binding="panel_admin_feature" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Features"/>
+              <tabbedpane title="Features" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -665,7 +667,7 @@
           <grid id="4aa66" binding="panel_admin_accommodation" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Accommodation"/>
+              <tabbedpane title="Accommodation" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -789,7 +791,7 @@
           <grid id="fa76" binding="panel_admin_season" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Seasons"/>
+              <tabbedpane title="Seasons" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -873,7 +875,7 @@
           <grid id="b6536" binding="panel_admin_room" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Rooms"/>
+              <tabbedpane title="Rooms" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -979,7 +981,7 @@
           <grid id="15708" binding="panel_admin_roomfeature" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Room Features"/>
+              <tabbedpane title="Room Features" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -1119,7 +1121,7 @@
           <grid id="ccbb4" binding="panel_admin_calculation" layout-manager="GridLayoutManager" row-count="17" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Calculation"/>
+              <tabbedpane title="Calculation" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -1323,7 +1325,7 @@
           <grid id="32663" binding="panel_admin_search" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Search Room"/>
+              <tabbedpane title="Search Room" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -1450,7 +1452,7 @@
           <grid id="d90f0" binding="panel_admin_price" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Price"/>
+              <tabbedpane title="Price" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -1598,7 +1600,7 @@
           <grid id="dbbe" binding="panel_admin_reservation" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Reservation"/>
+              <tabbedpane title="Reservation" enabled="false"/>
             </constraints>
             <properties/>
             <border type="none"/>

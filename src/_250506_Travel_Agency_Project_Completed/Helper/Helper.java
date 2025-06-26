@@ -1,6 +1,9 @@
 package _250506_Travel_Agency_Project_Completed.Helper;
 
-import _250506_Travel_Agency_Project_Completed.Model.*;
+import _250506_Travel_Agency_Project_Completed.Model.Feature;
+import _250506_Travel_Agency_Project_Completed.Model.Hotel;
+import _250506_Travel_Agency_Project_Completed.Model.Room;
+import _250506_Travel_Agency_Project_Completed.Model.Roomfeature;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,7 +68,6 @@ public class Helper {
     }
 
     public static void showMessage(String string) {
-        //     optionPaneTR();
         String message;
         String title;
         switch (string) {
@@ -93,7 +95,6 @@ public class Helper {
                 message = string;
                 title = "Title";
         }
-
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -117,14 +118,9 @@ public class Helper {
         String preparedString = "";
 
         preparedString += selectedDate.substring(6, 10);
-//        System.out.println(preparedString);
         preparedString += selectedDate.substring(3, 5);
-//        System.out.println(preparedString);
         preparedString += selectedDate.substring(0, 2);
-//        System.out.println(preparedString);
         dateInt = (Integer) Integer.parseInt(preparedString);
-//        System.out.println(dateInt+"int");
-
         return dateInt;
     }
 
@@ -134,18 +130,12 @@ public class Helper {
         String preparedString = "";
 
         preparedString += selectedDate.substring(6, 10);
-//        System.out.println(preparedString);
         preparedString += selectedDate.substring(3, 5);
-//        System.out.println(preparedString);
         preparedString += selectedDate.substring(0, 2);
-//        System.out.println(preparedString);
         dateInt = (Integer) Integer.parseInt(preparedString);
-//        System.out.println(dateInt+"int");
         if (dateInt < 20250531) {
-//            System.out.println("Season 1");
             season = 1;
         } else {
-//            System.out.println("Season 2");
             season = 2;
         }
         return season;
@@ -300,16 +290,5 @@ public class Helper {
                 break;
         }
         return condition;
-    }
-
-    public static void main(String[] args) {
-        Hotel hotel = Hotel.getFetch(1);
-        System.out.println(createStringFeatureList(hotel));
-        System.out.println(createStringFeatureList(Room.getFetch(1)));
-        // Helper.createIntFromStringDate("12.06.2025");
-    }
-
-    public static void optionPaneTR() {
-        UIManager.put("OptionPane.okButtonText", "Tamam");
     }
 }

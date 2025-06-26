@@ -9,7 +9,7 @@ import _250506_Travel_Agency_Project_Completed.Model.User;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class LoginGUI extends JFrame{
+public class LoginGUI extends JFrame {
     private JPanel wrapper;
     private JPanel wrapper_top;
     private JPanel wrapper_bottom;
@@ -22,10 +22,10 @@ public class LoginGUI extends JFrame{
     private JLabel label_login_password;
     private JPasswordField field_login_password;
 
-    public LoginGUI(){
+    public LoginGUI() {
         add(wrapper);
-        setSize(400,400);
-        setLocation(Helper.screenCenterPoint("x",getSize()),Helper.screenCenterPoint("y",getSize()));
+        setSize(400, 400);
+        setLocation(Helper.screenCenterPoint("x", getSize()), Helper.screenCenterPoint("y", getSize()));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
         setResizable(false);
@@ -39,24 +39,23 @@ public class LoginGUI extends JFrame{
             loginTextFieldList.add(field_login_username);
             loginTextFieldList.add(field_login_password);
 
-            if(Helper.isAnyFieldEmpty(loginTextFieldList)){
+            if (Helper.isAnyFieldEmpty(loginTextFieldList)) {
                 Helper.showMessage("fill");
-            }else{
-                User u = User.getFetch(field_login_username.getText(),field_login_password.getText());
-                if (u == null){
+            } else {
+                User u = User.getFetch(field_login_username.getText(), field_login_password.getText());
+                if (u == null) {
                     Helper.showMessage("User not found");
-                }else{
-                    switch(u.getType()){
+                } else {
+                    switch (u.getType()) {
                         case "admin":
-                            AdminGUI adminGUI = new AdminGUI((Admin)u);
+                            AdminGUI adminGUI = new AdminGUI((Admin) u);
                             break;
                         case "staff":
-                            StaffGUI staffGUI = new StaffGUI((Staff)u);
+                            StaffGUI staffGUI = new StaffGUI((Staff) u);
                             break;
 
                     }
-dispose();
-          //          Helper.showMessage("Welcome "+u.getName());
+                    dispose();
                 }
             }
             field_login_username.setText(null);

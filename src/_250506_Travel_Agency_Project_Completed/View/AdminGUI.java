@@ -340,6 +340,14 @@ public class AdminGUI extends JFrame {
 
         //** ModelUserList-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        /*
+        //***********************************************************************************************************************************************************************
+
+        //***********************************************************************************************************************************************************************
+        //***********************************************************************************************************************************************************************
+        // MODELS BELOW ARE CREATED TO BE USED IN STAFFGUI THEN THEY ARE DISABLED
+
+
         //ModelHotelList-------------------------------------------------------------------------------------------------------------------------------------------------------
         model_admin_hotel_list = new DefaultTableModel() {
             @Override
@@ -514,7 +522,6 @@ public class AdminGUI extends JFrame {
         loadAdminRoomIdCombobox(combobox_admin_calculation_room_price_room_id);
         hotel = new Hotel();
         hotel = Hotel.getFetch(combobox_admin_calculation_room_price_room_id.getSelectedItem().toString());
-        //loadAdminCalculationAccommodationTypeCombobox(hotel);
 
         //##Admin Calculation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -593,12 +600,6 @@ public class AdminGUI extends JFrame {
                 String note = table_admin_reservation_list.getValueAt(selectedRow, 8).toString();
                 int adult_guest_count = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 9).toString());
                 int child_guest_count = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow, 10).toString());
-                //   int price = Integer.parseInt(table_admin_reservation_list.getValueAt(selectedRow,11).toString());
-
-//                if (Reservation.update(id, "All In", "14.06.2025", contact_name, contact_phone, contact_email, "111111111111", note, "1", "1", "1", "adult", "", "", "", "adult", "3", "3", "3", "child")) {
-//                    Helper.showMessage("success");
-//                }
-//                loadAdminReservationListModel();
 
             }
 
@@ -606,7 +607,10 @@ public class AdminGUI extends JFrame {
 
         //##Admin Reservation Panel-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+//***********************************************************************************************************************************************************************
+        //***********************************************************************************************************************************************************************
+        // MODELS BELOW ARE CREATED TO BE USED IN STAFFGUI THEN THEY ARE DISABLED
+*/
         button_admin_user_add.addActionListener(e -> {
 
             ArrayList<JTextField> adminUserAddTextFieldList = new ArrayList<>();
@@ -694,14 +698,7 @@ public class AdminGUI extends JFrame {
             String phone = field_admin_hotel_add_phone.getText();
 
             ArrayList<Boolean> adminHotelAddFacilityFeatureList = new ArrayList<>();
-//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_free_parking.isSelected());
-//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_free_wifi.isSelected());
-//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_pool.isSelected());
-//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_fitness_center.isSelected());
-//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_hotel_corcierge.isSelected());
-//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_spa.isSelected());
-//            adminHotelAddFacilityFeatureList.add(checkbox_admin_hotel_add_feature_room_service.isSelected());
-////Feature.createStringHotelFeatureList(field_admin_hotel_add)
+
             String stringHotelFacilityFeatureList = "";
             for (int i = 0; i <= adminHotelAddFacilityFeatureList.size() - 1; i++) {
                 if (adminHotelAddFacilityFeatureList.get(i)) {

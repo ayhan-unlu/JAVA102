@@ -140,8 +140,6 @@ public class User {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-//        System.out.println(userList);
-
         return userList;
     }
 
@@ -184,19 +182,19 @@ public class User {
         return obj;
     }
 
-    public static User getFetch(String username, String password){
+    public static User getFetch(String username, String password) {
         User obj = null;
 
         String query = "SELECT * FROM user WHERE username = ? AND password = ?";
 
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setString(1,username);
-            pr.setString(2,password);
+            pr.setString(1, username);
+            pr.setString(2, password);
             ResultSet rs = pr.executeQuery();
 
-            if(rs.next()){
-                switch(rs.getString("type")){
+            if (rs.next()) {
+                switch (rs.getString("type")) {
                     case "admin":
                         obj = new Admin();
                         break;
@@ -215,7 +213,7 @@ public class User {
                 obj.setType(rs.getString("type"));
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return obj;
