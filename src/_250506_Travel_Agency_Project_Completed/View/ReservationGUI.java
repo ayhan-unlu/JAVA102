@@ -78,7 +78,12 @@ public class ReservationGUI extends JFrame {
         Price currentPrice = Price.getFetchByRoomId(room.getId());
         if (!check_in_date.isEmpty()) {
             season = Season.seasonDecider(check_in_date);
+        }else{
+            Helper.showMessage("As the check in date is not declared Season is selected as 1 and Duration as 1 day.");
+            season=1;
+            duration=1;
         }
+
         if (season == 1) {
             adult_price = currentPrice.getAdult_price_1();
             child_price = currentPrice.getChild_price_1();
@@ -87,8 +92,8 @@ public class ReservationGUI extends JFrame {
             adult_price = currentPrice.getAdult_price_2();
             child_price = currentPrice.getChild_price_2();
         }
-        label_staff_reservation_adult_price.setText("Adult Price per Night: " + adult_price + " ₺");
-        label_staff_reservation_child_price.setText("Child Price per Night: " + child_price + " ₺");
+       // label_staff_reservation_adult_price.setText("Adult Price per Night: " + adult_price + " ₺");
+        //label_staff_reservation_child_price.setText("Child Price per Night: " + child_price + " ₺");
 
         // Model Room Accommodation Type List---------------------------------------------------------------------------
         model_reservation_accommodation_type_list = new DefaultTableModel() {
@@ -106,15 +111,15 @@ public class ReservationGUI extends JFrame {
         loadStaffReservationAccommodationTypeListComboBox(hotel);
 
 
-        if (!check_in_date.isEmpty()) {
-        } else {
-            check_in_date = "01.01.2025";
-        }
-        if (!check_out_date.isEmpty()) {
-
-        } else {
-            check_out_date = "02.01.2025";
-        }
+//        if (!check_in_date.isEmpty()) {
+//        } else {
+//            check_in_date = "01.01.2025";
+//        }
+//        if (!check_out_date.isEmpty()) {
+//
+//        } else {
+//            check_out_date = "02.01.2025";
+//        }
         // ##Model Room Accommodation Type List---------------------------------------------------------------------------
 
         String finalCheck_in_date = check_in_date;
@@ -125,6 +130,7 @@ public class ReservationGUI extends JFrame {
                 Helper.showMessage("Please Choose an Accommodation Type ");
             } else {
                 ConfirmationGUI confirmationGUI = new ConfirmationGUI(hotel, room, adultGuestCount, childGuestCount, finalCheck_in_date, finalCheck_out_date, selectedAccommodation_type);
+                dispose();
             }
 
         });

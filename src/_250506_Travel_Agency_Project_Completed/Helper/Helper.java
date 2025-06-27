@@ -1,9 +1,6 @@
 package _250506_Travel_Agency_Project_Completed.Helper;
 
-import _250506_Travel_Agency_Project_Completed.Model.Feature;
-import _250506_Travel_Agency_Project_Completed.Model.Hotel;
-import _250506_Travel_Agency_Project_Completed.Model.Room;
-import _250506_Travel_Agency_Project_Completed.Model.Roomfeature;
+import _250506_Travel_Agency_Project_Completed.Model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -212,6 +209,22 @@ public class Helper {
         if (!guest_3_name.isEmpty()) guestCount += 1;
         return guestCount;
 
+    }
+
+    public static boolean reservationController(Reservation foundReservation, String check_in_date, String check_out_date) {
+        String foundCheck_in_date = foundReservation.getCheck_in_date();
+        String foundCheck_out_date = foundReservation.getCheck_out_date();
+        int intFoundCheck_in_date = Helper.createIntFromStringDate(foundCheck_in_date);
+        int intFoundCheck_out_date = Helper.createIntFromStringDate(foundCheck_out_date);
+        int intCheck_in_date = Helper.createIntFromStringDate(check_in_date);
+        int intCheck_out_date = Helper.createIntFromStringDate(check_out_date);
+        int foundDuration = intFoundCheck_out_date - intFoundCheck_in_date;
+        int duration = intCheck_out_date - intCheck_in_date;
+        if (intFoundCheck_in_date == intCheck_in_date || ((intFoundCheck_in_date < intCheck_in_date) && (intCheck_in_date < intFoundCheck_out_date))||((intFoundCheck_in_date<intCheck_out_date)&&(intCheck_out_date<intFoundCheck_out_date))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static void decreaseRoomStockOne(int room_id) {

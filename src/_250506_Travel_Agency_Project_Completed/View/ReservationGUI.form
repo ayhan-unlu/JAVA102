@@ -10,7 +10,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="80020" binding="panel_staff_reservation_top" layout-manager="GridLayoutManager" row-count="18" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="80020" binding="panel_staff_reservation_top" layout-manager="GridLayoutManager" row-count="16" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="10" left="10" bottom="10" right="10"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -31,7 +31,7 @@
           </component>
           <vspacer id="55866">
             <constraints>
-              <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
           <component id="87226" class="javax.swing.JLabel" binding="label_staff_reservation_hotel_star">
@@ -151,25 +151,9 @@
               <text value="Duration Line"/>
             </properties>
           </component>
-          <component id="a4d71" class="javax.swing.JLabel" binding="label_staff_reservation_adult_price">
-            <constraints>
-              <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Adult Price Line"/>
-            </properties>
-          </component>
-          <component id="41bf6" class="javax.swing.JLabel" binding="label_staff_reservation_child_price">
-            <constraints>
-              <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Child Price Line"/>
-            </properties>
-          </component>
           <component id="23fbe" class="javax.swing.JTable" binding="table_staff_reservation_accommodation_type_list">
             <constraints>
-              <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>

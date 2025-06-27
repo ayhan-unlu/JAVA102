@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -606,7 +607,7 @@ public class StaffGUI extends JFrame {
                     Helper.showMessage("success");
                     loadStaffModelsAndComboboxes();
 
-                 //   loadStaffHotelListModel();
+                    //   loadStaffHotelListModel();
                 } else {
                     Helper.showMessage("error");
                 }
@@ -623,7 +624,7 @@ public class StaffGUI extends JFrame {
             } else {
                 if (Helper.confirm("sure")) {
                     int selected_hotel_id = Integer.parseInt(field_staff_hotel_delete_hotel_id.getText());
-                    if (Hotel.delete(selected_hotel_id) && Feature.deleteByHotelId(selected_hotel_id) && Accommodation.deleteByHotelId(selected_hotel_id) && Season.delete(selected_hotel_id) && Room.deleteByHotelId(selected_hotel_id) && Roomfeature.deleteByHotelId(selected_hotel_id)&&Price.deleteByHotelId(selected_hotel_id)) {
+                    if (Hotel.delete(selected_hotel_id) && Feature.deleteByHotelId(selected_hotel_id) && Accommodation.deleteByHotelId(selected_hotel_id) && Season.delete(selected_hotel_id) && Room.deleteByHotelId(selected_hotel_id) && Roomfeature.deleteByHotelId(selected_hotel_id) && Price.deleteByHotelId(selected_hotel_id)) {
                         Helper.showMessage("success");
 //
 //                        ArrayList<Room> hotelRoomList = new ArrayList<>();
@@ -728,7 +729,7 @@ public class StaffGUI extends JFrame {
             } else {
                 if (Helper.confirm("sure")) {
                     int selected_room_id = Integer.parseInt(field_staff_room_delete_room_id.getText());
-                    if (Room.delete(selected_room_id)&&Roomfeature.deleteByHotelId(Room.getFetch(selected_room_id).getHotel_id())&&Price.delete(selected_room_id)) {
+                    if (Room.delete(selected_room_id) && Roomfeature.deleteByHotelId(Room.getFetch(selected_room_id).getHotel_id()) && Price.delete(selected_room_id)) {
                         Helper.showMessage("success");
                         loadStaffModelsAndComboboxes();
                         clearAllFieldsAndComboboxes();
@@ -901,6 +902,84 @@ public class StaffGUI extends JFrame {
             }
 
 
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffReservationListModel();
+                loadStaffReservationIdCombobox(combobox_staff_reservation_delete_reservation_id);
+                loadStaffReservationIdCombobox(combobox_staff_reservation_update_reservation_id);
+                super.mouseClicked(e);
+            }
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffHotelListModel();
+                super.mouseClicked(e);
+            }
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffFeatureListModel();
+                loadStaffHotelNameCombobox(combobox_staff_feature_add_hotel_name);
+                super.mouseClicked(e);
+            }
+        });
+        tabbed_panel_staff.addComponentListener(new ComponentAdapter() {
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffAccommodationListModel();
+                loadStaffHotelNameCombobox(combobox_staff_accommodation_add_hotel_name);
+                super.mouseClicked(e);
+
+            }
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffRoomListModel();
+                loadStaffHotelNameCombobox(combobox_staff_room_add_hotel_name);
+                super.mouseClicked(e);
+            }
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffRoomfeatureListModel();
+                loadStaffRoomIdCombobox(combobox_staff_roomfeature_add_room_id);
+                super.mouseClicked(e);
+            }
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffSeasonListModel();
+                loadStaffHotelNameCombobox(combobox_staff_season_add_hotel_name);
+                loadStaffSeasonIdCombobox(combobox_staff_season_delete_season_id);
+                super.mouseClicked(e);
+            }
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffPriceListModel();
+                loadStaffRoomIdCombobox(combobox_staff_price_add_room_id);
+                loadStaffRoomIdCombobox(combobox_staff_price_delete_room_id);
+                super.mouseClicked(e);
+            }
+        });
+        tabbed_panel_staff.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadStaffSearchRoomListModel();
+                loadStaffHotelCityCombobox(combobox_staff_search_room_city);
+                loadStaffHotelNameCombobox(combobox_staff_search_room_hotel_name);
+                super.mouseClicked(e);
+            }
         });
     }
 

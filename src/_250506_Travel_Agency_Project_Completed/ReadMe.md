@@ -25,6 +25,9 @@ Java 102 Project Tourism Agency
 6-Reservation Confirmation Panel
 ![img_6.png](img_6.png)
 
+6-2 Room Already Reserved On Selected Dates
+![img_10.png](img_10.png)
+
 6-3 Room Capacity Low
 ![img_7.png](img_7.png)
 

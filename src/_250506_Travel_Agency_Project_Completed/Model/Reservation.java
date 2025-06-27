@@ -225,9 +225,11 @@ public class Reservation {
         System.out.println("reservation is added-2");
         Reservation foundReservation = Reservation.getFetchByRoomId(room_id);
         if (foundReservation != null) {
-            System.out.println("Found Reservation" + foundReservation.getId() + "Room Id" + foundReservation.getRoom_id());
-            Helper.showMessage("exist");
-            return false;
+            boolean isRoomReservedOnSelectedDates = Helper.reservationController(foundReservation, check_in_date, check_out_date);
+            if (isRoomReservedOnSelectedDates) {
+                Helper.showMessage("Room is already reserved on selected dates");
+                return false;
+            }
         }
         if (Roomfeature.getFetch(room_id).getBed_count() >= Helper.calculateGuestCount(guest_1_name, guest_2_name) + Helper.calculateGuestCount(guest_3_name)) {
             try {
@@ -272,9 +274,9 @@ public class Reservation {
 
     public static boolean delete(int id) {
         String query = "DELETE FROM reservation WHERE id = ? ";
-        System.out.println("reservation id"+id);
+        System.out.println("reservation id" + id);
         int room_id = Reservation.getFetch(id).getRoom_id();
-        System.out.println("room id"+room_id);
+        System.out.println("room id" + room_id);
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1, id);
@@ -306,7 +308,7 @@ public class Reservation {
             return false;
         }
 
-        if(Helper.createIntFromStringDate(check_in_date)>Helper.createIntFromStringDate(check_out_date)){
+        if (Helper.createIntFromStringDate(check_in_date) > Helper.createIntFromStringDate(check_out_date)) {
             Helper.showMessage("Check In Date is after Check Out Date. Please set it properly, if required choose update Check Out Date first.");
             return false;
         }
