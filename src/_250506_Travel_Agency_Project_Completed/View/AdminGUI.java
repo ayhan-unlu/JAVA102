@@ -2,8 +2,10 @@ package _250506_Travel_Agency_Project_Completed.View;
 
 import _250506_Travel_Agency_Project_Completed.Helper.Config;
 import _250506_Travel_Agency_Project_Completed.Helper.Helper;
-import _250506_Travel_Agency_Project_Completed.Helper.Item;
-import _250506_Travel_Agency_Project_Completed.Model.*;
+import _250506_Travel_Agency_Project_Completed.Model.Admin;
+import _250506_Travel_Agency_Project_Completed.Model.Hotel;
+import _250506_Travel_Agency_Project_Completed.Model.Room;
+import _250506_Travel_Agency_Project_Completed.Model.User;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -301,6 +303,7 @@ public class AdminGUI extends JFrame {
                 return super.isCellEditable(row, column);
             }
         };
+
         Object[] column_admin_user_list = {"Id", "Name", "Surname", "Username", "Password", "Type"};
         model_admin_user_list.setColumnIdentifiers(column_admin_user_list);
         row_admin_user_list = new Object[column_admin_user_list.length];
@@ -308,7 +311,6 @@ public class AdminGUI extends JFrame {
 
         table_admin_user_list.setModel(model_admin_user_list);
         table_admin_user_list.getTableHeader().setReorderingAllowed(false);
-
 
         table_admin_user_list.getSelectionModel().addListSelectionListener(e -> {
             try {
@@ -680,6 +682,11 @@ public class AdminGUI extends JFrame {
             dispose();
             LoginGUI loginGUI = new LoginGUI();
         });
+/*
+//***********************************************************************************************************************************************************************
+        //***********************************************************************************************************************************************************************
+        // BUTTONS BELOW ARE CREATED TO BE USED IN STAFFGUI THEN THEY ARE DISABLED
+
         button_admin_hotel_add.addActionListener(e -> {
 
             ArrayList<JTextField> adminHotelAddTextFieldList = new ArrayList<>();
@@ -742,7 +749,7 @@ public class AdminGUI extends JFrame {
             if (Helper.isAnyFieldEmpty(adminHotelAddTextFieldList) || combobox_admin_hotel_add_star.getSelectedItem().toString().isEmpty()) {
                 Helper.showMessage("fill");
             } else {
-                if (Hotel.add(name, city, region, address, email, phone, star/*, stringHotelFacilityFeatureList*/)) {
+                if (Hotel.add(name, city, region, address, email, phone, star/*, stringHotelFacilityFeatureList)) {
                     Helper.showMessage("success");
                     loadAdminHotelListModel();
                     //   loadAdminFeatureHotelNameCombobox();
@@ -1077,6 +1084,12 @@ public class AdminGUI extends JFrame {
             }
 
         });
+
+//***********************************************************************************************************************************************************************
+        //***********************************************************************************************************************************************************************
+        // BUTTONS BELOW ARE CREATED TO BE USED IN STAFFGUI THEN THEY ARE DISABLED
+    */
+
     }
 
     public void loadAdminUserListModel() {
@@ -1112,7 +1125,7 @@ public class AdminGUI extends JFrame {
             model_admin_user_list.addRow(row_admin_user_list);
         }
     }
-
+/* BELOW LOADING MODELS ARE CREATED FOR STAFFGUI THEN DISABLED
     public void loadAdminHotelListModel() {
 
         DefaultTableModel clearModel = (DefaultTableModel) table_admin_hotel_list.getModel();
@@ -1430,8 +1443,5 @@ public class AdminGUI extends JFrame {
             combobox.addItem(new Item(obj.getId(), String.valueOf(obj.getId())));
         }
     }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
+*/
 }

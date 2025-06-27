@@ -38,13 +38,6 @@ public class ReservationGUI extends JFrame {
     private JLabel label_staff_reservation_confirmation_title;
     private DefaultTableModel model_reservation_accommodation_type_list;
     private Object[] row_reservation_accommodation_type_list;
-
-    //    private Accommodation accommodation;
-//    private Feature feature;
-//    private Hotel hotel;
-//    private Price price;
-//    private Roomfeature roomfeature;
-//    private Season season;
     private Room room;
     private Reservation reservation;
     private Hotel hotel;
@@ -58,7 +51,6 @@ public class ReservationGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
         setVisible(true);
-//        System.out.println(check_in_date + "check in date" + check_out_date + "checkoutdate");
         hotel = Hotel.getFetch(room.getHotel_id());
         label_staff_reservation_hotel_name.setText(hotel.getName());
         label_staff_reservation_hotel_star.setText(hotel.getStar()+ " Star");
@@ -92,8 +84,6 @@ public class ReservationGUI extends JFrame {
             adult_price = currentPrice.getAdult_price_2();
             child_price = currentPrice.getChild_price_2();
         }
-       // label_staff_reservation_adult_price.setText("Adult Price per Night: " + adult_price + " ₺");
-        //label_staff_reservation_child_price.setText("Child Price per Night: " + child_price + " ₺");
 
         // Model Room Accommodation Type List---------------------------------------------------------------------------
         model_reservation_accommodation_type_list = new DefaultTableModel() {
@@ -107,19 +97,8 @@ public class ReservationGUI extends JFrame {
         row_reservation_accommodation_type_list = new Object[column_reservation_accommodation_type_list.length];
         loadReservationAccommodationTypeListModel(hotel, adult_price, child_price);
         table_staff_reservation_accommodation_type_list.setModel(model_reservation_accommodation_type_list);
-        // Accommodation.loadHotelAccommodationTypeListCombobox(combobox_staff_reservation_accommodation_type_list, hotel.getId());
         loadStaffReservationAccommodationTypeListComboBox(hotel);
 
-
-//        if (!check_in_date.isEmpty()) {
-//        } else {
-//            check_in_date = "01.01.2025";
-//        }
-//        if (!check_out_date.isEmpty()) {
-//
-//        } else {
-//            check_out_date = "02.01.2025";
-//        }
         // ##Model Room Accommodation Type List---------------------------------------------------------------------------
 
         String finalCheck_in_date = check_in_date;

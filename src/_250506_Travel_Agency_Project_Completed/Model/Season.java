@@ -158,29 +158,14 @@ public class Season {
             Helper.showMessage("exist");
             return false;
         }
-        System.out.println("Season 1" + season_1);
-        System.out.println("Season 2" + season_2);
         boolean boolean_season_1;
         if (season_1.equals("true")) {
             boolean_season_1 = true;
         } else if (season_1.equals("false")) {
             boolean_season_1 = false;
-            System.out.println("1");
             Price.updateSeason1Prices(foundHotelId);
-            //Price.update(1);
-
-//            if (Price.deleteRelatedPrices(foundHotelId)) {
-//                System.out.println("2");
-//                Helper.showMessage("Seasonal prices also deleted and will be displayed as zero");
-//                System.out.println("3");
-//            }
-//            ;
-//            if (!Price.deleteRelatedPrices(foundHotelId)) {
-//                System.out.println("4");
-//                return false;
-//            }
         } else {
-            Helper.showMessage("Please choose true or false for 1eason 1");
+            Helper.showMessage("Please choose true or false for Season 1");
             return false;
         }
         boolean boolean_season_2;
@@ -189,36 +174,15 @@ public class Season {
             boolean_season_2 = true;
         } else if (season_2.equals("false")) {
             boolean_season_2 = false;
-            System.out.println("5");
-            //Price.update(1);
         } else {
-            Helper.showMessage("Please choose true or false for 2eason 2 ");
+            Helper.showMessage("Please choose true or false for Season 2 ");
             return false;
         }
-
-
-//        if (season_1.equals("true") || season_1.equals("false")) {
-//            boolean boolean_season_1 = Boolean.getBoolean(season_1);
-//            if (season_2.equals("true") || season_2.equals("false")) {
-//                boolean boolean_season_2 =Boolean.getBoolean(season_2);
-//            } else {
-//                Helper.showMessage("Please choose true or false for Season 2");
-//                return false;
-//            }
-//        } else {
-//            Helper.showMessage("Please choose true or false for Season 1");
-//            return false;
-//        }
-
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setBoolean(1, boolean_season_1);
             pr.setBoolean(2, boolean_season_2);
             pr.setInt(3, id);
-
-//s            pr.setBoolean(1,boolean_season_1)
-//
-//            pr.setInt(3, id);
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());

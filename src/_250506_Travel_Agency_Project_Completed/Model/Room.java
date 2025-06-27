@@ -286,11 +286,6 @@ public class Room {
     public static boolean update(int id, int hotel_id, String room_type, int stock) {
         String query = "UPDATE room SET hotel_id=?, room_type=?, stock=? WHERE id=?";
         Room foundRoom = Room.getFetch(id);
-
-//        if (foundRoom != null && foundRoom.getId() != id) {
-//            Helper.showMessage("exist");
-//            return false;
-//        }
         ArrayList <Room> roomList = new ArrayList<>();
         roomList = Room.getListByHotelName(Hotel.getFetch(hotel_id).getName());
 
@@ -301,20 +296,9 @@ public class Room {
             }
         }
 
-//        int i = 0;
-//        for (Hotel obj : Hotel.getList()) {
-//            if (hotel_id == obj.getId()) {
-//                i++;
-//            }
-//        }
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-//            if (i > 0) {
                 pr.setInt(1, hotel_id);
-//            } else {
-//                Helper.showMessage("Choose an existing Hotel Id");
-//                return false;
-          //  }
             if (room_type.equals("single_room") || room_type.equals("double_room") || room_type.equals("junior_suite") || room_type.equals("suite")) {
                 pr.setString(2, room_type);
             } else {
@@ -332,22 +316,16 @@ public class Room {
 
     public static ArrayList<Room> searchRoomList(String query) {
         ArrayList<Room> roomList = new ArrayList<>();
-        System.out.println("searchlist"+1);
         Room obj;
-        System.out.println("searchlist"+2);
         try {
             Statement st = DBConnector.getInstance().createStatement();
-            System.out.println("searchlist"+3);
             ResultSet rs = st.executeQuery(query);
-            System.out.println("searchlist"+4);
             while (rs.next()) {
-                System.out.println("searchlist"+5);
                 obj = new Room();
                 obj.setId(rs.getInt("id"));
                 obj.setHotel_id(rs.getInt("hotel_id"));
                 obj.setRoom_type(rs.getString("room_type"));
                 obj.setStock(rs.getInt("stock"));
-                System.out.println("searchlist"+6);
                 roomList.add(obj);
             }
         } catch (SQLException e) {
@@ -357,76 +335,41 @@ public class Room {
     }
 
     public static String createSearchQuery(String check_in_date, String check_out_date, String city, String hotel_name, int guestCount) {
-        System.out.println("111");
         String query = "SELECT * FROM room JOIN hotel ON room.hotel_id = hotel.id JOIN season ON room.hotel_id = season.hotel_id JOIN roomfeature ON roomfeature.id = room.id WHERE room.stock>0";
-        System.out.println("112");
-
-
-
         boolean dateCondition;
         if (!city.isEmpty()) {
             query += " AND hotel.city='{{city}}'";
             query = query.replace("{{city}}", city);
         }
-        System.out.println("113");
-
         if (!hotel_name.isEmpty()) {
             query += " AND hotel.name='{{hotel_name}}'";
             query = query.replace("{{hotel_name}}", hotel_name);
         }
 
-
         if (!check_in_date.isEmpty() && !check_out_date.isEmpty()) {
-            System.out.println("114");
-
             dateCondition = true;
-            System.out.println("115");
-
         } else {
-            System.out.println("116");
-
             dateCondition = false;
-            System.out.println("117");
-
         }
         if (dateCondition) {
-            System.out.println("118");
-
             int int_check_in_date = Helper.createIntFromStringDate(check_in_date);
             int int_check_out_date = Helper.createIntFromStringDate(check_out_date);
             int duration = Helper.calculateDuration(check_in_date, check_out_date);
             int season = Season.seasonDecider(check_in_date);
             query += " AND {{season}} = true";
-            System.out.println("119");
             System.out.println(season);
-
             String searchedSeason = "";
-            System.out.println("120");
-
             if (season == 1) {
-                System.out.println("121");
-
                 searchedSeason = "season_1";
-                System.out.println("122");
-
             } else if (season == 2) {
-                System.out.println("123");
-
                 searchedSeason = "season_2";
-                System.out.println("124");
-
             }
-            System.out.println("125");
-
             query = query.replace("{{season}}", searchedSeason);
-            System.out.println("126");
-
         }
         if (guestCount > 0) {
             query += " AND  roomfeature.bed_count >= '{{guestCount}}'";
             query = query.replace("{{guestCount}}", String.valueOf(guestCount));
         }
-        System.out.println("QUERY " + query);
         return query;
     }
 
@@ -468,6 +411,5 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
-
     }
 }

@@ -103,8 +103,6 @@ public class Roomfeature {
 
         String query = "INSERT INTO roomfeature (hotel_id, room_id, bed_count, squaremeters, tv, minibar ,console, safe, projector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Roomfeature foundRoomfeature = Roomfeature.getFetch(room_id);
-
-        //   System.out.println(foundRoomfeature.getHotel_id()+"hotel_id");
         if (foundRoomfeature != null) {
             Helper.showMessage("exist");
         } else {

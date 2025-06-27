@@ -52,7 +52,6 @@ public class Price {
                 int child_price_1 = rs.getInt("child_price_1");
                 int child_price_2 = rs.getInt("child_price_2");
                 obj = new Price(id, hotel_id, room_id, adult_price_1, adult_price_2, child_price_1, child_price_2);
-                // if (Room.getFetch(room_id).getStock() > 0)
                 priceList.add(obj);
             }
         } catch (SQLException e) {
@@ -75,7 +74,6 @@ public class Price {
             if (Season.seasonDecider(start_date) == 1) {
 
                 query += "AND season.season_1 ='__season_1__'";
-                /*boolean???*/
                 query = query.replace("__season_1__", "true");
             }
             if (Season.seasonDecider(start_date) == 2) {
@@ -104,8 +102,6 @@ public class Price {
                 obj.setChild_price_1(rs.getInt("child_price_1"));
                 obj.setChild_price_2(rs.getInt("child_price_2"));
                 searchList.add(obj);
-
-
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -143,13 +139,7 @@ public class Price {
         String query = "INSERT INTO price (hotel_id, room_id, adult_price_1,adult_price_2,child_price_1,child_price_2) VALUES (?, ?, ?, ?, ?, ?)";
         Price foundPrice = Price.getFetchByRoomId(room_id);
 
-//        System.out.println("id" + foundPrice.getId());
-//        System.out.println("id" + foundPrice.getHotel_id());
-//        System.out.println("id" + foundPrice.getRoom_id());
-
-
         if (foundPrice != null) {
-//            System.out.println("foundPrice id:" + foundPrice.getId());
             Helper.showMessage("exist");
             return false;
         } else {
@@ -208,9 +198,6 @@ public class Price {
     public static boolean deleteByHotelId(int hotel_id) {
         String query = "DELETE FROM price WHERE hotel_id=?";
 
-//        Price foundPrice = Price.getFetchByRoomId(room_id);
-//        if (foundPrice != null) {
-
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1, hotel_id);
@@ -218,57 +205,33 @@ public class Price {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-//        } else {
-//            Helper.showMessage("No assigned Price for the room");
-//            return false;
-//        }
         return true;
     }
 
     public static boolean update(int room_id, int adult_price_1, int adult_price_2, int child_price_1, int child_price_2) {
-        System.out.println(adult_price_1);
-        System.out.println(adult_price_2);
-        System.out.println(child_price_1);
-        System.out.println(child_price_2);
-        System.out.println("20");
-
         String query = "UPDATE price SET adult_price_1=?, adult_price_2=?, child_price_1=?, child_price_2=? WHERE room_id=?";
-        System.out.println("21");
 
         Price foundPrice = Price.getFetchByRoomId(room_id);
-        System.out.println("22");
         int hotel_id = Room.getFetch(room_id).getHotel_id();
-        System.out.println("23");
         if (foundPrice == null) {
-            System.out.println("24");
             Helper.showMessage("error");
             return false;
         } else {
             try {
                 PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-                System.out.println("25");
-                System.out.println(!Season.getFetchByHotelId(hotel_id).isSeason_1());
-                System.out.println(Season.getFetchByHotelId(hotel_id).isSeason_1());
                 if (Season.getFetchByHotelId(hotel_id).isSeason_1()) {
-                    System.out.println("26");
                     adult_price_1 = 0;
                     child_price_1 = 0;
-                    System.out.println("27");
                 }
                 if (!Season.getFetchByHotelId(hotel_id).isSeason_2()) {
-                    System.out.println("28");
                     adult_price_2 = 0;
                     child_price_2 = 0;
-                    System.out.println("29");
                 }
-                System.out.println("30");
                 pr.setInt(1, adult_price_1);
                 pr.setInt(2, adult_price_2);
                 pr.setInt(3, child_price_1);
                 pr.setInt(4, child_price_2);
                 pr.setInt(5, room_id);
-                System.out.println("31");
-                System.out.println(query);
                 return pr.executeUpdate() != -1;
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -295,31 +258,20 @@ public class Price {
                 pr.setInt(5, room_id);
                 return pr.executeUpdate() != -1;
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
             }
         }
         return true;
     }
 
     public static void updateSeason1Prices(int hotel_id) {
-        System.out.println("11");
         Hotel hotel = Hotel.getFetch(hotel_id);
-        System.out.println("12");
         ArrayList<Room> roomList = new ArrayList<>();
-        System.out.println("13");
         roomList = Room.getListByHotelName(hotel.getName());
-        System.out.println("14");
 
         for (Room obj : roomList) {
-            System.out.println("15");
-            System.out.println(obj.getId());
             int room_id = obj.getId();
-            System.out.println("16");
             Price currentPrice = Price.getFetchByRoomId(room_id);
-            System.out.println("current price " + currentPrice);
-            System.out.println("17");
             currentPrice.update(room_id, currentPrice.adult_price_1, currentPrice.adult_price_2, currentPrice.child_price_1, currentPrice.child_price_2);
-            System.out.println("18");
         }
     }
 

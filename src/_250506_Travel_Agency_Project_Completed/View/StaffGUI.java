@@ -289,7 +289,6 @@ public class StaffGUI extends JFrame {
         model_staff_feature_list.setColumnIdentifiers(column_staff_feature_list);
         row_staff_feature_list = new Object[column_staff_feature_list.length];
         loadStaffFeatureListModel();
-        //  loadStaffFeatureHotelNameCombobox();
         loadStaffHotelNameCombobox(combobox_staff_feature_add_hotel_name);
 
         table_staff_feature_list.setModel(model_staff_feature_list);
@@ -374,10 +373,7 @@ public class StaffGUI extends JFrame {
         model_staff_roomfeature_list = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-//                if (column == 0 || column == 1 || column == 2) {
                 return false;
-//                }
-//                return super.isCellEditable(row, column);
             }
         };
 
@@ -400,9 +396,8 @@ public class StaffGUI extends JFrame {
             @Override
             public boolean isCellEditable(int row, int column) {
 
-//UPDATING is canceled cause is not required in the project.                if (column == 0 || column == 1 || column == 2)
+//UPDATING is canceled cause is not required in the project.
                 return false;
-                //   return super.isCellEditable(row, column);
             }
         };
 
@@ -481,12 +476,6 @@ public class StaffGUI extends JFrame {
                     adult_price_2 = 0;
                     child_price_2 = 0;
                 }
-//                if (adult_price_1 == 0 || child_price_1 == 0 || adult_price_2 == 0 || child_price_2 == 0) {
-//                    Helper.showMessage("When the hotel is closed in the season the price is updated to zero");
-//                }
-//                if (Price.update1(room_id, adult_price_1, adult_price_2, child_price_1, child_price_2)) {
-//                    Helper.showMessage("success");
-//                }
                 loadStaffPriceListModel();
             }
         });
@@ -517,7 +506,6 @@ public class StaffGUI extends JFrame {
             if (!combobox_staff_search_room_guest_child_number.getSelectedItem().toString().isEmpty()) {
                 childGuestCount = Integer.parseInt(combobox_staff_search_room_guest_child_number.getSelectedItem().toString());
             }
-            //   System.out.println(check_in_date + "check in date" + check_out_date + "checkoutdate");
             ReservationGUI reservationGUI = new ReservationGUI(Room.getFetch(selected_room_id), check_in_date, check_out_date, adultGuestCount, childGuestCount);
 
         });
@@ -531,9 +519,6 @@ public class StaffGUI extends JFrame {
         Object[] column_staff_search_room_list = {"Room Id", "Hotel Id", "Hotel Name", "Room Type", "Stock", "Star", "Hotel Features", "Room Features", "Accommodation Type", "Available Seasons", "Adult Price 2", "Child Price 2"};
         model_staff_search_room_list.setColumnIdentifiers(column_staff_search_room_list);
         row_staff_search_room_list = new Object[column_staff_search_room_list.length];
-        //loadStaffSearchRoomListModel();
-        //  field_staff_search_room_check_in_date.setText("12.06.2025");
-        //  field_staff_search_room_check_out_date.setText("15.06.2025");
         loadStaffHotelNameCombobox(combobox_staff_search_room_hotel_name);
         loadStaffHotelCityCombobox(combobox_staff_search_room_city);
         table_staff_search_room_list.setModel(model_staff_search_room_list);
@@ -607,7 +592,6 @@ public class StaffGUI extends JFrame {
                     Helper.showMessage("success");
                     loadStaffModelsAndComboboxes();
 
-                    //   loadStaffHotelListModel();
                 } else {
                     Helper.showMessage("error");
                 }
@@ -626,17 +610,9 @@ public class StaffGUI extends JFrame {
                     int selected_hotel_id = Integer.parseInt(field_staff_hotel_delete_hotel_id.getText());
                     if (Hotel.delete(selected_hotel_id) && Feature.deleteByHotelId(selected_hotel_id) && Accommodation.deleteByHotelId(selected_hotel_id) && Season.delete(selected_hotel_id) && Room.deleteByHotelId(selected_hotel_id) && Roomfeature.deleteByHotelId(selected_hotel_id) && Price.deleteByHotelId(selected_hotel_id)) {
                         Helper.showMessage("success");
-//
-//                        ArrayList<Room> hotelRoomList = new ArrayList<>();
-//                        hotelRoomList = Room.getListByHotelName(Hotel.getFetch(selected_hotel_id).getName());
-//
-//                        for (Room obj : hotelRoomList) {
-//                            if(Room.delete(obj.getId())&&Price.delete(obj.getId())){}
-//                        }
                         loadStaffModelsAndComboboxes();
-
                         loadStaffHotelListModel();
-
+                        loadStaffHotelCityCombobox(combobox_staff_search_room_city);
                     } else {
                         Helper.showMessage("error");
                     }
@@ -646,7 +622,6 @@ public class StaffGUI extends JFrame {
         });
 
         button_staff_feature_add.addActionListener(e -> {
-            //   Item hotelNameItem = (Item) combobox_staff_feature_add_hotel_name.getSelectedItem();
             String selectedHotelName = combobox_staff_feature_add_hotel_name.getSelectedItem().toString();
 
             boolean free_parking = checkbox_staff_feature_add_free_parking.isSelected();
@@ -670,8 +645,6 @@ public class StaffGUI extends JFrame {
                     loadStaffFeatureListModel();
                 }
             }
-            //   field_staff_feature_add_hotel_id.setText(null);
-            //  combobox_staff_feature_add_hotel_name.set
         });
 
 
@@ -679,7 +652,6 @@ public class StaffGUI extends JFrame {
 
             String selectedHotelName = combobox_staff_accommodation_add_hotel_name.getSelectedItem().toString();
 
-            //int hotel_id = (Integer) Integer.parseInt(field_staff_accommodation_add_hotel_id.getText());
             boolean ultra_all_inclusive = checkbox_staff_accommodation_add_ultra_all_inclusive.isSelected();
             boolean all_in = checkbox_staff_accommodation_add_all_in.isSelected();
             boolean bed_and_breakfast = checkbox_staff_accommodation_add_bed_and_breakfast.isSelected();
@@ -698,8 +670,6 @@ public class StaffGUI extends JFrame {
 
                     loadStaffAccommodationListModel();
                 }
-//                field_staff_accommodation_add_hotel_id.setText(null);
-                //              combobox_staff_accommodation_add_hotel_name.setSelectedItem(combobox_staff_accommodation_add_hotel_name.getItemAt(0));
 
             }
 
@@ -717,10 +687,6 @@ public class StaffGUI extends JFrame {
                 }
             }
             clearAllFieldsAndComboboxes();
-//            combobox_staff_room_add_hotel_name.setSelectedItem(new Item(0,""));
-//            combobox_staff_room_add_room_type.setSelectedItem(null);
-//            field_staff_room_add_stock.setText(null);
-//            field_staff_room_delete_room_id.setText(null);
         });
         button_staff_room_delete.addActionListener(e -> {
 
@@ -860,7 +826,6 @@ public class StaffGUI extends JFrame {
             if ((check_in_date.isEmpty() || check_out_date.isEmpty()) && city.isEmpty() && hotel_name.isEmpty() || combobox_staff_search_room_guest_adult_number.getSelectedItem().toString().isEmpty()) {
                 Helper.showMessage("fill");
             } else {
-                //Room.searchRoomList(query);
                 String query = Room.createSearchQuery(check_in_date, check_out_date, city, hotel_name, guestCount);
 
                 System.out.println("1");
@@ -897,8 +862,6 @@ public class StaffGUI extends JFrame {
                 int intSelectedReservationId = (Integer) Integer.parseInt(stringSelectedReservationId);
                 ReservationUpdateGUI reservationUpdateGUI = new ReservationUpdateGUI(intSelectedReservationId);
                 loadStaffModelsAndComboboxes();
-
-                // ConfirmationGUI confirmationGUI = new ConfirmationGUI();
             }
 
 

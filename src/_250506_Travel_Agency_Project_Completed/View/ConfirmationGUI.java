@@ -114,11 +114,6 @@ public class ConfirmationGUI extends JFrame {
         } else {
             this.check_in_date = "01.01.2025";
         }
-//        if (!check_out_date.isEmpty()) {
-//            this.check_out_date = check_out_date;
-//        } else {
-//            this.check_out_date = "02.01.2025";
-//        }
         if(check_in_date.isEmpty()||check_out_date.isEmpty()){
             Helper.showMessage("As the check in and check out dates are not selected, Season is selected as 1 And duratio is  1 day");
             selectedSeason=1;
@@ -142,14 +137,10 @@ public class ConfirmationGUI extends JFrame {
         label_staff_confirmation_hotel_feature.setText(Feature.createStringHotelFeatureList(hotel_id));
         label_staff_confirmation_room_feature.setText(Roomfeature.createStringRoomFeatureList(room.getId()));
         label_staff_confirmation_room_type.setText(room.getRoom_type());
-        //label_staff_confirmation_check_in_date.setText(check_in_date);
-        //label_staff_confirmation_check_out_date.setText(check_out_date);
         label_staff_confirmation_adult_guest_count.setText(adultGuestCount + " Adult Guest. This field is editable below.");
         label_staff_confirmation_child_guest_count.setText(childGuestCount + " Child Guest. This field is editable below.");
         field_staff_confirmation_check_in_date.setText(check_in_date);
         field_staff_confirmation_check_out_date.setText(check_out_date);
-        //  Accommodation.loadHotelAccommodationTypeListCombobox(combobox_staff_confirmation_accommodation_type_list,hotel_id);
-        //loadStaffConfirmationAccommodationTypeListCombobox(hotel_id);
         label_staff_confirmation_selected_accommodation_type_line.setText("Selected Accommodation Type: " + selectedAccommodation_type);
 
         ArrayList<JTextField> confirmationFieldList = new ArrayList<>();
@@ -164,43 +155,16 @@ public class ConfirmationGUI extends JFrame {
         confirmationFieldList.add(field_staff_confirmation_check_in_date);
         confirmationFieldList.add(field_staff_confirmation_check_out_date);
 
-//        for (int i = 1; i < confirmationFieldList.size() - 2; i++) {
-//            confirmationFieldList.get(i).setText("i");
-//        }
-
-
         gatherReservationInformationForConfirmation(room_id, hotel_id, selectedAccommodation_type, check_in_date, check_out_date, contact_name, contact_phone, contact_email, contact_id_no, note, guest_1_name, guest_1_country, guest_1_id_no, guest_1_type, guest_2_name, guest_2_country, guest_2_id_no, guest_2_type, guest_3_name, guest_3_country, guest_3_id_no, guest_3_type);
         //##INFO BROUGHT FROM PREVIOUS RESERVATION MENU
-
-        // GATHERING RESERVATION INFORMATION FOR CONFIRMATION
-
-        //   gatherReservationInformationForConfirmation()
-        // ### GATHERING RESERVATION INFORMATION FOR CONFIRMATION
 
         confirmedAdultGuestCount = 1;
         confirmedChildGuestCount = 0;
 
-
-//
-
         button_staff_confirmation_calculate_reservation_price.addActionListener(e -> {
-//            ArrayList<JTextField> confirmationFieldList = new ArrayList<>();
-//            confirmationFieldList.add(field_staff_confirmation_contact_name);
-//            confirmationFieldList.add(field_staff_confirmation_contact_id_no);
-//            confirmationFieldList.add(field_staff_confirmation_contact_phone);
-//            confirmationFieldList.add(field_staff_confirmation_contact_email);
-//            confirmationFieldList.add(field_staff_confirmation_guest_1_name);
-//            confirmationFieldList.add(field_staff_confirmation_guest_1_country);
-//            confirmationFieldList.add(field_staff_confirmation_guest_1_id_no);
-//            confirmationFieldList.add(field_staff_confirmation_check_in_date);
-//            confirmationFieldList.add(field_staff_confirmation_check_out_date);
-//            for (int i = 1; i < confirmationFieldList.size() - 2; i++) {
-//                confirmationFieldList.get(i).setText("i");
-//            }
-            if (Helper.isAnyFieldEmpty(confirmationFieldList)) {
+        if (Helper.isAnyFieldEmpty(confirmationFieldList)) {
                 Helper.showMessage("Please fill in the required Fields");
             } else {
-                //  double calculatedReservationPrice = Calculation.calculateReservationPrice();
                 if (!field_staff_confirmation_guest_2_name.getText().isEmpty() && !field_staff_confirmation_guest_2_country.getText().isEmpty() && !field_staff_confirmation_guest_2_id_no.getText().isEmpty()) {
                     confirmedAdultGuestCount = +1;
                     System.out.println("confirmed adult guest count" + confirmedAdultGuestCount);
@@ -245,49 +209,10 @@ public class ConfirmationGUI extends JFrame {
                     dispose();
                 }
                 System.out.println(room_id + hotel_id + selectedAccommodation_type + check_in_date + check_out_date + contact_name + contact_phone + contact_email + contact_id_no + note + guest_1_name + guest_1_country + guest_1_id_no + guest_1_type + guest_2_name + guest_2_country + guest_2_id_no + guest_2_type + guest_3_name + guest_3_country + guest_3_id_no + guest_3_type);
-
-                //   int accommodation_type = Accommodation.getFetch(hotel_id);
-                //    Reservation.add(room_id, hotel_id, accommodation_type, check_in_date, check_out_date)
             }
         });
     }
 
-    //    public void loadStaffConfirmationAccommodationTypeListCombobox(int hotel_id) {
-//        combobox_staff_confirmation_accommodation_type_list.removeAllItems();
-//        int i;
-//        i = 0;
-//        combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, ""));
-//        Accommodation a = Accommodation.getFetch(hotel_id);
-//
-//        if (a.isUltra_all_inclusive()) {
-//            combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, "Ultra All Inclusive"));
-//        }
-//
-//        if (a.isAll_in()) {
-//            combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, "All In"));
-//        }
-//
-//        if (a.isBed_and_breakfast()) {
-//            combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, "Bed And Breakfast"));
-//        }
-//
-//        if (a.isFull_board()) {
-//            combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, "Full Board"));
-//        }
-//
-//        if (a.isHalf_board()) {
-//            combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, "Half Board"));
-//        }
-//
-//        if (a.isBed_only()) {
-//            combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, "Bed Only"));
-//        }
-//
-//        if (a.isExcluding_alcohol_full_credit()) {
-//            combobox_staff_confirmation_accommodation_type_list.addItem(new Item(i++, "Excluding Alcohol Full Credit"));
-//
-//        }
-//    }
     public static ArrayList<String> gatherReservationInformationForConfirmation(int room_id, int hotel_id, String accommodation_type, String check_in_date, String check_out_date, String contact_name, String contact_phone, String contact_email, String contact_id_no, String note, String guest_1_name, String guest_1_country, String guest_1_id_no, String guest_1_type, String guest_2_name, String guest_2_country, String guest_2_id_no, String guest_2_type, String guest_3_name, String guest_3_country, String guest_3_id_no, String guest_3_type) {
         ArrayList<String> informationList = new ArrayList<>();
         informationList.add(String.valueOf(room_id));

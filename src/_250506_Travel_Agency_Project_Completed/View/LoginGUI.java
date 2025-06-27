@@ -30,9 +30,6 @@ public class LoginGUI extends JFrame {
         setTitle(Config.PROJECT_TITLE);
         setResizable(false);
         setVisible(true);
-
-        field_login_username.setText("b");
-        field_login_password.setText("b");
         button_login.addActionListener(e -> {
 
             ArrayList<JTextField> loginTextFieldList = new ArrayList<>();
@@ -53,7 +50,6 @@ public class LoginGUI extends JFrame {
                         case "staff":
                             StaffGUI staffGUI = new StaffGUI((Staff) u);
                             break;
-
                     }
                     dispose();
                 }

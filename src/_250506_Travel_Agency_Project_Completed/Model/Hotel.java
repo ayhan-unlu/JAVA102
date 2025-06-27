@@ -18,7 +18,6 @@ public class Hotel {
     private String email;
     private String phone;
     private String star;
-    // private Feature feature;
 
     public Hotel() {
     }
@@ -32,7 +31,6 @@ public class Hotel {
         this.email = email;
         this.phone = phone;
         this.star = star;
-        //this.facilityFeatureList = facilityFeatureList;
     }
 
     public static ArrayList<Hotel> getList() {
@@ -55,7 +53,6 @@ public class Hotel {
                 obj.setEmail(rs.getString("email"));
                 obj.setPhone(rs.getString("phone"));
                 obj.setStar(rs.getString("star"));
-                //     obj.setFacility_feature(rs.getString("facility_feature"));
                 hotelList.add(obj);
             }
         } catch (SQLException e) {
@@ -123,7 +120,6 @@ public class Hotel {
 
     public static boolean add(String name, String city, String region, String address, String email, String phone, String star/*, String facility_feature*/) {
 
-        //String query = "INSERT INTO hotel(name, city, region, address, email, phone, star, facility_feature) VALUES(?, ?, ?, ?, ?, ?, ?,?)";
         String query = "INSERT INTO hotel(name, city, region, address, email, phone, star) VALUES(?, ?, ?, ?, ?, ?, ?)";
         Hotel foundHotel = Hotel.getFetch(name);
 
@@ -277,22 +273,5 @@ public class Hotel {
     public void setStar(String star) {
         this.star = star;
     }
-
-//    public String getFacility_feature() {
-//        return facility_feature;
-//    }
-//
-//    public void setFacility_feature(String facility_feature) {
-//        this.facility_feature = facility_feature;
-//    }
-//
-//    public ArrayList<Boolean> getFacilityFeatureList() {
-//        return facilityFeatureList;
-//    }
-//
-//    public void setFacilityFeatureList(ArrayList<Boolean> facilityFeatureList) {
-//        this.facilityFeatureList = facilityFeatureList;
-//    }
-
 
 }

@@ -142,8 +142,8 @@ public class Helper {
         int duration = 0;
         if (!check_in_date.isEmpty()) {
             duration = Helper.createIntFromStringDate(check_out_date) - Helper.createIntFromStringDate(check_in_date);
-            System.out.println("int checkout date" + Helper.createIntFromStringDate(check_out_date));
-            System.out.println("int checkin date" + Helper.createIntFromStringDate(check_in_date));
+         //   System.out.println("int checkout date" + Helper.createIntFromStringDate(check_out_date));
+           // System.out.println("int checkin date" + Helper.createIntFromStringDate(check_in_date));
         }
         return duration;
     }

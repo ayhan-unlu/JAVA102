@@ -220,9 +220,7 @@ public class Reservation {
                               String guest_3_country,
                               String guest_3_id_no,
                               String guest_3_type) {
-        System.out.println("reservation is added-1");
         String query = "INSERT INTO reservation (room_id, hotel_id, accommodation_type, check_in_date, check_out_date, contact_name, contact_phone, contact_email, contact_id_no,note, guest_1_name,guest_1_country,guest_1_id_no,guest_1_type,guest_2_name,guest_2_country,guest_2_id_no,guest_2_type,guest_3_name,guest_3_country,guest_3_id_no,guest_3_type)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        System.out.println("reservation is added-2");
         Reservation foundReservation = Reservation.getFetchByRoomId(room_id);
         if (foundReservation != null) {
             boolean isRoomReservedOnSelectedDates = Helper.reservationController(foundReservation, check_in_date, check_out_date);

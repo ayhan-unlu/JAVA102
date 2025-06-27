@@ -158,7 +158,6 @@ public class Accommodation {
         return true;
     }
     public static boolean deleteByHotelId(int hotel_id) {
-      //  int id= Accommodation.getFetch(hotel_id).getId();
         String query = "DELETE FROM accommodation WHERE hotel_id = ?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);

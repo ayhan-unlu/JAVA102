@@ -87,27 +87,6 @@ public class Calculation {
         }
         //##Room Type;----------------------------------------------------------
 
-
-        //Accommodation Types----------------------------------------------------------
- /*
-        Accommodation selectedAccommodation = Accommodation.getFetch(selectedHotel_id);
-        if (selectedAccommodation.isBed_only()) currentCoefficient *= 1.1;
-        if (selectedAccommodation.isBed_and_breakfast()) currentCoefficient *= 1.2;
-        if (selectedAccommodation.isHalf_board()) currentCoefficient *= 1.3;
-        if (selectedAccommodation.isFull_board()) currentCoefficient *= 1.4;
-        if (selectedAccommodation.isExcluding_alcohol_full_credit()) currentCoefficient *= 1.5;
-        if (selectedAccommodation.isAll_in()) currentCoefficient *= 1.6;
-        if (selectedAccommodation.isUltra_all_inclusive()) currentCoefficient *= 1.7;
-*/
-        //##Accommodation Types----------------------------------------------------------
-
-        //Season----------------------------------------------------------
-//        Season selectedSeason = Season.getFetchByHotelId(selectedHotel_id);
-//        if (selectedSeason.isSeason_1()) currentCoefficient *= 1.1;
-//        else if (selectedSeason.isSeason_2()) currentCoefficient *= 1.5;
-//        else currentCoefficient *= 1;
-        //##Season----------------------------------------------------------
-
         //Features----------------------------------------------------------
         Feature selectedFeature = Feature.getFetch(selectedHotel_id);
         if (selectedFeature.isFree_wifi()) currentCoefficient *= 1.1;
@@ -141,19 +120,15 @@ public class Calculation {
         double currentCoefficient = Calculation.calculateCurrentCoefficient(room_id);
         double adult_price = 1;
         double child_price = 1;
-        System.out.println("J: " + j++ + "Room id:" + room_id + "selectseason:" + selectedSeason + "selectedAccommodation_type:" + selectedAccommodation_type + " adultGuestCount:" + adultGuestCount + " childGuestCount:" + childGuestCount + "duration" + duration + "Reservation Price" + reservationPrice + "current Coefficient:" + currentCoefficient + "adultprice" + adult_price + "childPrice" + child_price);
         if (selectedSeason == 1) {
             adult_price = Price.getFetchByRoomId(room_id).getAdult_price_1();
             child_price = Price.getFetchByRoomId(room_id).getChild_price_1();
         }
-        System.out.println("J: " + j++ + "Room id:" + room_id + "selectseason:" + selectedSeason + "selectedAccommodation_type:" + selectedAccommodation_type + " adultGuestCount:" + adultGuestCount + " childGuestCount:" + childGuestCount + "duration" + duration + "Reservation Price" + reservationPrice + "current Coefficient:" + currentCoefficient + "adultprice" + adult_price + "childPrice" + child_price);
         if (selectedSeason == 2) {
             adult_price = Price.getFetchByRoomId(room_id).getAdult_price_2();
             child_price = Price.getFetchByRoomId(room_id).getChild_price_2();
         }
-        System.out.println("J: " + j++ + "Room id:" + room_id + "selectseason:" + selectedSeason + "selectedAccommodation_type:" + selectedAccommodation_type + " adultGuestCount:" + adultGuestCount + " childGuestCount:" + childGuestCount + "duration" + duration + "Reservation Price" + reservationPrice + "current Coefficient:" + currentCoefficient + "adultprice" + adult_price + "childPrice" + child_price);
         reservationPrice = currentCoefficient * (adultGuestCount * adult_price + childGuestCount * child_price) * duration;
-        System.out.println("J: " + j++ + "Room id:" + room_id + "selectseason:" + selectedSeason + "selectedAccommodation_type:" + selectedAccommodation_type + " adultGuestCount:" + adultGuestCount + " childGuestCount:" + childGuestCount + "duration" + duration + "Reservation Price" + reservationPrice + "current Coefficient:" + currentCoefficient + "adultprice" + adult_price + "childPrice" + child_price);
 
         switch (selectedAccommodation_type) {
             case "Bed Only":
@@ -180,7 +155,6 @@ public class Calculation {
             default:
                 reservationPrice *= 1;
         }
-        System.out.println("J: " + j++ + "Room id:" + room_id + "selectseason:" + selectedSeason + "selectedAccommodation_type:" + selectedAccommodation_type + " adultGuestCount:" + adultGuestCount + " childGuestCount:" + childGuestCount + "duration" + duration + "Reservation Price" + reservationPrice + "current Coefficient:" + currentCoefficient + "adultprice" + adult_price + "childPrice" + child_price);
         reservationPrice = round(reservationPrice);
         return reservationPrice;
     }
@@ -281,5 +255,4 @@ public class Calculation {
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
-
 }
